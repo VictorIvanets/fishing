@@ -1,0 +1,51 @@
+.mainpage
+    background: url(../fon.jpg) center / cover no-repeat
+    position: relative
+    width: 100vw
+    height: 100vh
+    background: #001a1ec9
+    display: flex
+    flex-direction: row
+    flex-wrap: wrap
+    justify-content: center
+    align-content: space-between
+    &__outlet
+        width: 100%
+        height: calc( 100% - 8rem )
+        display: flex
+        align-items: center
+        justify-content: center
+    &__navbar
+        width: 100%
+        height: 8rem
+        padding: 1rem
+        display: flex
+        justify-content: space-between
+        &__left
+            width: 30rem
+            display: flex
+            align-items: center
+            justify-content: space-around
+        &__right
+            display: flex
+            align-items: center
+
+    &__userinfo
+        width: 20rem
+        display: flex
+        flex-direction: column
+        justify-content: space-evenly
+    &__fon
+        position: fixed
+        z-index: -1
+        width: 100%
+        height: 100%
+        overflow: hidden
+        &__img
+            width: 1980px
+            position: absolute
+            bottom: 0px
+            right: 0px
+            object-fit: cover             
+            overflow: hidden 
+            text-align: center   

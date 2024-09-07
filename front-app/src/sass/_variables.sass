@@ -1,0 +1,187 @@
+$colorMain: rgb(34, 34, 34)
+$colorLight: rgb(201, 201, 201)
+$colorGreen:#00998c
+$colorDeepLight: rgb(148, 154, 156)
+$colorDark: rgb(9, 11, 14)
+
+$font-size-m: 1.6rem
+$font-line-m: 2.4rem
+$font-size-l: 2.4rem
+$font-line-l: 3.2rem
+$font-main: "Roboto", Arial
+
+$COLMAIN: #004149
+$COLSECOND: #e0e0e0
+$COLACCENT: #071a22
+
+:root
+    --index: calc( 1vw + 1vh )
+
+html
+    font-size: 62.5%
+    font-family: "Roboto", sans-serif
+    font-weight: 100
+    font-style: normal
+    background: $colorMain
+
+*
+    margin: 0
+    padding: 0
+    box-sizing: border-box
+p
+    font-size: 1.3rem
+    // letter-spacing: 1pxa
+    
+h1
+    font-size: 5rem
+h2
+    font-size: 2rem
+h3 
+    font-size: 1.5rem
+h4
+    font-size: 1.2rem
+
+.fontsize2rem
+    font-size: 2rem
+.fontsize1rem
+    font-size: 1.1rem
+.fontsize1-5rem
+    font-size: 1.5rem
+
+.colorLight
+    color: $COLSECOND
+
+
+.white
+    color: rgb(255, 255, 255)
+.taright
+    text-align: right
+.taleft
+    text-align: left
+.tacenter
+    text-align: center
+.tajustify
+    text-align: justify
+.marginbottom5
+    margin-bottom: 5rem
+.marginbottom2
+    margin-bottom: 2rem
+.marginbottom3
+    margin-bottom: 3rem
+.margin1
+    margin: 1rem
+.marginright1
+    margin-right: 1rem
+.margin2
+    margin: 2rem
+.margin2left
+    margin-left: 2rem
+a  
+    color: $colorDeepLight 
+    text-decoration: none
+    font-size: 1.5rem
+.active
+    color: #00a89a
+
+
+.mb1
+    margin-bottom: 1rem
+.mb2
+    margin-bottom: 2rem
+
+.upper
+    text-transform: uppercase
+button
+    border: none
+    padding: 0.5rem
+    cursor: pointer
+.svg
+    display: flex
+    min-height: 3rem
+    max-height: 5rem
+
+.svgbox
+    height: 100%
+    width: 100%
+
+.absolutecenter
+    position: absolute
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%)
+.cyrillicextrabold
+    font-family: "Montserrat Alternates", sans-serif
+    font-weight: 800
+    font-style: normal
+.cyrillicbold
+    font-family: "Montserrat Alternates", sans-serif
+    font-weight: 600
+    font-style: normal
+.cyrillicsamibold
+    font-family: "Montserrat Alternates", sans-serif
+    font-weight: 300
+    font-style: normal
+.flex
+    display: flex
+    align-items: center
+    justify-content: center
+
+form
+    margin: 2rem
+    width: 80%
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-content: center
+    align-items: center
+
+input
+    width: 30rem
+    height: 3rem
+    border: none
+    border-bottom: 1px solid #007488f5
+    outline: none
+    margin-bottom: 2rem
+    border-radius: 0.2rem
+    background: none
+    padding: 0.5rem
+    font-size: 1.5rem
+    color: white
+    &:focus
+        border-bottom: 1px solid white
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus,
+    &:-webkit-autofill:active 
+        text-decoration-color: white
+        transition: background-color 5000s ease-in-out 0s
+        -webkit-text-fill-color: #ffffff
+
+
+
+
+button
+    min-width: 8rem
+    height: 3.2rem
+    border: none
+    outline: none
+    border-radius: 0.2rem
+    padding: 0.7rem
+    font-size: 1.5rem
+    background: $COLACCENT
+    color: $COLSECOND
+    transition: all 0.2s
+    &:hover
+        color: $COLMAIN
+        transition: all 0.2s
+        box-shadow: 1px 1px 3px #00000041
+    &:active
+        color: $COLACCENT
+        background: $COLMAIN
+        transition: all 0.2s
+        
+        
+
+
+
+
