@@ -3,11 +3,13 @@ import { saveState } from './storage'
 import userSlice from './login.slice'
 import { JWT_PER_STATE, LOG_PER_STATE } from './login.slice.types'
 import registerSlice from './register.slice'
+import mapSlice from './map.slice'
 
 export const store = configureStore({
 	reducer: {
 		user: userSlice,
 		register: registerSlice,
+		map: mapSlice,
 	},
 })
 

@@ -25,8 +25,6 @@ function MainPage() {
 		})()
 	}, [login])
 
-	console.log(data)
-
 	const logOut = () => {
 		dispatch(userActions.logout())
 		localStorage.removeItem(JWT_PER_STATE)

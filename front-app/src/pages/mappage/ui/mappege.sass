@@ -6,8 +6,6 @@
     display: flex
     flex-direction: row
     flex-wrap: wrap
-    // overflow: auto
-    // scrollbar: 0px
     @media (max-width: 720px) 
         flex-direction: column 
         flex-wrap: nowrap
@@ -22,11 +20,27 @@
         width: 30%
         @media (max-width: 720px) 
             width: 100%
-// .mappage::-webkit-scrollbar
-//     width: 7px
-// .mappage::-webkit-scrollbar-thumb
-//     width: 7px
-//     background: $COLSECOND
+        &__item
+            padding: 1rem
+            background: #0000002d
+            border-radius: 0.3rem
+            margin: 1rem
+            color: $COLSECOND
+        &__itembox
+            width: 100%
+            height: 100%
+            overflow: auto
+            scrollbar: 0px
+        &__itembox::-webkit-scrollbar
+            width: 7px
+        &__itembox::-webkit-scrollbar-thumb
+            width: 7px
+            background: $COLSECOND
+
+
+
+
+
 
 .leaflet-container 
     height: 100%
@@ -44,3 +58,9 @@
 
     width: 5rem
     background: $COLMAIN
+.resultbtn
+    width: 100%
+    height: 3.5rem 
+    font-size: 1.2rem
+    &__info
+        font-size: 1rem
