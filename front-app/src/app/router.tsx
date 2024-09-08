@@ -7,6 +7,7 @@ import { Suspense } from 'react'
 import { PreLoaderGradient } from '../widgets/PreLoader/index'
 import { MainPage } from '../pages/mainpage'
 import { RequireAuth } from './RequireAuth'
+import { MapPage } from '../pages/mappage'
 
 export const router = createBrowserRouter(
 	[
@@ -49,7 +50,7 @@ export const router = createBrowserRouter(
 			children: [
 				{
 					path: 'map',
-					element: <h1>MAP</h1>,
+					element: <MapPage />,
 				},
 				{
 					path: 'sets',
