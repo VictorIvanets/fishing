@@ -18,11 +18,12 @@ const initialState: UserState = {
 export const getlogin = createAsyncThunk(
 	'auth/login',
 	async (params: { login: string; password: string }) => {
-		const { data } = await axios.post<LoginResponse>(`${PREFIX}auth/login`, {
+		const data = await axios.post<LoginResponse>(`${PREFIX}auth/login`, {
 			login: params.login,
 			password: params.password,
 		})
-		return data
+		console.log(data.status)
+		return data.data
 	},
 )
 
@@ -80,9 +81,6 @@ export const userSlice = createSlice({
 		},
 		clearLoginError: (state) => {
 			state.loginErrorMass = undefined
-		},
-		clearRegisterError: (state) => {
-			state.registerErrorMass = undefined
 		},
 	},
 

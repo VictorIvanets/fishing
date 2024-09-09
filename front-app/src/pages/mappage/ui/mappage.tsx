@@ -12,7 +12,7 @@ function MapPage() {
 	const [nameResult, setNameResult] = useState('')
 
 	const [newCoords, setNewCoords] = useState<LatLngTuple>()
-	const state = useSelector((s: RootState) => s.map)
+	const state = useSelector((s: RootState) => s.map.data)
 
 	useEffect(() => {
 		if (coords) {
@@ -25,6 +25,7 @@ function MapPage() {
 	}, [coords])
 
 	useEffect(() => {
+		console.log(state)
 		navigator.geolocation.getCurrentPosition(
 			(position) => {
 				setCoords(position)
@@ -36,6 +37,7 @@ function MapPage() {
 	}, [state])
 
 	function getCoords(e: any) {
+		console.log(e.target.dataset.setid)
 		setViewResult(true)
 		setNewCoords(undefined)
 		const coor = e.target.textContent.split(' | ')
@@ -54,13 +56,15 @@ function MapPage() {
 							url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 						/>
 						{viewResult ? (
-							<ResultMarkers
-								lat={newCoords[0]}
-								lng={newCoords[1]}
-								name={nameResult}
-							>
-								<h1>nameResult</h1>
-							</ResultMarkers>
+							[
+								<ResultMarkers
+									lat={newCoords[0]}
+									lng={newCoords[1]}
+									name={nameResult}
+								>
+									<h1>nameResult</h1>
+								</ResultMarkers>,
+							]
 						) : (
 							<LocationMarker />
 						)}
@@ -81,7 +85,7 @@ function MapPage() {
 				<div className="mappage__result__itembox">
 					{state
 						? state.map((i) => (
-								<div key={i.title} className="mappage__result__item">
+								<div key={i.setID} className="mappage__result__item">
 									<h2>Місце: {i.title}</h2>
 									<p>Дата: {i.date}</p>
 									<p>Що ловилося: {i.description}</p>
@@ -92,8 +96,9 @@ function MapPage() {
 										}}
 										className="resultbtn"
 									>
-										<p className="resultbtn__info">
-											{i.coords[0]} | {i.coords[1]} <br />| {i.title}
+										<p data-setid={i.setID} className="resultbtn__info">
+											{i.coords ? `${i.coords[0]} | ${i.coords[1]}` : ''} <br />
+											| {i.title}
 										</p>
 									</button>
 								</div>

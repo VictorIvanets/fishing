@@ -1,4 +1,4 @@
-import { FormEvent, useEffect } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { LoginForm } from './login.types'
 import { useDispatch, useSelector } from 'react-redux'
@@ -9,19 +9,34 @@ function Login() {
 	const navigate = useNavigate()
 	const dispatch = useDispatch<AppDispath>()
 	const { login, jwt, loginErrorMass } = useSelector((s: RootState) => s.user)
+	const [inputValue, setInputValue] = useState(false)
+	const [errorValue, setErrorValue] = useState('')
 
 	useEffect(() => {
+		if (loginErrorMass === 'Request failed with status code 401') {
+			setErrorValue('невірний логін або пароль')
+		}
+		if (loginErrorMass === 'Network Error') {
+			setErrorValue('сервер не відповідає')
+		}
+
+		console.log(loginErrorMass)
 		if (jwt) {
 			navigate(`/main/${login}`)
 		}
-	}, [jwt, navigate, login])
+	}, [jwt, navigate, login, loginErrorMass])
 
 	const submit = async (e: FormEvent) => {
 		e.preventDefault()
 		dispatch(userActions.clearLoginError())
 		const target = e.target as typeof e.target & LoginForm
 		const { login, password } = target
-		await sendLogin(login.value, password.value)
+		if (login.value.length > 2 && password.value.length > 2) {
+			setInputValue(false)
+			await sendLogin(login.value, password.value)
+		} else {
+			setInputValue(true)
+		}
 	}
 
 	const sendLogin = async (login: string, password: string) => {
@@ -40,9 +55,12 @@ function Login() {
 					placeholder="password"
 				/>
 				{loginErrorMass ? (
-					<p className="margin1 active roboto-bold">
-						невірний логін або пароль
-					</p>
+					<p className="margin1 active roboto-bold">{errorValue}</p>
+				) : (
+					''
+				)}
+				{inputValue ? (
+					<p className="margin1 active roboto-bold">заповніть всі поля</p>
 				) : (
 					''
 				)}

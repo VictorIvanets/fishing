@@ -3,10 +3,10 @@ import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import { Marker, Popup } from 'react-leaflet'
 // import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { AppDispath } from '../../../store/store'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispath, RootState } from '../../../store/store'
 import { fishingResultForm } from './map.types'
-import { mapActions } from '../../../store/map.slice'
+import { setSets } from '../../../store/map.slice'
 
 interface CustomMarkerProps {
 	position: L.LatLngLiteral
@@ -16,20 +16,22 @@ const CustomMarker: React.FC<CustomMarkerProps> = ({ position }) => {
 	// const navigate = useNavigate()
 	const dispatch = useDispatch<AppDispath>()
 	const [viewMarker, setViewMarker] = useState(true)
+	const { login } = useSelector((s: RootState) => s.user)
 
 	function onSubmit(e: FormEvent, lat: number, lng: number) {
 		e.preventDefault()
 		const target = e.target as typeof e.target & fishingResultForm
 		const { title, description, score, date } = target
 		if (title.value.length) {
-			// navigate(`/main/${login}/sets`)
 			dispatch(
-				mapActions.setFishing({
+				setSets({
 					title: title.value,
 					description: description.value,
 					score: score.value,
 					date: date.value,
 					coords: [lat, lng],
+					login: login,
+					setID: +(Math.random() * 100000).toFixed(),
 				}),
 			)
 			setViewMarker(false)
