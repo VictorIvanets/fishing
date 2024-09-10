@@ -5,7 +5,7 @@ import { LocationMarker, ResultMarkers } from './helpers/locationMarkers'
 import { LatLngExpression, LatLngTuple } from 'leaflet'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../../store/store'
-import { fetchDelState, fetchState } from './helpers/loadState'
+import { fetchAllState, fetchDelState, fetchState } from './helpers/loadState'
 import { MapResponse } from '../../../store/map.slice.types'
 import SetFishing from './setFishing.component'
 
@@ -18,6 +18,8 @@ function MapPage() {
 	const state = useSelector((s: RootState) => s.map.data)
 	const login = useSelector((s: RootState) => s.user.login)
 	const [deleteSet, setDeleteSet] = useState(false)
+	const [loadAllState, setloadAllState] = useState<MapResponse[]>([])
+	const [viewAllstate, setViewAllstate] = useState(false)
 
 	useEffect(() => {
 		if (login) {
@@ -32,6 +34,18 @@ function MapPage() {
 			})
 		}
 	}, [login, state, deleteSet])
+
+	useEffect(() => {
+		const data = fetchAllState()
+		data.then((a) => {
+			if (a && typeof a === 'object') {
+				setloadAllState(a)
+			}
+			if (a && typeof a === 'string') {
+				console.log(a)
+			}
+		})
+	}, [viewAllstate])
 
 	useEffect(() => {
 		if (coords) {
@@ -90,6 +104,15 @@ function MapPage() {
 								lng={newCoords[1]}
 								name={nameResult}
 							></ResultMarkers>
+						) : viewAllstate ? (
+							loadAllState.map((i) => (
+								<ResultMarkers
+									key={i.setID}
+									lat={i.coords[0]}
+									lng={i.coords[1]}
+									name={i.title}
+								></ResultMarkers>
+							))
 						) : (
 							<LocationMarker />
 						)}
@@ -101,11 +124,21 @@ function MapPage() {
 			<div className="mappage__result">
 				<button
 					onClick={() => {
+						setViewAllstate(false)
 						setViewResult(false)
 					}}
 					className="resultbtn"
 				>
 					повернутися до карти
+				</button>
+				<button
+					onClick={() => {
+						setViewAllstate(!viewAllstate)
+						setViewResult(false)
+					}}
+					className="resultbtn"
+				>
+					показати усі місця
 				</button>
 				<div className="mappage__result__itembox">
 					{loadState
@@ -115,6 +148,7 @@ function MapPage() {
 									i={i}
 									getCoords={getCoords}
 									delSet={delSet}
+									setViewAllstate={setViewAllstate}
 								/>
 						  ))
 						: ''}

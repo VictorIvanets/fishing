@@ -14,8 +14,9 @@ export class FishDto {
 	score: number
 	@IsString()
 	date: number
-
 	@IsArray()
 	@IsNumber()
 	coords: number[]
+	@IsString()
+	db: string
 }

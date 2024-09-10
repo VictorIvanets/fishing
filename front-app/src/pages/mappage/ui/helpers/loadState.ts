@@ -31,3 +31,20 @@ export async function fetchDelState(setId: string | number): Promise<string> {
 		return 'error'
 	}
 }
+
+export async function fetchAllState(): Promise<
+	string | Omit<MapResponse[], 'login'>
+> {
+	try {
+		const { data } = await axios.get<MapResponse[]>(
+			`${PREFIX}fishsets/all/database`,
+		)
+
+		return data
+	} catch (e) {
+		if (e instanceof AxiosError) {
+			return e.message
+		}
+		return 'error'
+	}
+}

@@ -17,11 +17,11 @@ export function LocationMarker() {
 
 export function ResultMarkers({ lat, lng, name }: any) {
 	const position = { lat, lng }
-	const map = useMapEvents({
-		click() {
-			map.flyTo(position, map.getZoom())
-		},
-	})
+	// const map = useMapEvents({
+	// 	click() {
+	// 		map.flyTo(position, map.getZoom())
+	// 	},
+	// })
 	return position === null ? null : (
 		<ResultMarker position={position} name={name} />
 	)

@@ -5,9 +5,15 @@ export interface setFishProps {
 	i: MapResponse
 	getCoords: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
 	delSet: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
+	setViewAllstate: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export function SetFishing({ i, getCoords, delSet }: setFishProps) {
+export function SetFishing({
+	i,
+	getCoords,
+	delSet,
+	setViewAllstate,
+}: setFishProps) {
 	const [viewDel, setViewDel] = useState(false)
 
 	return (
@@ -21,6 +27,7 @@ export function SetFishing({ i, getCoords, delSet }: setFishProps) {
 					<button
 						onClick={(e) => {
 							getCoords(e)
+							setViewAllstate(false)
 						}}
 						className="resultbtn"
 						data-setid={i.setID}

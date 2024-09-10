@@ -27,6 +27,25 @@ export class FishsetsController {
 	async getSets(@Param('login') login: string): Promise<object> {
 		return await this.fishService.findUserSets(login)
 	}
+
+	@HttpCode(200)
+	@Get('all/:db')
+	async getAllSets(@Param('db') db: string): Promise<object> {
+		const res = await this.fishService.findAllSets(db)
+		const output = res.map((i) => {
+			const news = {
+				title: i.title,
+				description: i.description,
+				score: i.score,
+				coords: i.coords,
+				date: i.date,
+				setID: i.setID,
+			}
+			return news
+		})
+		return output
+	}
+
 	@HttpCode(200)
 	@Delete(':id')
 	async delSet(@Param('id') id: string): Promise<string> {

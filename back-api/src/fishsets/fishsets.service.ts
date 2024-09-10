@@ -10,7 +10,7 @@ export class FishsetsService {
 		@InjectModel(FishModel) private readonly fishModel: ModelType<FishModel>,
 	) {}
 
-	async createSets(dto: FishDto): Promise<unknown> {
+	async createSets(dto: FishDto): Promise<FishModel> {
 		const newSets = new this.fishModel({
 			login: dto.login,
 			title: dto.title,
@@ -19,6 +19,7 @@ export class FishsetsService {
 			date: dto.date,
 			coords: dto.coords,
 			setID: dto.setID,
+			db: 'database',
 		})
 		console.log(newSets)
 		return newSets.save()
@@ -26,6 +27,10 @@ export class FishsetsService {
 
 	async findUserSets(login: string): Promise<FishModel[]> {
 		return this.fishModel.find({ login }).exec()
+	}
+
+	async findAllSets(db: string): Promise<Omit<FishModel[], 'login'>> {
+		return this.fishModel.find({ db }).exec()
 	}
 
 	async delById(setID: string = `0`): Promise<string> {
