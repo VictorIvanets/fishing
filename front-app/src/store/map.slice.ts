@@ -35,7 +35,11 @@ export const setSets = createAsyncThunk(
 export const mapSlice = createSlice({
 	name: 'map',
 	initialState,
-	reducers: {},
+	reducers: {
+		clearState: (state) => {
+			state.data = []
+		},
+	},
 
 	extraReducers: (builder) => {
 		builder.addCase(setSets.fulfilled, (state, actions) => {

@@ -28,8 +28,13 @@ export class FishsetsService {
 		return this.fishModel.find({ login }).exec()
 	}
 
-	async delById(setID: string): Promise<string> {
-		this.fishModel.findOneAndDelete({ setID }).exec()
-		return `delete: ${setID}`
+	async delById(setID: string = `0`): Promise<string> {
+		const res = this.fishModel.find({ setID }).exec()
+		if (res) {
+			this.fishModel.findOneAndDelete({ setID }).exec()
+			return `delete`
+		} else {
+			return `error delete`
+		}
 	}
 }

@@ -28,7 +28,7 @@
             color: $COLSECOND
         &__itembox
             width: 100%
-            height: 100%
+            height: 95%
             overflow: auto
             scrollbar: 0px
         &__itembox::-webkit-scrollbar
@@ -62,5 +62,30 @@
     width: 100%
     height: 3.5rem 
     font-size: 1.2rem
+    margin: 0.1rem
     &__info
         font-size: 1rem
+    &__btnbox
+        display: flex
+        position: relative
+.resultbtndel
+    width: 5rem
+    height: 3.5rem 
+    font-size: 1.4rem
+    margin: 0.1rem
+    
+    &:hover
+        background: #470101
+        color: #ff0404
+    &__confirm
+        width: 32rem
+        height: 13rem
+        background: #470000d8
+        position: absolute
+        z-index: 2
+        top: 0%
+        left: 50%
+        transform: translate(-50%, -64%)
+        display: flex
+        justify-content: space-around
+        align-items: center

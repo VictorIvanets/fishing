@@ -25,13 +25,11 @@ export class FishsetsController {
 	@HttpCode(200)
 	@Get(':login')
 	async getSets(@Param('login') login: string): Promise<object> {
-		const sets = await this.fishService.findUserSets(login)
-		return sets
+		return await this.fishService.findUserSets(login)
 	}
 	@HttpCode(200)
 	@Delete(':id')
 	async delSet(@Param('id') id: string): Promise<string> {
-		const set = await this.fishService.delById(id)
-		return set
+		return await this.fishService.delById(id)
 	}
 }

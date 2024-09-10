@@ -2,18 +2,16 @@ import { FormEvent, useEffect, useState } from 'react'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import { Marker, Popup } from 'react-leaflet'
-// import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispath, RootState } from '../../../store/store'
 import { fishingResultForm } from './map.types'
-import { setSets } from '../../../store/map.slice'
+import { mapActions, setSets } from '../../../store/map.slice'
 
 interface CustomMarkerProps {
 	position: L.LatLngLiteral
 }
 
 const CustomMarker: React.FC<CustomMarkerProps> = ({ position }) => {
-	// const navigate = useNavigate()
 	const dispatch = useDispatch<AppDispath>()
 	const [viewMarker, setViewMarker] = useState(true)
 	const { login } = useSelector((s: RootState) => s.user)
@@ -35,6 +33,7 @@ const CustomMarker: React.FC<CustomMarkerProps> = ({ position }) => {
 				}),
 			)
 			setViewMarker(false)
+			dispatch(mapActions.clearState())
 		}
 	}
 

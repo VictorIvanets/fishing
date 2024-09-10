@@ -19,8 +19,6 @@ function Login() {
 		if (loginErrorMass === 'Network Error') {
 			setErrorValue('сервер не відповідає')
 		}
-
-		console.log(loginErrorMass)
 		if (jwt) {
 			navigate(`/main/${login}`)
 		}
