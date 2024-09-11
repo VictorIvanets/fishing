@@ -26,7 +26,7 @@ function MapPage() {
 			const data = fetchState(login)
 			data.then((a) => {
 				if (a && typeof a === 'object') {
-					setloadState(a)
+					setloadState(a.reverse())
 				}
 				if (a && typeof a === 'string') {
 					console.log(a)

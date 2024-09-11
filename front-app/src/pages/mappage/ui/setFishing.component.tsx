@@ -47,23 +47,26 @@ export function SetFishing({
 						</button>
 					) : (
 						<div className="resultbtndel__confirm">
-							<button
-								onClick={(e) => {
-									delSet(e)
-									setViewDel(false)
-								}}
-								className="resultbtndel"
-								data-setid={i.setID}
-							>
-								видалити
-							</button>
-							<button
-								onClick={() => setViewDel(false)}
-								className="resultbtndel"
-								data-setid={i.setID}
-							>
-								відмінити
-							</button>
+							<h2>Ви дійсно хочете видалити?</h2>
+							<div className="resultbtndel__confirm__btn">
+								<button
+									onClick={(e) => {
+										delSet(e)
+										setViewDel(false)
+									}}
+									className="resultbtndel"
+									data-setid={i.setID}
+								>
+									так
+								</button>
+								<button
+									onClick={() => setViewDel(false)}
+									className="resultbtndel"
+									data-setid={i.setID}
+								>
+									відміна
+								</button>
+							</div>
 						</div>
 					)}
 				</div>
