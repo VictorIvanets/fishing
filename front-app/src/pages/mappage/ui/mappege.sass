@@ -1,7 +1,6 @@
 .mappage
     width: 100%
     height: 100%
-    overflow: hidden
     background: $COLMAIN
     display: flex
     flex-direction: row
@@ -15,20 +14,37 @@
         height: 100%
         @media (max-width: 720px) 
             width: 100%
+            height: 60%
     &__result
         height: 100%
         width: 30%
+        display: flex
+        flex-direction: column
+
         @media (max-width: 720px) 
             width: 100%
+            height: 40%
         &__item
             padding: 1rem
-            background: #0000002d
+            background: #0000007c
             border-radius: 0.3rem
             margin: 1rem
             color: $COLSECOND
+            line-height: 1.8rem
+            // letter-spacing: 0.1rem
+            text-align: justify
+            // font-family: "Roboto", sans-serif
+            // font-weight: 400
+            // font-style: normal
+            font-family: "Open Sans", sans-serif
+            font-optical-sizing: auto
+            font-weight: 400
+            font-style: normal
+
+
         &__itembox
             width: 100%
-            height: 90%
+            height: 100%
             overflow: auto
             scrollbar: 0px
         &__itembox::-webkit-scrollbar
@@ -95,3 +111,8 @@
             display: flex
             justify-content: space-around
             align-items: center
+.popupbox
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center

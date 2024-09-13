@@ -19,4 +19,6 @@ export class FishModel extends TimeStamps {
 	coords: number[]
 	@prop()
 	db: string
+	@prop({ type: () => [String] })
+	img: string[]
 }

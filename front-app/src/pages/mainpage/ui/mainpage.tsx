@@ -55,19 +55,20 @@ function MainPage() {
 				<div className="mainpage__navbar__left">
 					<Link
 						onClick={() => setLink(true)}
-						className="light tacenter roboto-bold"
+						className="mainpage__navbar__left__link tacenter"
 						to={`/main/${login}/map`}
 					>
 						карта
 					</Link>
 					<Link
 						onClick={() => setLink(true)}
-						className="light tacenter roboto-bold"
-						to={`/main/${login}/sets`}
+						className="mainpage__navbar__left__link tacenter"
+						to={`/main/${login}/map`}
 					>
-						рибалки
+						про сайт
 					</Link>
 				</div>
+
 				<div className="mainpage__navbar__right">
 					<div className="mainpage__userinfo">
 						<h3 className="colorLight roboto-medium">
@@ -78,7 +79,12 @@ function MainPage() {
 							{data?.city} {data?.country}
 						</h3>
 					</div>
-					<button onClick={logOut}>Вийти</button>
+					<button
+						className="mainpage__navbar__left__link tacenter"
+						onClick={logOut}
+					>
+						Вийти
+					</button>
 				</div>
 			</div>
 		</div>

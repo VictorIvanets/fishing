@@ -17,6 +17,7 @@ export interface MapResponse {
 	coords: Coords
 	setID: number
 	login: string
+	img: string[]
 }
 
 export interface InitState {

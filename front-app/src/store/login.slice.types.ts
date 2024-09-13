@@ -56,3 +56,4 @@ export interface RegisterResponse {
 }
 
 export const PREFIX = 'http://localhost:5550/api/'
+export const PREFIX_STATIC = 'http://localhost:5550/'

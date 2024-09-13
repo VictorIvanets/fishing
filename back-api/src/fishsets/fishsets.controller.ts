@@ -40,6 +40,7 @@ export class FishsetsController {
 				coords: i.coords,
 				date: i.date,
 				setID: i.setID,
+				img: i.img,
 			}
 			return news
 		})
@@ -50,5 +51,23 @@ export class FishsetsController {
 	@Delete(':id')
 	async delSet(@Param('id') id: string): Promise<string> {
 		return await this.fishService.delById(id)
+	}
+
+	@HttpCode(200)
+	@Get('onesets/:id')
+	async getSetsById(@Param('id') id: string): Promise<object> {
+		const { title, description, score, coords, date, setID, img } =
+			await this.fishService.getSetsById(id)
+		const output = {
+			title: title,
+			description: description,
+			score: score,
+			coords: coords,
+			date: date,
+			setID: setID,
+			img: img,
+		}
+
+		return output
 	}
 }
