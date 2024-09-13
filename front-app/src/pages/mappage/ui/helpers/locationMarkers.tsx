@@ -15,14 +15,10 @@ export function LocationMarker() {
 	return position === null ? null : <CustomMarker position={position} />
 }
 
-export function ResultMarkers({ lat, lng, name }: any) {
+export function ResultMarkers({ lat, lng, name, setId }: any) {
 	const position = { lat, lng }
-	// const map = useMapEvents({
-	// 	click() {
-	// 		map.flyTo(position, map.getZoom())
-	// 	},
-	// })
+
 	return position === null ? null : (
-		<ResultMarker position={position} name={name} />
+		<ResultMarker position={position} name={name} setId={setId} />
 	)
 }

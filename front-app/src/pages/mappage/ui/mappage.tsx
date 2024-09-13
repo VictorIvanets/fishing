@@ -13,6 +13,7 @@ function MapPage() {
 	const [coords, setCoords] = useState<GeolocationPosition>()
 	const [viewResult, setViewResult] = useState(false)
 	const [nameResult, setNameResult] = useState('')
+	const [idResult, setIdResult] = useState('')
 	const [loadState, setloadState] = useState<MapResponse[]>([])
 	const [newCoords, setNewCoords] = useState<LatLngTuple>()
 	const state = useSelector((s: RootState) => s.map.data)
@@ -86,6 +87,7 @@ function MapPage() {
 			setTimeout(() => {
 				setNewCoords([+coor[0], +coor[1]])
 				setNameResult(e.target.dataset.name)
+				setIdResult(e.target.dataset.setid)
 			}, 50)
 		}
 	}
@@ -103,6 +105,7 @@ function MapPage() {
 								lat={newCoords[0]}
 								lng={newCoords[1]}
 								name={nameResult}
+								setId={idResult}
 							></ResultMarkers>
 						) : viewAllstate ? (
 							loadAllState.map((i) => (
@@ -111,6 +114,7 @@ function MapPage() {
 									lat={i.coords[0]}
 									lng={i.coords[1]}
 									name={i.title}
+									setId={i.setID}
 								></ResultMarkers>
 							))
 						) : (

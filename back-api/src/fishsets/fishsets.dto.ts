@@ -19,4 +19,7 @@ export class FishDto {
 	coords: number[]
 	@IsString()
 	db: string
+	@IsString()
+	@IsArray()
+	img: string[]
 }

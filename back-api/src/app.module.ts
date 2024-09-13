@@ -8,6 +8,7 @@ import { getMongoConfig } from './config/mongo-config'
 import { FishsetsController } from './fishsets/fishsets.controller'
 import { FishsetsService } from './fishsets/fishsets.service'
 import { FishsetsModule } from './fishsets/fishsets.module'
+import { FotosetModule } from './fotoset/fotoset.module';
 
 @Module({
 	imports: [
@@ -19,6 +20,7 @@ import { FishsetsModule } from './fishsets/fishsets.module'
 		}),
 		AuthModule,
 		FishsetsModule,
+		FotosetModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],

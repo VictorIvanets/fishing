@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { MapResponse } from '../../../store/map.slice.types'
+import { Link } from 'react-router-dom'
 
 export interface setFishProps {
 	i: MapResponse
@@ -19,10 +20,13 @@ export function SetFishing({
 	return (
 		<>
 			<div key={i.setID} className="mappage__result__item">
-				<h2>Місце: {i.title}</h2>
-				<p>Дата: {i.date}</p>
-				<p>Що ловилося: {i.description}</p>
-				<p>Оцінка: {i.score}</p>
+				<Link to={`/main/${i.login}/sets/${i.setID}`}>
+					<h2 className="marginbottom1 white">Місце: {i.title}</h2>
+					<p>Дата: {i.date}</p>
+					<p>Що ловилося: {i.description}</p>
+					<p>Оцінка: {i.score}</p>
+				</Link>
+
 				<div className="resultbtn__btnbox">
 					<button
 						onClick={(e) => {

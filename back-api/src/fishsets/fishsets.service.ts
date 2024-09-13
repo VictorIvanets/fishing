@@ -20,6 +20,7 @@ export class FishsetsService {
 			coords: dto.coords,
 			setID: dto.setID,
 			db: 'database',
+			img: [],
 		})
 		console.log(newSets)
 		return newSets.save()
@@ -41,5 +42,9 @@ export class FishsetsService {
 		} else {
 			return `error delete`
 		}
+	}
+
+	async getSetsById(setID: string): Promise<FishModel> {
+		return this.fishModel.findOne({ setID }).exec()
 	}
 }

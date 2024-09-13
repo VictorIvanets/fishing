@@ -8,6 +8,7 @@ import { PreLoaderGradient } from '../widgets/PreLoader/index'
 import { MainPage } from '../pages/mainpage'
 import { RequireAuth } from './RequireAuth'
 import { MapPage } from '../pages/mappage'
+import { SetsPage } from '../components/setspage'
 
 export const router = createBrowserRouter(
 	[
@@ -53,8 +54,8 @@ export const router = createBrowserRouter(
 					element: <MapPage />,
 				},
 				{
-					path: 'sets',
-					element: <h1>SETS</h1>,
+					path: 'sets/:id',
+					element: <SetsPage />,
 				},
 			],
 		},
