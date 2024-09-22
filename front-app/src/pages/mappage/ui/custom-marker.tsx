@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { AppDispath, RootState } from '../../../store/store'
 import { fishingResultForm } from './map.types'
 import { mapActions, setSets } from '../../../store/map.slice'
+import marker from '/markeradd.svg'
 
 interface CustomMarkerProps {
 	position: L.LatLngLiteral
@@ -15,6 +16,14 @@ const CustomMarker: React.FC<CustomMarkerProps> = ({ position }) => {
 	const dispatch = useDispatch<AppDispath>()
 	const [viewMarker, setViewMarker] = useState(true)
 	const { login } = useSelector((s: RootState) => s.user)
+
+	const markerIconConst = L.icon({
+		iconUrl: marker,
+		iconRetinaUrl: marker,
+		iconAnchor: [5, 55],
+		popupAnchor: [10, -44],
+		iconSize: [30, 60],
+	})
 
 	function onSubmit(e: FormEvent, lat: number, lng: number) {
 		e.preventDefault()
@@ -42,7 +51,7 @@ const CustomMarker: React.FC<CustomMarkerProps> = ({ position }) => {
 	}, [position])
 
 	return (
-		<Marker position={position}>
+		<Marker position={position} icon={markerIconConst}>
 			{viewMarker ? (
 				<Popup className="popup">
 					{position ? (
@@ -68,7 +77,7 @@ const CustomMarker: React.FC<CustomMarkerProps> = ({ position }) => {
 										max="10"
 									/>
 								</div>
-								<button>submit</button>
+								<button>Додати</button>
 							</form>
 						</>
 					) : (

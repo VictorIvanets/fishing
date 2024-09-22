@@ -13,6 +13,7 @@ function SetsPage() {
 	const [viewloadFoto, setviewloadFoto] = useState(false)
 	const [files, setFiles] = useState<any>([])
 	const [uploadedFiles, setUploadedFiles] = useState(false)
+	const [nameFiles, setNameFiles] = useState('Вибрати фото')
 
 	useEffect(() => {
 		const data = getSetsById(id)
@@ -28,29 +29,40 @@ function SetsPage() {
 
 	function handleMultipleChange(event: any) {
 		setFiles([...event.target.files])
+		const nameFiale = [...event.target.files]
+
+		nameFiale.forEach((file: any) => {
+			const onefile = file.name
+			const nameFile = onefile.split('.')
+
+			setNameFiles(nameFile[0])
+		})
 	}
 	async function handleMultipleSubmit(e: any) {
 		e.preventDefault()
 		const formData = new FormData()
-		files.forEach((file: any) => {
-			formData.append('files', file, file.name)
-		})
-		const config = {
-			headers: {
-				'content-type': 'multipart/form-data',
-			},
-		}
+		if (files) {
+			files.forEach((file: any) => {
+				formData.append('files', file, file.name)
+			})
+			const config = {
+				headers: {
+					'content-type': 'multipart/form-data',
+				},
+			}
 
-		axios
-			.post(`${PREFIX}fotoset/upload/${load?.setID}`, formData, config)
-			.then((response) => {
-				setUploadedFiles(!uploadedFiles)
-				console.log(response.data[0].name)
-				setviewloadFoto(false)
-			})
-			.catch((error) => {
-				console.error('Error uploading files: ', error)
-			})
+			axios
+				.post(`${PREFIX}fotoset/upload/${load?.setID}`, formData, config)
+				.then((response) => {
+					setUploadedFiles(!uploadedFiles)
+					console.log(response.data[0].name)
+					setviewloadFoto(false)
+				})
+				.catch((error) => {
+					console.error('Error uploading files: ', error)
+				})
+			setFiles([])
+		}
 	}
 
 	return (
@@ -89,27 +101,44 @@ function SetsPage() {
 						<div className="loadimg">
 							<h2
 								className="loadimg__head"
-								onClick={() => setviewloadFoto(!viewloadFoto)}
+								onClick={() => {
+									setviewloadFoto(!viewloadFoto)
+									setNameFiles('Вибрати фото')
+								}}
 							>
 								{!viewloadFoto ? 'Завантажити фото' : 'приховати'}
 							</h2>
 							{viewloadFoto ? (
-								<form onSubmit={handleMultipleSubmit} className="loadimg__form">
-									<label htmlFor="upload" className="loadimg__label">
-										Вибрати фото
-									</label>
-									<input
-										className="loadimg__input"
-										name="upload"
-										id="upload"
-										type="file"
-										multiple
-										onChange={handleMultipleChange}
-									/>
-									<button className="loadimg__btn" type="submit">
-										Upload
+								<>
+									<form
+										onSubmit={handleMultipleSubmit}
+										className="loadimg__form"
+									>
+										<label htmlFor="upload" className="loadimg__label">
+											<p>{nameFiles}</p>
+										</label>
+										<input
+											className="loadimg__input"
+											name="upload"
+											id="upload"
+											type="file"
+											multiple
+											onChange={handleMultipleChange}
+										/>
+										<button className="loadimg__btn" type="submit">
+											завантажити
+										</button>
+									</form>
+									<button
+										onClick={() => {
+											setNameFiles('Вибрати фото')
+											setFiles([])
+										}}
+										className="loadimg__btncansel"
+									>
+										відмінти
 									</button>
-								</form>
+								</>
 							) : (
 								''
 							)}

@@ -21,6 +21,7 @@ function MapPage() {
 	const [deleteSet, setDeleteSet] = useState(false)
 	const [loadAllState, setloadAllState] = useState<MapResponse[]>([])
 	const [viewAllstate, setViewAllstate] = useState(false)
+	const [viewResetAllset, setViewResetAllset] = useState(false)
 
 	useEffect(() => {
 		if (login) {
@@ -126,24 +127,29 @@ function MapPage() {
 				)}
 			</div>
 			<div className="mappage__result">
-				<button
-					onClick={() => {
-						setViewAllstate(false)
-						setViewResult(false)
-					}}
-					className="resultbtn"
-				>
-					повернутися до карти
-				</button>
-				<button
-					onClick={() => {
-						setViewAllstate(!viewAllstate)
-						setViewResult(false)
-					}}
-					className="resultbtn"
-				>
-					показати усі місця
-				</button>
+				{viewResetAllset ? (
+					<button
+						onClick={() => {
+							setViewAllstate(false)
+							setViewResult(false)
+							setViewResetAllset(false)
+						}}
+						className="resultbtn"
+					>
+						повернутися до вибору на карті
+					</button>
+				) : (
+					<button
+						onClick={() => {
+							setViewAllstate(!viewAllstate)
+							setViewResult(false)
+							setViewResetAllset(true)
+						}}
+						className="resultbtn"
+					>
+						показати усі місця
+					</button>
+				)}
 				<div className="mappage__result__itembox">
 					{loadState
 						? loadState.map((i) => (

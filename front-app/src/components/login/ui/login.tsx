@@ -4,11 +4,14 @@ import { LoginForm } from './login.types'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispath, RootState } from '../../../store/store'
 import { getlogin, userActions } from '../../../store/login.slice'
+import { PreLoaderAPI } from '../../../widgets/PreLoader/ui/Preloader'
 
 function Login() {
 	const navigate = useNavigate()
 	const dispatch = useDispatch<AppDispath>()
-	const { login, jwt, loginErrorMass } = useSelector((s: RootState) => s.user)
+	const { login, jwt, loginErrorMass, isLoading } = useSelector(
+		(s: RootState) => s.user,
+	)
 	const [inputValue, setInputValue] = useState(false)
 	const [errorValue, setErrorValue] = useState('')
 
@@ -44,26 +47,40 @@ function Login() {
 	return (
 		<div className="loginpage">
 			<h2 className="roboto-thin colorLight"> вхід </h2>
-			<form onSubmit={submit}>
-				<input name="login" id="login" placeholder="login" type="text" />
-				<input
-					name="password"
-					type="password"
-					id="password"
-					placeholder="password"
-				/>
-				{loginErrorMass ? (
-					<p className="margin1 active roboto-bold">{errorValue}</p>
-				) : (
-					''
-				)}
-				{inputValue ? (
-					<p className="margin1 active roboto-bold">заповніть всі поля</p>
-				) : (
-					''
-				)}
-				<button>Вхід</button>
-			</form>
+
+			{!isLoading ? (
+				<form onSubmit={submit}>
+					<input name="login" id="login" placeholder="login" type="text" />
+					<input
+						name="password"
+						type="password"
+						id="password"
+						placeholder="password"
+					/>
+					{loginErrorMass ? (
+						<p className="margin1 active roboto-bold">{errorValue}</p>
+					) : (
+						''
+					)}
+					{inputValue ? (
+						<p className="margin1 active roboto-bold">заповніть всі поля</p>
+					) : (
+						''
+					)}
+					<button>Вхід</button>
+				</form>
+			) : (
+				<div className="loginpage__load">
+					<button
+						onClick={() => dispatch(userActions.isLoadingFalse(false))}
+						className="loginpage__loadbtn"
+					>
+						ВІДМІНА
+					</button>
+					<PreLoaderAPI />
+				</div>
+			)}
+
 			<Link className="light roboto-regular" to="/register">
 				зареєструйтеся
 			</Link>

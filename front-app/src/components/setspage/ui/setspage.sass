@@ -67,24 +67,39 @@
         position: relative
         background: #004049
         border: 1px solid #007e73
-        border-radius: 1rem 0 1rem 0
+        border-radius: 0.3rem
         padding: 1rem
-        width: 10rem
+        width: 90%
         cursor: pointer
         text-align: center
-        z-index: 2
+        z-index: 3
         &:hover
             background: #002f35
     &__btn
         position: relative
-        top: -7px
-        background: #004049b9
+        top: -3px
+        background: #004049
         border: 1px solid #007e73
-        border-radius: 1rem 0 1rem 0
+        border-radius: 0.3rem
         padding: 1rem
-        width: 10rem
+        width: 90%
+        height: 4rem
         cursor: pointer
         text-align: center
+        z-index: 2
+        &:hover
+            background: #73a2a8
+    &__btncansel
+        position: relative
+        top: -31px
+        background: #004049
+        border: 1px solid #007e73
+        border-radius: 0.3rem
+        padding: 1rem
+        width: 90%
+        cursor: pointer
+        text-align: center
+        z-index: 1
         &:hover
             background: #73a2a8
 
@@ -95,15 +110,27 @@
     display: flex
     justify-content: center
     align-items: center
-    &__picbox
-        height: 95%
-        width: 95%
+    &__item
+        width: 100%
+        // height: 70vh
+        padding: 1rem
         @media (max-width: 720px)
-            width: 95% 
-            height: auto 
+            padding: 0
+    &__picbox
+        height: 100%
+        width: 100%
+        display: flex
+        justify-content: center
+        align-items: center
+        @media (max-width: 720px)
+            // width: 95% 
+            height: 100%  
     &__img
         height: 100%
+
+        // width: auto
         @media (max-width: 720px)
+            height: max-content
             width: 100%
 
 .swiperbox
@@ -115,3 +142,9 @@
         width: 100%
 
 
+.swiper-wrapper
+    height: 100%
+    align-items: center
+    @media (max-width: 720px)
+        height: none
+        align-items: center

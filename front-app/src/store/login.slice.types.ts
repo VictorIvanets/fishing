@@ -7,6 +7,7 @@ export interface UserState {
 	login?: string | null
 	registerErrorMass?: string
 	errorMassege?: string | null
+	isLoading: boolean
 }
 
 export interface UserRegisterState {
@@ -55,5 +56,8 @@ export interface RegisterResponse {
 	img: string
 }
 
-export const PREFIX = 'http://localhost:5550/api/'
-export const PREFIX_STATIC = 'http://localhost:5550/'
+// export const PREFIX = 'http://localhost:5550/api/'
+// export const PREFIX_STATIC = 'http://localhost:5550/'
+
+export const PREFIX = 'https://fishapi.onrender.com/api/'
+export const PREFIX_STATIC = 'https://fishapi.onrender.com/'

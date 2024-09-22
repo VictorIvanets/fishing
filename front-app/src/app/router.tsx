@@ -9,6 +9,8 @@ import { MainPage } from '../pages/mainpage'
 import { RequireAuth } from './RequireAuth'
 import { MapPage } from '../pages/mappage'
 import { SetsPage } from '../components/setspage'
+import { AboutPage } from '../pages/aboutpage'
+import { Rules } from '../components/rules'
 
 export const router = createBrowserRouter(
 	[
@@ -40,6 +42,15 @@ export const router = createBrowserRouter(
 		},
 
 		{
+			path: '/rules',
+			element: (
+				<Suspense fallback={<PreLoaderGradient />}>
+					<Rules />
+				</Suspense>
+			),
+		},
+
+		{
 			path: '/main/:login',
 			element: (
 				<RequireAuth>
@@ -57,6 +68,10 @@ export const router = createBrowserRouter(
 					path: 'sets/:id',
 					element: <SetsPage />,
 				},
+				{
+					path: 'about',
+					element: <AboutPage />,
+				},
 			],
 		},
 		{
@@ -68,5 +83,5 @@ export const router = createBrowserRouter(
 			),
 		},
 	],
-	// { basename: '/' },
+	{ basename: '/fishapp' },
 )

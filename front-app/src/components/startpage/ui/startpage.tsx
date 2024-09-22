@@ -9,15 +9,16 @@ function AuthLayout() {
 
 	return (
 		<div className="startpage">
-			<div className="startpage__fon">
-				<img className="startpage__fon__img" src="./fon.jpg" alt="" />
-			</div>
 			<div className="startpage__info">
 				<div className="startpage__info__logo">
-					<img src="./logo.png" alt="" />
+					<img src="../fishapp/logo.png" alt="" />
 				</div>
-				<h1 className="roboto-thin colorLight">MY FISHING</h1>
+				<h1 className="cyrillicextrabold colorLight">MY FISHING</h1>
+				<Link className="light tacenter roboto-light" to={`/rules`}>
+					<p>правила користування</p>
+				</Link>
 			</div>
+
 			<div className="startpage__auth">
 				{!viewLogin ? (
 					!jwt ? (
@@ -25,7 +26,6 @@ function AuthLayout() {
 							onClick={() => setViewLogin(true)}
 							className="light tacenter roboto-regular"
 							to={`/login`}
-							// to={stageJwt ? `/login` : `/main/:${stageLogin}`}
 						>
 							Щоб продовжити, <br /> увійдіть у свій кабінет <br /> <br /> Вхід
 						</Link>

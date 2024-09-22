@@ -13,6 +13,7 @@ import axios from 'axios'
 const initialState: UserState = {
 	jwt: loadState<UserPerSate>(JWT_PER_STATE)?.jwt ?? null,
 	login: loadState<UserPerSate>(LOG_PER_STATE)?.login ?? null,
+	isLoading: false,
 }
 
 export const getlogin = createAsyncThunk(
@@ -37,16 +38,26 @@ export const userSlice = createSlice({
 		clearLoginError: (state) => {
 			state.loginErrorMass = undefined
 		},
+		isLoadingFalse: (state, action) => {
+			state.isLoading = action.payload
+		},
 	},
 
 	extraReducers: (builder) => {
+		builder.addCase(getlogin.pending, (state) => {
+			state.loginErrorMass = undefined
+			state.isLoading = true
+		})
+
 		builder.addCase(getlogin.fulfilled, (state, actions) => {
 			state.jwt = actions.payload.access_token
 			state.login = actions.payload.login
+			state.isLoading = false
 		})
 
 		builder.addCase(getlogin.rejected, (state, action) => {
 			state.loginErrorMass = action.error.message
+			state.isLoading = false
 		})
 	},
 })

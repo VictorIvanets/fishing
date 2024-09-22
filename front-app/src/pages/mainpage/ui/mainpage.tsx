@@ -34,9 +34,6 @@ function MainPage() {
 
 	return (
 		<div className="mainpage">
-			<div className="mainpage__fon">
-				<img className="mainpage__fon__img" src="../fon.jpg" alt="" />
-			</div>
 			<div className="mainpage__outlet">
 				{link ? (
 					<Outlet />
@@ -58,12 +55,12 @@ function MainPage() {
 						className="mainpage__navbar__left__link tacenter"
 						to={`/main/${login}/map`}
 					>
-						карта
+						до карти
 					</Link>
 					<Link
 						onClick={() => setLink(true)}
 						className="mainpage__navbar__left__link tacenter"
-						to={`/main/${login}/map`}
+						to={`/main/${login}/about`}
 					>
 						про сайт
 					</Link>
@@ -74,10 +71,8 @@ function MainPage() {
 						<h3 className="colorLight roboto-medium">
 							{data?.name} {data?.subname}
 						</h3>
-						<h3 className="colorLight roboto-medium">{data?.age} років</h3>
-						<h3 className="colorLight roboto-medium">
-							{data?.city} {data?.country}
-						</h3>
+						<h3 className="colorLight roboto-medium">{data?.city}</h3>
+						<h3 className="colorLight roboto-medium">{data?.country}</h3>
 					</div>
 					<button
 						className="mainpage__navbar__left__link tacenter"
