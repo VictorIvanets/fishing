@@ -8,6 +8,7 @@ function AboutPage() {
 			</div>
 			<div className="aboutpage__text">
 				<h2>ПРО ПРОЄКТ</h2>
+				<br />
 				<p>
 					Додаток створено у навчальних цілях. <br />
 					API розташовано на платформі render.com, <br />

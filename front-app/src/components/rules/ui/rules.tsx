@@ -7,6 +7,7 @@ function Rules() {
 		<div className="rulespage">
 			<div className="rules">
 				<h2 className="tacenter">ПРАВИЛА КОРИТСУВАННЯ</h2>
+				<br />
 				<ul>
 					<li>
 						Зареєструйтеся. (Важливий лише логін та пароль, усе інше у довільній

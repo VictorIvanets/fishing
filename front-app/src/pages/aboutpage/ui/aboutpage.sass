@@ -1,8 +1,8 @@
 .aboutpage
     width: 100%
-    height: 100%
+    height: calc( 100vh - 10rem )
     padding: 1rem
-    background: #00222786
+    background: #0022279f
     display: flex
     flex-direction: row
     flex-wrap: wrap
@@ -10,11 +10,23 @@
     @media (max-width: 720px) 
         flex-direction: column 
         flex-wrap: nowrap
+    @media (max-width: 840px) 
+        overflow: auto
+        scrollbar: 0px
+    .aboutpage::-webkit-scrollbar
+        width: 7px
+    .aboutpage::-webkit-scrollbar-thumb
+        width: 7px
+        background: $COLSECOND
+
+
+
 
     &__text
         padding: 1rem
+        padding-top: 2rem
         width: 40%
-        height: 100%
+        height: max-content
     
         @media (max-width: 720px) 
             width: 100%
@@ -23,7 +35,7 @@
         padding: 1rem
         padding-left: 2rem
         width: 60%
-        height: 100%
+        height: max-content
         display: flex
         flex-direction: column
         ul
@@ -32,4 +44,5 @@
             line-height: 1.8rem
         @media (max-width: 720px) 
             width: 100%
+            padding-left: 0rem
             
