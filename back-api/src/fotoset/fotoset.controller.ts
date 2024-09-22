@@ -25,18 +25,20 @@ export class FotosetController {
 		@UploadedFile() file: Express.Multer.File,
 		@Param('folder') folder: string,
 	): Promise<FileElemResponse[]> {
-		console.log('upload', file)
-		const saveArr: MFile[] = []
-		// const saveArr: MFile[] = [new MFile(file)]
-		if (file.mimetype.includes('image')) {
-			const buffer = await this.fotosetService.convertToWebp(file.buffer)
-			saveArr.push(
-				new MFile({
-					originalname: `${file.originalname.split('.')[0]}.webp`,
-					buffer,
-				}),
-			)
+		if (file) {
+			console.log('upload', file)
+			const saveArr: MFile[] = []
+			// const saveArr: MFile[] = [new MFile(file)]
+			if (file.mimetype.includes('image')) {
+				const buffer = await this.fotosetService.convertToWebp(file.buffer)
+				saveArr.push(
+					new MFile({
+						originalname: `${file.originalname.split('.')[0]}.webp`,
+						buffer,
+					}),
+				)
+			}
+			return this.fotosetService.saveFoto(saveArr, folder)
 		}
-		return this.fotosetService.saveFoto(saveArr, folder)
 	}
 }
