@@ -7,6 +7,7 @@ import { AppDispath, RootState } from '../../../store/store'
 import { fishingResultForm } from './map.types'
 import { mapActions, setSets } from '../../../store/map.slice'
 import marker from '/markeradd.svg'
+import { getWeatherApi } from './helpers/getWeather'
 
 interface CustomMarkerProps {
 	position: L.LatLngLiteral
@@ -25,11 +26,12 @@ const CustomMarker: React.FC<CustomMarkerProps> = ({ position }) => {
 		iconSize: [30, 60],
 	})
 
-	function onSubmit(e: FormEvent, lat: number, lng: number) {
+	async function onSubmit(e: FormEvent, lat: number, lng: number) {
 		e.preventDefault()
 		const target = e.target as typeof e.target & fishingResultForm
 		const { title, description, score, date } = target
-		if (title.value.length) {
+		const weather = await getWeatherApi(lat, lng)
+		if (title.value.length && weather) {
 			dispatch(
 				setSets({
 					title: title.value,
@@ -39,6 +41,7 @@ const CustomMarker: React.FC<CustomMarkerProps> = ({ position }) => {
 					coords: [lat, lng],
 					login: login,
 					setID: +(Math.random() * 100000).toFixed(),
+					weather: weather,
 				}),
 			)
 			setViewMarker(false)

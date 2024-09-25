@@ -21,4 +21,6 @@ export class FishModel extends TimeStamps {
 	db: string
 	@prop({ type: () => [String] })
 	img: string[]
+	@prop({ type: () => [Object] })
+	weather: object[]
 }

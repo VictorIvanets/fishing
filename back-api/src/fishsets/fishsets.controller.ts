@@ -41,6 +41,7 @@ export class FishsetsController {
 				date: i.date,
 				setID: i.setID,
 				img: i.img,
+				weather: i.weather,
 			}
 			return news
 		})
@@ -56,9 +57,19 @@ export class FishsetsController {
 	@HttpCode(200)
 	@Get('onesets/:id')
 	async getSetsById(@Param('id') id: string): Promise<object> {
-		const { title, description, score, coords, date, setID, img } =
-			await this.fishService.getSetsById(id)
+		const {
+			title,
+			description,
+			score,
+			coords,
+			date,
+			setID,
+			img,
+			login,
+			weather,
+		} = await this.fishService.getSetsById(id)
 		const output = {
+			login: login,
 			title: title,
 			description: description,
 			score: score,
@@ -66,6 +77,7 @@ export class FishsetsController {
 			date: date,
 			setID: setID,
 			img: img,
+			weather: weather,
 		}
 
 		return output

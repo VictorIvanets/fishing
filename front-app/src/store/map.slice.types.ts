@@ -18,6 +18,7 @@ export interface MapResponse {
 	setID: number
 	login: string
 	img: string[]
+	weather: object[] | string
 }
 
 export interface InitState {

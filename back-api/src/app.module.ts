@@ -9,6 +9,7 @@ import { FishsetsController } from './fishsets/fishsets.controller'
 import { FishsetsService } from './fishsets/fishsets.service'
 import { FishsetsModule } from './fishsets/fishsets.module'
 import { FotosetModule } from './fotoset/fotoset.module'
+import { CommentModule } from './comment/comment.module'
 
 @Module({
 	imports: [
@@ -21,6 +22,7 @@ import { FotosetModule } from './fotoset/fotoset.module'
 		AuthModule,
 		FishsetsModule,
 		FotosetModule,
+		CommentModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],

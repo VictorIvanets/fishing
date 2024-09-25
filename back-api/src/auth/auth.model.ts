@@ -16,13 +16,7 @@ export class AuthModel extends TimeStamps {
 	@prop()
 	subname: string
 	@prop()
-	age: number
-	@prop()
-	sex: Sex
-	@prop()
 	country: string
 	@prop()
 	city: string
-	@prop()
-	img?: string
 }

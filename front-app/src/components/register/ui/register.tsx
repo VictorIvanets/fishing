@@ -22,18 +22,14 @@ function Register() {
 	const submit = async (e: FormEvent) => {
 		e.preventDefault()
 		const target = e.target as typeof e.target & RegisterForm
-		const { login, password, name, subname, age, sex, country, city, img } =
-			target
+		const { login, password, name, subname, country, city } = target
 		if (
 			login.value.length &&
 			password.value.length &&
 			name.value.length &&
 			subname.value.length &&
-			age.value > 10 &&
-			sex.value.length &&
 			country.value.length &&
-			city.value.length &&
-			img.value.length
+			city.value.length
 		) {
 			setValid('')
 			await sendLogin(
@@ -41,11 +37,8 @@ function Register() {
 				password.value,
 				name.value,
 				subname.value,
-				age.value,
-				sex.value,
 				country.value,
 				city.value,
-				img.value,
 			)
 		} else {
 			setValid('не всі поля заповнені')
@@ -56,11 +49,8 @@ function Register() {
 		password: string,
 		name: string,
 		subname: string,
-		age: number,
-		sex: string,
 		country: string,
 		city: string,
-		img: string,
 	) => {
 		dispatch(
 			register({
@@ -68,11 +58,8 @@ function Register() {
 				password,
 				name,
 				subname,
-				age,
-				sex,
 				country,
 				city,
-				img,
 			}),
 		)
 	}
@@ -86,11 +73,8 @@ function Register() {
 				<input placeholder="password" name="password" type="text" />
 				<input placeholder="name" name="name" type="text" />
 				<input placeholder="subname" name="subname" type="text" />
-				<input placeholder="age" name="age" type="text" />
-				<input placeholder="sex" name="sex" type="text" />
 				<input placeholder="country" name="country" type="text" />
 				<input placeholder="city" name="city" type="text" />
-				<input placeholder="img" name="img" type="text" />
 				{valid ? <p className="margin1 active roboto-bold">{valid}</p> : ''}
 				<button>зареєструвати</button>
 			</form>

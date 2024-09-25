@@ -18,6 +18,7 @@ export const setSets = createAsyncThunk(
 		coords: Coords
 		setID: number
 		login: string | undefined | null
+		weather: object[] | string
 	}) => {
 		const { data } = await axios.post<MapResponse>(`${PREFIX}fishsets/sets`, {
 			login: params.login,
@@ -27,6 +28,7 @@ export const setSets = createAsyncThunk(
 			date: params.date,
 			coords: params.coords,
 			setID: +params.setID,
+			weather: params.weather,
 		})
 		return data
 	},

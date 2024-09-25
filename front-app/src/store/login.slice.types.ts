@@ -15,11 +15,8 @@ export interface UserRegisterState {
 	password: string | null
 	name: string | null
 	subname: string | null
-	age: number | null
-	sex: string | null
 	country: string | null
 	city: string | null
-	img: string | null
 	loginErrorMass?: string
 	registerErrorMass?: string
 	errorMassege?: string | null
@@ -49,15 +46,12 @@ export interface RegisterResponse {
 	password: string
 	name: string
 	subname: string
-	age: number
-	sex: string
 	country: string
 	city: string
-	img: string
 }
 
-// export const PREFIX = 'http://localhost:5550/api/'
-// export const PREFIX_STATIC = 'http://localhost:5550/'
+export const PREFIX = 'http://localhost:5550/api/'
+export const PREFIX_STATIC = 'http://localhost:5550/'
 
-export const PREFIX = 'https://fishapi.onrender.com/api/'
-export const PREFIX_STATIC = 'https://fishapi.onrender.com/'
+// export const PREFIX = 'https://fishapi.onrender.com/api/'
+// export const PREFIX_STATIC = 'https://fishapi.onrender.com/'

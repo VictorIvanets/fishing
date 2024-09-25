@@ -8,6 +8,8 @@ import { RootState } from '../../../store/store'
 import { fetchAllState, fetchDelState, fetchState } from './helpers/loadState'
 import { MapResponse } from '../../../store/map.slice.types'
 import SetFishing from './setFishing.component'
+import { getWeatherApi } from './helpers/getWeather'
+import Weather from '../../../widgets/wather/ui/weather'
 
 function MapPage() {
 	const [coords, setCoords] = useState<GeolocationPosition>()
@@ -22,16 +24,17 @@ function MapPage() {
 	const [loadAllState, setloadAllState] = useState<MapResponse[]>([])
 	const [viewAllstate, setViewAllstate] = useState(false)
 	const [viewResetAllset, setViewResetAllset] = useState(false)
+	const [weather, setWeather] = useState<string | object[]>()
 
 	useEffect(() => {
 		if (login) {
 			const data = fetchState(login)
-			data.then((a) => {
-				if (a && typeof a === 'object') {
-					setloadState(a.reverse())
+			data.then((sets) => {
+				if (sets && typeof sets === 'object') {
+					setloadState(sets.reverse())
 				}
-				if (a && typeof a === 'string') {
-					console.log(a)
+				if (sets && typeof sets === 'string') {
+					console.log(sets)
 				}
 			})
 		}
@@ -39,12 +42,12 @@ function MapPage() {
 
 	useEffect(() => {
 		const data = fetchAllState()
-		data.then((a) => {
-			if (a && typeof a === 'object') {
-				setloadAllState(a)
+		data.then((allSets) => {
+			if (allSets && typeof allSets === 'object') {
+				setloadAllState(allSets)
 			}
-			if (a && typeof a === 'string') {
-				console.log(a)
+			if (allSets && typeof allSets === 'string') {
+				console.log(allSets)
 			}
 		})
 	}, [viewAllstate])
@@ -56,6 +59,8 @@ function MapPage() {
 				coords?.coords.longitude,
 			]
 			setNewCoords(normalCords)
+			const weather = getWeatherApi(normalCords[0], normalCords[1])
+			weather.then((res) => setWeather(res))
 		}
 	}, [coords])
 
@@ -163,6 +168,13 @@ function MapPage() {
 						  ))
 						: ''}
 				</div>
+				{weather ? (
+					<div className="weatherpopup">
+						<Weather weather={weather} />
+					</div>
+				) : (
+					<PreLoader />
+				)}
 			</div>
 		</div>
 	)

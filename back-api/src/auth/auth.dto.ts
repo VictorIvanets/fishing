@@ -9,14 +9,8 @@ export class AuthDto {
 	name: string
 	@IsString()
 	subname: string
-	@IsNumber()
-	age: number
-	@IsString()
-	sex: string
 	@IsString()
 	country: string
 	@IsString()
 	city: string
-	@IsString()
-	img?: string
 }
