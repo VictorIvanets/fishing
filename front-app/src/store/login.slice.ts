@@ -3,12 +3,12 @@ import {
 	JWT_PER_STATE,
 	LOG_PER_STATE,
 	LoginResponse,
-	PREFIX,
 	UserPerSate,
 	UserState,
 } from './login.slice.types'
 import { loadState } from './storage'
 import axios from 'axios'
+import { PREFIX } from '../app/prefix'
 
 const initialState: UserState = {
 	jwt: loadState<UserPerSate>(JWT_PER_STATE)?.jwt ?? null,

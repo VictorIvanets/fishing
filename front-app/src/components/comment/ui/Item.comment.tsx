@@ -1,12 +1,29 @@
-import { CommentItem } from './type.comment'
+import { CommentItemProps } from './type.comment'
+import { delComments } from './fethComment'
 
-function CommentItemComponent({ login, setId, comment, commId }: CommentItem) {
-	console.log(login, setId, comment, commId)
+function CommentItemComponent({
+	login,
+	comment,
+	commId,
+	setIsLoading,
+}: CommentItemProps) {
+	const userLogin = JSON.parse(localStorage.getItem('userName') || '')
+	console.log(userLogin.login === login)
+
+	async function delComment(commId: number) {
+		setIsLoading(false)
+		await delComments(commId)
+		setIsLoading(true)
+	}
 
 	return (
 		<div className="getcomments">
 			<div className="getcomments__head">
-				<button> Видалити </button>
+				{userLogin.login === login ? (
+					<button onClick={() => delComment(commId)}> Видалити </button>
+				) : (
+					''
+				)}
 				<h3>{login}:</h3>
 			</div>
 

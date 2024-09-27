@@ -13,7 +13,7 @@ function AuthLayout() {
 				<div className="startpage__info__logo">
 					<img src="../fishapp/logo.png" alt="" />
 				</div>
-				<h1 className="cyrillicextrabold colorLight">MY FISHING</h1>
+				<h1 className="cyrillicextrabold colorLight">FISHING</h1>
 				<Link className="light tacenter roboto-light" to={`/rules`}>
 					<p>правила користування</p>
 				</Link>

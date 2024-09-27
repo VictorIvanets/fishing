@@ -1,10 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import {
-	PREFIX,
-	RegisterResponse,
-	UserRegisterState,
-} from './login.slice.types'
+import { RegisterResponse, UserRegisterState } from './login.slice.types'
 import axios from 'axios'
+import { PREFIX } from '../app/prefix'
 
 const initialState: UserRegisterState = {
 	login: null,

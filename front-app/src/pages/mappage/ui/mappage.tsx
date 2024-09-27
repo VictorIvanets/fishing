@@ -40,6 +40,17 @@ function MapPage() {
 		}
 	}, [login, state, deleteSet])
 
+	function viewAll() {
+		setViewAllstate(true)
+		setViewResult(false)
+		setViewResetAllset(true)
+	}
+	function notViewAll() {
+		setViewAllstate(false)
+		setViewResult(false)
+		setViewResetAllset(false)
+	}
+
 	useEffect(() => {
 		const data = fetchAllState()
 		data.then((allSets) => {
@@ -101,7 +112,7 @@ function MapPage() {
 		<div className="mappage">
 			<div className="mappage__map">
 				{newCoords && !isNaN(newCoords[0]) ? (
-					<MapContainer center={newCoords} zoom={13} scrollWheelZoom={false}>
+					<MapContainer center={newCoords} zoom={13} scrollWheelZoom={true}>
 						<TileLayer
 							attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 							url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -135,9 +146,7 @@ function MapPage() {
 				{viewResetAllset ? (
 					<button
 						onClick={() => {
-							setViewAllstate(false)
-							setViewResult(false)
-							setViewResetAllset(false)
+							notViewAll()
 						}}
 						className="resultbtn"
 					>
@@ -146,9 +155,7 @@ function MapPage() {
 				) : (
 					<button
 						onClick={() => {
-							setViewAllstate(!viewAllstate)
-							setViewResult(false)
-							setViewResetAllset(true)
+							viewAll()
 						}}
 						className="resultbtn"
 					>
@@ -173,7 +180,7 @@ function MapPage() {
 						<Weather weather={weather} />
 					</div>
 				) : (
-					<PreLoader />
+					''
 				)}
 			</div>
 		</div>

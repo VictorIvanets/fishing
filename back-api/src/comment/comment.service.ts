@@ -31,4 +31,13 @@ export class CommentService {
 		const res = this.commentModel.findOneAndDelete({ commId }).exec()
 		return `delete ${commId}`
 	}
+
+	async delCommBySetId(setId: string): Promise<string> {
+		const result = await this.commentModel.find({ setId }).exec()
+		result.forEach((i) => {
+			const setId = i.setId
+			this.commentModel.findOneAndDelete({ setId }).exec()
+		})
+		return `del comment for ${setId}`
+	}
 }

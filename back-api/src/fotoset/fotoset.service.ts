@@ -13,11 +13,7 @@ export class FotosetService {
 	constructor(
 		@InjectModel(FishModel) private readonly fishModel: ModelType<FishModel>,
 	) {}
-	async saveFoto(
-		files: MFile[],
-		folder: string,
-		// dto: FishModel,
-	): Promise<FileElemResponse[]> {
+	async saveFoto(files: MFile[], folder: string): Promise<FileElemResponse[]> {
 		const uploadFolder = `${path}/upload/${folder}`
 		await ensureDir(uploadFolder)
 		const res: FileElemResponse[] = []

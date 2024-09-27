@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
-import { PREFIX } from './login.slice.types'
 import { Coords, InitState, MapResponse } from './map.slice.types'
+import { PREFIX } from '../app/prefix'
 
 const initialState: InitState = {
 	data: [],

@@ -1,10 +1,11 @@
-import { Module } from '@nestjs/common'
+import { Global, Module } from '@nestjs/common'
 import { CommentController } from './comment.controller'
 import { CommentService } from './comment.service'
 import { TypegooseModule } from 'nestjs-typegoose'
 import { CommentModel } from './comment.model'
 import { ConfigModule } from '@nestjs/config'
 
+@Global()
 @Module({
 	controllers: [CommentController],
 	imports: [
@@ -19,5 +20,6 @@ import { ConfigModule } from '@nestjs/config'
 		ConfigModule,
 	],
 	providers: [CommentService],
+	exports: [CommentService],
 })
 export class CommentModule {}

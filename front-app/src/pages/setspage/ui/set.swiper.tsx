@@ -3,9 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import 'swiper/css/effect-coverflow'
 import 'swiper/css/pagination'
-
-import { EffectCoverflow, Pagination } from 'swiper/modules'
-import { PREFIX_STATIC } from '../../../store/login.slice.types'
+import { PREFIX_STATIC } from '../../../app/prefix'
 
 interface SwiperProps {
 	img: string[]
@@ -14,21 +12,7 @@ interface SwiperProps {
 export default function SwiperComponent({ img }: SwiperProps) {
 	return (
 		<div className="swiperpage">
-			<Swiper
-				className="swiperbox"
-				effect={'coverflow'}
-				grabCursor={true}
-				centeredSlides={true}
-				slidesPerView={'auto'}
-				coverflowEffect={{
-					rotate: 50,
-					stretch: 0,
-					depth: 100,
-					modifier: 1,
-					slideShadows: true,
-				}}
-				modules={[EffectCoverflow, Pagination]}
-			>
+			<Swiper className="swiperbox" spaceBetween={50} slidesPerView={1}>
 				{img
 					? img.map((i) => {
 							return (

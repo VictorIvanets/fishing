@@ -9,5 +9,3 @@ export const getMongoConfig = async (): Promise<TypegooseModuleOptions> => {
 
 const getMongoString =
 	'mongodb+srv://imperiazt:MCq87RDUGnLSH7ZM@cluster0.fiqphth.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
-
-// 'mongodb://admin:admin@localhost:27017/admin'

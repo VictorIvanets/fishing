@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios'
 import { MapResponse } from '../../../../store/map.slice.types'
-import { PREFIX } from '../../../../store/login.slice.types'
+import { PREFIX } from '../../../../app/prefix'
 
 export async function fetchState(
 	login: string,

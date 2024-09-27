@@ -43,8 +43,19 @@
             font-optical-sizing: auto
             font-weight: 400
             font-style: normal
+            animation: anime 0.3s linear 0s
             &:hover
                 background: #1d1d1dc9
+                
+            @keyframes anime 
+                    0%
+                        opacity: 0
+                        scale: 10%
+                        backface-visibility: hidden
+                    100%
+                        opacity: 1
+                        scale: 100%
+                        backface-visibility: hidden
                 
 
 

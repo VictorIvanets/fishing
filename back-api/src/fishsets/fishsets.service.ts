@@ -35,7 +35,7 @@ export class FishsetsService {
 		return this.fishModel.find({ db }).exec()
 	}
 
-	async delById(setID: string = `0`): Promise<string> {
+	async delById(setID: string): Promise<string> {
 		const res = this.fishModel.find({ setID }).exec()
 		if (res) {
 			this.fishModel.findOneAndDelete({ setID }).exec()

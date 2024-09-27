@@ -2,14 +2,11 @@ import { useDispatch } from 'react-redux'
 import { Link, Outlet, useNavigate, useParams } from 'react-router-dom'
 import { AppDispath } from '../../../store/store'
 import { userActions } from '../../../store/login.slice'
-import {
-	JWT_PER_STATE,
-	LOG_PER_STATE,
-	PREFIX,
-} from '../../../store/login.slice.types'
+import { JWT_PER_STATE, LOG_PER_STATE } from '../../../store/login.slice.types'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { UserData } from './data.types'
+import { PREFIX } from '../../../app/prefix'
 
 function MainPage() {
 	const { login } = useParams()

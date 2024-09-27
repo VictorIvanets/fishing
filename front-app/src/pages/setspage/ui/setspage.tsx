@@ -3,11 +3,11 @@ import { useParams } from 'react-router-dom'
 import { getSetsById } from './getSetsById'
 import { MapResponse } from '../../../store/map.slice.types'
 import axios from 'axios'
-import { PREFIX } from '../../../store/login.slice.types'
 import SwiperComponent from './set.swiper'
 import { PreLoader } from '../../../widgets/PreLoader'
 import Weather from '../../../widgets/wather/ui/weather'
 import { Comments } from '../../../components/comment'
+import { PREFIX } from '../../../app/prefix'
 
 function SetsPage() {
 	const { id } = useParams()
@@ -17,8 +17,6 @@ function SetsPage() {
 	const [uploadedFiles, setUploadedFiles] = useState(false)
 	const [nameFiles, setNameFiles] = useState('Вибрати фото')
 	const { login } = JSON.parse(localStorage.getItem('userName') || '')
-	// console.log(login)
-	// console.log(load?.login)
 
 	useEffect(() => {
 		const data = getSetsById(id)
@@ -95,11 +93,13 @@ function SetsPage() {
 								<br />
 							</div>
 
-							<div>
+							<a
+								href={`https://www.google.com/maps/@${load.coords[0]},${load.coords[1]},15z?authuser=0&entry=ttu`}
+							>
 								<h2> Координати</h2>
 								<p>latitude: {load.coords[0]}</p>
 								<p>longitude: {load.coords[1]}</p>
-							</div>
+							</a>
 						</div>
 						<div className="colorLight setspage__loadinfo__description">
 							<div className="setspage__loadinfo__description__box">

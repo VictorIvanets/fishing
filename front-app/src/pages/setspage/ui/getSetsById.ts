@@ -1,5 +1,5 @@
 import axios, { AxiosError } from 'axios'
-import { PREFIX } from '../../../store/login.slice.types'
+import { PREFIX } from '../../../app/prefix'
 
 export async function getSetsById(setId: string | undefined): Promise<string> {
 	try {

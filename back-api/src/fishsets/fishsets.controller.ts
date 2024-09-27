@@ -9,12 +9,14 @@ import {
 } from '@nestjs/common'
 import { FishsetsService } from './fishsets.service'
 import { FishDto } from './fishsets.dto'
-
-const REGISTER_ERROR = 'такий user зараєстрован'
+import { CommentService } from 'src/comment/comment.service'
 
 @Controller('fishsets')
 export class FishsetsController {
-	constructor(private readonly fishService: FishsetsService) {}
+	constructor(
+		private readonly fishService: FishsetsService,
+		private readonly commentService: CommentService,
+	) {}
 
 	@HttpCode(200)
 	@Post('sets')
@@ -51,6 +53,7 @@ export class FishsetsController {
 	@HttpCode(200)
 	@Delete(':id')
 	async delSet(@Param('id') id: string): Promise<string> {
+		await this.commentService.delCommBySetId(id)
 		return await this.fishService.delById(id)
 	}
 
