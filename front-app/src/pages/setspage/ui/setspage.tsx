@@ -94,7 +94,8 @@ function SetsPage() {
 							</div>
 
 							<a
-								href={`https://www.google.com/maps/@${load.coords[0]},${load.coords[1]},15z?authuser=0&entry=ttu`}
+								href={`https://www.google.com/maps?ll=${load.coords[0]},${load.coords[1]}&q=${load.coords[0]},${load.coords[1]}`}
+								target="_blank"
 							>
 								<h2> Координати</h2>
 								<p>latitude: {load.coords[0]}</p>

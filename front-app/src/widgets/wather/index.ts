@@ -1,3 +1,3 @@
 import { lazy } from 'react'
 
-export const Wather = lazy(() => import('./ui/wather'))
+export const Wather = lazy(() => import('./ui/weather'))

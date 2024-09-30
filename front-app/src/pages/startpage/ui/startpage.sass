@@ -1,33 +1,47 @@
+#root
+    background: url(../fonfish.jpg) center / cover no-repeat
 .startpage
     position: relative
     width: 100vw
     height: 100vh
-    background: url(../fon.jpg) center / cover no-repeat
     display: flex
-    flex-direction: row
+    flex-direction: column
     flex-wrap: wrap
     justify-content: center
     align-content: center
+    transition: all 0.5s
+        
+
     &__info
-        width: 50%
+        width: 60rem
         min-width: 35rem
         display: flex
         flex-direction: column
         justify-content: center
         align-content: center
         align-items: center
-        &__logo
-            width: 25rem
+        margin-bottom: 2rem
         @media (max-width: 720px) 
-            margin-bottom: 2rem
+            width: 100%
+            min-width: 100%
+        &__logo
+            width: calc(var(--index)*13)
+            @media (max-width: 720px) 
+                width: calc(var(--index)*20)
+            img
+                width: 100%
     &__auth
-        width: 50%
+        width: 60rem
         min-width: 35rem
         display: flex
         flex-direction: column
         justify-content: center
         align-content: center
         align-items: center
+        @media (max-width: 720px) 
+            width: 100%
+            min-width: 100%
+
     &__fon
         position: fixed
         z-index: -1
@@ -40,4 +54,8 @@
             bottom: 0px
             object-fit: cover             
             overflow: hidden 
-            text-align: center   
+            text-align: center  
+.authrow
+    flex-direction: row
+    animation: anime 0.3s linear 0s
+

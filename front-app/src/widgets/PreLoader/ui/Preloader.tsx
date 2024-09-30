@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 export function PreLoader() {
 	return (
 		<div className="preloaderbox">
@@ -7,12 +9,22 @@ export function PreLoader() {
 }
 
 export function PreLoaderAPI() {
+	const [viewError, setviewError] = useState(false)
+
+	setTimeout(() => {
+		setviewError(true)
+	}, 2000)
+
 	return (
 		<div className="preloaderbox_api">
 			<div className="preloader_api">
-				<h3 className="white">
-					Зачекайте <br /> можливо сервер ще не активний
-				</h3>
+				{viewError ? (
+					<h3 className="white">
+						Зачекайте <br /> можливо сервер ще не активний
+					</h3>
+				) : (
+					''
+				)}
 			</div>
 		</div>
 	)
