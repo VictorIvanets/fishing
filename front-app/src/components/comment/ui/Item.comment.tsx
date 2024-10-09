@@ -8,7 +8,6 @@ function CommentItemComponent({
 	setIsLoading,
 }: CommentItemProps) {
 	const userLogin = JSON.parse(localStorage.getItem('userName') || '')
-	console.log(userLogin.login === login)
 
 	async function delComment(commId: number) {
 		setIsLoading(false)

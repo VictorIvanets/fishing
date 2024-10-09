@@ -14,7 +14,6 @@ function Comments({ login, setId }: CommentsProps) {
 			comments.then((comments) => setDataLoad(comments))
 		}
 	}, [isLoading, setId])
-	console.log(isLoading)
 
 	return (
 		<div className="comments">

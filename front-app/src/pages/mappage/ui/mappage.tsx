@@ -10,6 +10,7 @@ import { MapResponse } from '../../../store/map.slice.types'
 import SetFishing from './setFishing.component'
 import { getWeatherApi } from './helpers/getWeather'
 import Weather from '../../../widgets/wather/ui/weather'
+import Filter from './filter/filter'
 
 function MapPage() {
 	const [coords, setCoords] = useState<GeolocationPosition>()
@@ -25,6 +26,10 @@ function MapPage() {
 	const [viewAllstate, setViewAllstate] = useState(false)
 	const [viewResetAllset, setViewResetAllset] = useState(false)
 	const [weather, setWeather] = useState<string | object[]>()
+	const [filterByValue, setFilterByValue] = useState<string | null>(null)
+	const [filterloadAllState, setfilterloadAllState] = useState<MapResponse[]>(
+		[],
+	)
 
 	useEffect(() => {
 		if (login) {
@@ -108,11 +113,26 @@ function MapPage() {
 			}, 50)
 		}
 	}
+
+	useEffect(() => {
+		if (filterByValue) {
+			const filterItems = loadAllState.filter((i) => {
+				i.description.toLowerCase()
+				if (i.description.toLowerCase().includes(filterByValue)) {
+					return i
+				}
+			})
+			setfilterloadAllState(filterItems)
+		} else {
+			setfilterloadAllState(loadAllState)
+		}
+	}, [filterByValue, loadAllState])
+
 	return (
 		<div className="mappage">
 			<div className="mappage__map">
 				{newCoords && !isNaN(newCoords[0]) ? (
-					<MapContainer center={newCoords} zoom={13} scrollWheelZoom={true}>
+					<MapContainer center={newCoords} zoom={12} scrollWheelZoom={true}>
 						<TileLayer
 							attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 							url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -125,7 +145,7 @@ function MapPage() {
 								setId={idResult}
 							></ResultMarkers>
 						) : viewAllstate ? (
-							loadAllState.map((i) => (
+							filterloadAllState.map((i) => (
 								<ResultMarkers
 									key={i.setID}
 									lat={i.coords[0]}
@@ -144,14 +164,7 @@ function MapPage() {
 			</div>
 			<div className="mappage__result">
 				{viewResetAllset ? (
-					<button
-						onClick={() => {
-							notViewAll()
-						}}
-						className="resultbtn"
-					>
-						повернутися до вибору на карті
-					</button>
+					<Filter notViewAll={notViewAll} setFilterByValue={setFilterByValue} />
 				) : (
 					<button
 						onClick={() => {

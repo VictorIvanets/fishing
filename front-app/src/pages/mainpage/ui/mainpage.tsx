@@ -61,6 +61,12 @@ function MainPage() {
 					>
 						про сайт
 					</Link>
+					<div
+						onClick={() => navigate(-1)}
+						className="mainpage__navbar__left__link tacenter"
+					>
+						<p className="">back</p>
+					</div>
 				</div>
 
 				<div className="mainpage__navbar__right">
