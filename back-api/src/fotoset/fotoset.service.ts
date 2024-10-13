@@ -7,6 +7,7 @@ import { FileElemResponse } from './fotoset.dto'
 import * as sharp from 'sharp'
 import { MFile } from './mfile.class'
 import { FishModel } from 'src/fishsets/fishsets.model'
+import { GetFotoModel } from 'src/getfoto/getfoto.model'
 
 @Injectable()
 export class FotosetService {
@@ -14,11 +15,8 @@ export class FotosetService {
 		@InjectModel(FishModel) private readonly fishModel: ModelType<FishModel>,
 	) {}
 	async saveFoto(files: MFile[], folder: string): Promise<FileElemResponse[]> {
-		const uploadFolder = `${path}/upload/${folder}`
-		await ensureDir(uploadFolder)
 		const res: FileElemResponse[] = []
 		for (const file of files) {
-			await writeFile(`${uploadFolder}/${file.originalname}`, file.buffer)
 			res.push({
 				url: `${folder}/${file.originalname}`,
 				name: file.originalname,

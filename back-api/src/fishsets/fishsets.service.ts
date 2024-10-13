@@ -22,6 +22,7 @@ export class FishsetsService {
 			db: 'database',
 			img: [],
 			weather: dto.weather,
+			imgdb: [],
 		})
 		console.log(newSets)
 		return newSets.save()

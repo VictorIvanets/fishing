@@ -10,6 +10,7 @@ import { FishsetsService } from './fishsets/fishsets.service'
 import { FishsetsModule } from './fishsets/fishsets.module'
 import { FotosetModule } from './fotoset/fotoset.module'
 import { CommentModule } from './comment/comment.module'
+import { GetfotoModule } from './getfoto/getfoto.module'
 
 @Module({
 	imports: [
@@ -23,6 +24,7 @@ import { CommentModule } from './comment/comment.module'
 		FishsetsModule,
 		FotosetModule,
 		CommentModule,
+		GetfotoModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],

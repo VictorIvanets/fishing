@@ -1,5 +1,6 @@
 import { prop } from '@typegoose/typegoose'
 import { TimeStamps, Base } from '@typegoose/typegoose/lib/defaultClasses'
+// import { ImgData } from './fishsets.dto'
 
 export interface FishModel extends Base {}
 export class FishModel extends TimeStamps {
@@ -23,4 +24,6 @@ export class FishModel extends TimeStamps {
 	img: string[]
 	@prop({ type: () => [Object] })
 	weather: object[]
+	@prop({ type: () => [Object] })
+	imgdb: object[]
 }

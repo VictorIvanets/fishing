@@ -1,6 +1,15 @@
 import { Type } from 'class-transformer'
 import { IsArray, IsNumber, IsObject, IsString } from 'class-validator'
 
+// export class ImgData {
+// 	@IsString()
+// 	setid: string
+// 	@IsString()
+// 	filename: string
+// 	@IsString()
+// 	imgBuffer: string
+// }
+
 export class FishDto {
 	@IsNumber()
 	setID: number
@@ -25,4 +34,7 @@ export class FishDto {
 	@IsObject()
 	@IsArray()
 	weather: object[]
+	@IsObject()
+	@IsArray()
+	imgdb: object[]
 }
