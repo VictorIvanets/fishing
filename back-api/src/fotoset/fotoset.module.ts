@@ -6,7 +6,6 @@ import { path } from 'app-root-path'
 import { TypegooseModule } from 'nestjs-typegoose'
 import { FishModel } from 'src/fishsets/fishsets.model'
 import { ConfigModule } from '@nestjs/config'
-import { GetfotoService } from 'src/getfoto/getfoto.service'
 
 @Global()
 @Module({

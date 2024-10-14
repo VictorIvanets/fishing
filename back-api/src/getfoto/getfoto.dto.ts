@@ -1,4 +1,4 @@
-import { IsNumber, IsObject, IsString } from 'class-validator'
+import { IsObject, IsString } from 'class-validator'
 import { MFile } from 'src/fotoset/mfile.class'
 
 export class GetFotoDto {
@@ -6,8 +6,7 @@ export class GetFotoDto {
 	setid: string
 	@IsString()
 	filename: string
-	@IsString()
-	imgBuffer: string
+	imgBuffer: Buffer
 }
 
 export class LoadFotoDto {
@@ -20,5 +19,5 @@ export class LoadFotoDto {
 export class GetFotoElemResponse {
 	setid: string
 	filename: string
-	imgBuffer: string
+	imgBuffer: Buffer
 }

@@ -1,13 +1,10 @@
-import { Global, Injectable } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 import { ensureDir, writeFile } from 'fs-extra'
-import sharp from 'sharp'
-import { FileElemResponse } from 'src/fotoset/fotoset.dto'
 import { path } from 'app-root-path'
 import { MFile } from 'src/fotoset/mfile.class'
 import { ModelType } from '@typegoose/typegoose/lib/types'
 import { InjectModel } from 'nestjs-typegoose'
 import { GetFotoModel } from './getfoto.model'
-import { GetFotoElemResponse } from './getfoto.dto'
 
 @Injectable()
 export class GetfotoService {
@@ -20,16 +17,15 @@ export class GetfotoService {
 		const fotoBySetId = await this.getFotoModel.find({ setid }).exec()
 		const res = []
 
+		const uploadFolder = `${path}/upload/${folder}`
+
 		if (fotoBySetId.length) {
+			await ensureDir(uploadFolder)
 			fotoBySetId.forEach(async (fotoitem) => {
-				const folder = fotoitem.setid
 				const originalname = fotoitem.filename
 				const buffer = fotoitem.imgBuffer
 				res.push(originalname)
-				const uploadFolder = `${path}/upload/${folder}`
-				const buf = Buffer.from(buffer)
-				await ensureDir(uploadFolder)
-				await writeFile(`${uploadFolder}/${originalname}`, buf)
+				await writeFile(`${uploadFolder}/${originalname}`, buffer)
 			})
 
 			return res
@@ -39,18 +35,22 @@ export class GetfotoService {
 	async saveFotoBd(files: MFile[], folder: string): Promise<string> {
 		for (const file of files) {
 			const filename = file.originalname
-			const fotoset = await this.getFotoModel.find({ filename }).exec()
-			if (!fotoset.length) {
-				const imgBuffer = file.buffer.toString('base64')
+			const fotoset = await this.getFotoModel.findOne({ filename }).exec()
+			const check = fotoset?.setid === folder ? true : false
+			const checkcheck = fotoset?.filename && check ? false : true
+			if (checkcheck) {
 				const res = new this.getFotoModel({
 					setid: folder,
 					filename: file.originalname,
-					imgBuffer: imgBuffer,
+					imgBuffer: file.buffer,
 				})
-				console.log('UPLOAD')
+
 				res.save()
-			} else return
+			} else {
+				return
+			}
 		}
+
 		return folder
 	}
 
@@ -62,20 +62,12 @@ export class GetfotoService {
 	async delBySetId(setid: string): Promise<string> {
 		const fotoByset = await this.getFotoModel.find({ setid }).exec()
 
-		const delFile = fotoByset.map((i) => {
+		fotoByset.forEach((i) => {
 			const _id = i._id
-			console.log(`DELETE FOTO ${i.filename}`)
 			this.getFotoModel.findByIdAndDelete({ _id }).exec()
 			return i.filename
 		})
 
-		console.log(`DELETE FOTO`)
-		console.log(delFile)
-		// console.log(fotoByset)
 		return `DEL ${setid}`
 	}
-
-	// convertToWebp(file: Buffer): Promise<Buffer> {
-	// 	return sharp(file).webp().toBuffer()
-	// }
 }

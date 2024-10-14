@@ -11,7 +11,6 @@ import {
 import { FileElemResponse } from './fotoset.dto'
 import { MFile } from './mfile.class'
 import { GetfotoService } from 'src/getfoto/getfoto.service'
-import { CommentService } from 'src/comment/comment.service'
 
 @Controller('fotoset')
 export class FotosetController {
@@ -28,16 +27,7 @@ export class FotosetController {
 		@Param('folder') folder: string,
 	): Promise<FileElemResponse[]> {
 		if (file) {
-			const saveArr: MFile[] = []
-			if (file.mimetype.includes('image')) {
-				const buffer = await this.fotosetService.convertToWebp(file.buffer)
-				saveArr.push(
-					new MFile({
-						originalname: `${file.originalname.split('.')[0]}.webp`,
-						buffer,
-					}),
-				)
-			}
+			const saveArr: MFile[] = [new MFile(file)]
 			this.getfotoService.saveFotoBd(saveArr, folder)
 			return this.fotosetService.saveFoto(saveArr, folder)
 		}

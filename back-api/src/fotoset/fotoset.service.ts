@@ -1,13 +1,10 @@
 import { Injectable } from '@nestjs/common'
 import { InjectModel } from 'nestjs-typegoose'
 import { ModelType } from '@typegoose/typegoose/lib/types'
-import { path } from 'app-root-path'
-import { ensureDir, writeFile } from 'fs-extra'
 import { FileElemResponse } from './fotoset.dto'
 import * as sharp from 'sharp'
 import { MFile } from './mfile.class'
 import { FishModel } from 'src/fishsets/fishsets.model'
-import { GetFotoModel } from 'src/getfoto/getfoto.model'
 
 @Injectable()
 export class FotosetService {

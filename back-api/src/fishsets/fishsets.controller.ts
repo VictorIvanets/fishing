@@ -73,7 +73,6 @@ export class FishsetsController {
 			img,
 			login,
 			weather,
-			imgdb,
 		} = await this.fishService.getSetsById(id)
 		const output = {
 			login: login,
@@ -85,7 +84,6 @@ export class FishsetsController {
 			setID: setID,
 			img: img,
 			weather: weather,
-			imgdb: imgdb,
 		}
 
 		return output
