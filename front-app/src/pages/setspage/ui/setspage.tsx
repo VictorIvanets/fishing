@@ -167,7 +167,11 @@ function SetsPage() {
 					<h1>ERORR. NO DATA</h1>
 				)}
 				<div className="setspage__moreinfo colorLight">
-					{load?.img ? <SwiperComponent img={load?.img} /> : <PreLoader />}
+					{load?.img ? (
+						<SwiperComponent img={load?.img} setId={load?.setID} />
+					) : (
+						<PreLoader />
+					)}
 				</div>
 			</div>
 			<div className="comentbox">
