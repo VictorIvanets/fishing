@@ -26,10 +26,11 @@ export class GetfotoService {
 				const originalname = fotoitem.filename
 				const buffer = fotoitem.imgBuffer
 				res.push(originalname)
-				const check = await readFile(`${uploadFolder}/${originalname}`)
-				if (!check) {
-					await writeFile(`${uploadFolder}/${originalname}`, buffer)
-				}
+				// const check = await readFile(`${uploadFolder}/${originalname}`)
+				// if (!check) {
+				// 	await writeFile(`${uploadFolder}/${originalname}`, buffer)
+				await writeFile(`${uploadFolder}/${originalname}`, buffer)
+				// }
 			})
 			return res
 		} else return res
