@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom'
+import { createBrowserRouter, Navigate } from 'react-router-dom'
 // import Test1 from '../components/test1'
 import { StartPage } from '../pages/startpage/index'
 import { Login } from '../components/login/index'
@@ -11,6 +11,8 @@ import { MapPage } from '../pages/mappage'
 import { SetsPage } from '../pages/setspage'
 import { AboutPage } from '../pages/aboutpage'
 import { Rules } from '../components/rules'
+import { InfoPage } from '../pages/infopage'
+import { GaleryPage } from '../pages/galerypage'
 
 export const router = createBrowserRouter(
 	[
@@ -60,6 +62,16 @@ export const router = createBrowserRouter(
 				</RequireAuth>
 			),
 			children: [
+				{ index: true, element: <Navigate to="info" replace /> },
+
+				{
+					path: 'info',
+					element: <InfoPage />,
+				},
+				{
+					path: 'galery',
+					element: <GaleryPage />,
+				},
 				{
 					path: 'map',
 					element: <MapPage />,

@@ -1,0 +1,31 @@
+.infopage
+    // display: flex
+    width: 100%
+    height: 100%
+    color: $COLSECOND
+    display: flex
+    flex-direction: column
+    text-align: center
+    justify-content: center
+    align-items: center
+
+    &__itembox
+        height: 50vh
+        overflow: auto
+        scrollbar: 0px      
+        &__item
+            text-align: center
+            min-width: 20rem
+            max-width: max-content
+            height: 3rem
+            padding: 0.5rem
+            margin: 0.2rem
+            border-radius: 0.3rem
+            background: rgba(0, 42, 48, 0.11)
+            backdrop-filter: blure(10px)
+            cursor: pointer
+    &__itembox::-webkit-scrollbar
+            width: 7px
+    &__itembox::-webkit-scrollbar-thumb
+            width: 7px
+            background: $COLSECOND

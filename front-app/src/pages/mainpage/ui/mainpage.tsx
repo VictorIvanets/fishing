@@ -13,7 +13,6 @@ function MainPage() {
 	const dispatch = useDispatch<AppDispath>()
 	const navigate = useNavigate()
 	const [data, setData] = useState<UserData>()
-	const [link, setLink] = useState(false)
 
 	useEffect(() => {
 		;(async function load(): Promise<void> {
@@ -32,40 +31,34 @@ function MainPage() {
 	return (
 		<div className="mainpage">
 			<div className="mainpage__outlet">
-				{link ? (
-					<Outlet />
-				) : (
-					<Link
-						onClick={() => setLink(true)}
-						className="light tacenter roboto-bold"
-						to={`/main/${login}/map`}
-					>
-						<h1>Вітаю!</h1>
-						<h2>Тисни щоб продовжити!</h2>
-					</Link>
-				)}
+				<Outlet />
 			</div>
 			<div className="mainpage__navbar">
 				<div className="mainpage__navbar__left">
 					<Link
-						onClick={() => setLink(true)}
 						className="mainpage__navbar__left__link tacenter"
 						to={`/main/${login}/map`}
 					>
 						до карти
 					</Link>
 					<Link
-						onClick={() => setLink(true)}
 						className="mainpage__navbar__left__link tacenter"
 						to={`/main/${login}/about`}
 					>
 						про сайт
 					</Link>
+					<Link
+						// onClick={() => navigate(-1)}
+						className="mainpage__navbar__left__link tacenter"
+						to={`/main/${login}/galery`}
+					>
+						галерея
+					</Link>
 					<div
 						onClick={() => navigate(-1)}
 						className="mainpage__navbar__left__link tacenter"
 					>
-						<p className="">back</p>
+						<p className="">назад</p>
 					</div>
 				</div>
 
