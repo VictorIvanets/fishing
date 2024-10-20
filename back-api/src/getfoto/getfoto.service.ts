@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { ensureDir, writeFile } from 'fs-extra'
+import { ensureDir, readFile, writeFile } from 'fs-extra'
 import { path } from 'app-root-path'
 import { MFile } from 'src/fotoset/mfile.class'
 import { ModelType } from '@typegoose/typegoose/lib/types'
@@ -26,9 +26,11 @@ export class GetfotoService {
 				const originalname = fotoitem.filename
 				const buffer = fotoitem.imgBuffer
 				res.push(originalname)
-				await writeFile(`${uploadFolder}/${originalname}`, buffer)
+				const check = await readFile(`${uploadFolder}/${originalname}`)
+				if (!check) {
+					await writeFile(`${uploadFolder}/${originalname}`, buffer)
+				}
 			})
-
 			return res
 		} else return res
 	}
