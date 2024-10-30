@@ -13,6 +13,7 @@ import { AboutPage } from '../pages/aboutpage'
 import { Rules } from '../components/rules'
 import { InfoPage } from '../pages/infopage'
 import { GaleryPage } from '../pages/galerypage'
+import { ChatPage } from '../pages/chat'
 
 export const router = createBrowserRouter(
 	[
@@ -67,6 +68,10 @@ export const router = createBrowserRouter(
 				{
 					path: 'info',
 					element: <InfoPage />,
+				},
+				{
+					path: 'chat',
+					element: <ChatPage />,
 				},
 				{
 					path: 'galery',

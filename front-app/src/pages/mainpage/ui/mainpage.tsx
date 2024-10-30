@@ -7,12 +7,14 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { UserData } from './data.types'
 import { PREFIX } from '../../../app/prefix'
+import { useCheckIn } from '../../chat/ui/glq_hooks/chatUser.hook'
 
 function MainPage() {
 	const { login } = useParams()
 	const dispatch = useDispatch<AppDispath>()
 	const navigate = useNavigate()
 	const [data, setData] = useState<UserData>()
+	const { userInByUserName } = useCheckIn()
 
 	useEffect(() => {
 		;(async function load(): Promise<void> {
@@ -48,12 +50,20 @@ function MainPage() {
 						про сайт
 					</Link>
 					<Link
-						// onClick={() => navigate(-1)}
 						className="mainpage__navbar__left__link tacenter"
 						to={`/main/${login}/galery`}
 					>
 						галерея
 					</Link>
+					{login && (
+						<Link
+							onClick={() => userInByUserName(login)}
+							className="mainpage__navbar__left__link tacenter"
+							to={`/main/${login}/chat`}
+						>
+							чат
+						</Link>
+					)}{' '}
 					<div
 						onClick={() => navigate(-1)}
 						className="mainpage__navbar__left__link tacenter"

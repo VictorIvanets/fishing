@@ -1,0 +1,48 @@
+mutation CheckIn($newUser: String!) {
+	userIn(newUser: $newUser) {
+		userId
+		user
+	}
+}
+
+mutation CheckOut($userId: String!) {
+	userOut(userId: $userId)
+}
+
+mutation addComment($newCommentData: NewCommentInput!) {
+	addComment(newCommentData: $newCommentData) {
+		comId
+		title
+		comment
+		user
+		createdAt
+	}
+}
+mutation delComment($comId: String!) {
+	deleteComment(comId: $comId)
+}
+
+query allComment {
+	allComments {
+		comId
+		comment
+		user
+		createdAt
+	}
+}
+
+subscription UserChek {
+	userChek {
+		userId
+		user
+	}
+}
+
+subscription CommetChek {
+	commentAdded {
+		comId
+		comment
+		user
+		createdAt
+	}
+}
