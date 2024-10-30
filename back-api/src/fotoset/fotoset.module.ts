@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common'
+import { Global, Module } from '@nestjs/common'
 import { FotosetService } from './fotoset.service'
 import { FotosetController } from './fotoset.controller'
 import { ServeStaticModule } from '@nestjs/serve-static'
@@ -7,6 +7,7 @@ import { TypegooseModule } from 'nestjs-typegoose'
 import { FishModel } from 'src/fishsets/fishsets.model'
 import { ConfigModule } from '@nestjs/config'
 
+@Global()
 @Module({
 	imports: [
 		ServeStaticModule.forRoot({

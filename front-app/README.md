@@ -6,3 +6,6 @@ FRONT
 React + TypeScript + Vite + sass
 BACK
 Nest.js + MongoDB
+
+login: admin
+password: 5555

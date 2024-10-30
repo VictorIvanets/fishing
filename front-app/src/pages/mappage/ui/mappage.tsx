@@ -3,14 +3,16 @@ import { useEffect, useState } from 'react'
 import { PreLoader } from '../../../widgets/PreLoader'
 import { LocationMarker, ResultMarkers } from './helpers/locationMarkers'
 import { LatLngExpression, LatLngTuple } from 'leaflet'
-import { useSelector } from 'react-redux'
-import { RootState } from '../../../store/store'
-import { fetchAllState, fetchDelState, fetchState } from './helpers/loadState'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispath, RootState } from '../../../store/store'
+import { fetchDelState } from './helpers/loadState'
 import { MapResponse } from '../../../store/map.slice.types'
 import SetFishing from './setFishing.component'
 import { getWeatherApi } from './helpers/getWeather'
 import Weather from '../../../widgets/wather/ui/weather'
 import Filter from './filter/filter'
+import { setSets } from '../../../store/set.slise'
+import { allSetSets } from '../../../store/allset.slice'
 
 function MapPage() {
 	const [coords, setCoords] = useState<GeolocationPosition>()
@@ -30,20 +32,28 @@ function MapPage() {
 	const [filterloadAllState, setfilterloadAllState] = useState<MapResponse[]>(
 		[],
 	)
+	const { data } = useSelector((s: RootState) => s.set)
+	const { alldata } = useSelector((s: RootState) => s.allset)
+	const dispatch = useDispatch<AppDispath>()
+
+	useEffect(() => {
+		const loadDta: MapResponse[] = [...data]
+		setloadState(loadDta.reverse())
+	}, [data])
 
 	useEffect(() => {
 		if (login) {
-			const data = fetchState(login)
-			data.then((sets) => {
-				if (sets && typeof sets === 'object') {
-					setloadState(sets.reverse())
-				}
-				if (sets && typeof sets === 'string') {
-					console.log(sets)
-				}
-			})
+			dispatch(setSets(login))
 		}
-	}, [login, state, deleteSet])
+	}, [login, state, deleteSet, dispatch])
+
+	useEffect(() => {
+		setloadAllState(alldata)
+	}, [viewAllstate, alldata])
+
+	useEffect(() => {
+		dispatch(allSetSets())
+	}, [viewAllstate, dispatch])
 
 	function viewAll() {
 		setViewAllstate(true)
@@ -55,18 +65,6 @@ function MapPage() {
 		setViewResult(false)
 		setViewResetAllset(false)
 	}
-
-	useEffect(() => {
-		const data = fetchAllState()
-		data.then((allSets) => {
-			if (allSets && typeof allSets === 'object') {
-				setloadAllState(allSets)
-			}
-			if (allSets && typeof allSets === 'string') {
-				console.log(allSets)
-			}
-		})
-	}, [viewAllstate])
 
 	useEffect(() => {
 		if (coords) {

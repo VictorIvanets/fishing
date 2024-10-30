@@ -7,13 +7,14 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { UserData } from './data.types'
 import { PREFIX } from '../../../app/prefix'
+import { useCheckIn } from '../../chat/ui/glq_hooks/chatUser.hook'
 
 function MainPage() {
 	const { login } = useParams()
 	const dispatch = useDispatch<AppDispath>()
 	const navigate = useNavigate()
 	const [data, setData] = useState<UserData>()
-	const [link, setLink] = useState(false)
+	const { userInByUserName } = useCheckIn()
 
 	useEffect(() => {
 		;(async function load(): Promise<void> {
@@ -32,40 +33,42 @@ function MainPage() {
 	return (
 		<div className="mainpage">
 			<div className="mainpage__outlet">
-				{link ? (
-					<Outlet />
-				) : (
-					<Link
-						onClick={() => setLink(true)}
-						className="light tacenter roboto-bold"
-						to={`/main/${login}/map`}
-					>
-						<h1>Вітаю!</h1>
-						<h2>Тисни щоб продовжити!</h2>
-					</Link>
-				)}
+				<Outlet />
 			</div>
 			<div className="mainpage__navbar">
 				<div className="mainpage__navbar__left">
 					<Link
-						onClick={() => setLink(true)}
 						className="mainpage__navbar__left__link tacenter"
 						to={`/main/${login}/map`}
 					>
 						до карти
 					</Link>
 					<Link
-						onClick={() => setLink(true)}
 						className="mainpage__navbar__left__link tacenter"
 						to={`/main/${login}/about`}
 					>
 						про сайт
 					</Link>
+					<Link
+						className="mainpage__navbar__left__link tacenter"
+						to={`/main/${login}/galery`}
+					>
+						галерея
+					</Link>
+					{login && (
+						<Link
+							onClick={() => userInByUserName(login)}
+							className="mainpage__navbar__left__link tacenter"
+							to={`/main/${login}/chat`}
+						>
+							чат
+						</Link>
+					)}{' '}
 					<div
 						onClick={() => navigate(-1)}
 						className="mainpage__navbar__left__link tacenter"
 					>
-						<p className="">back</p>
+						<p className="">назад</p>
 					</div>
 				</div>
 

@@ -1,8 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { InjectModel } from 'nestjs-typegoose'
 import { ModelType } from '@typegoose/typegoose/lib/types'
-import { path } from 'app-root-path'
-import { ensureDir, writeFile } from 'fs-extra'
 import { FileElemResponse } from './fotoset.dto'
 import * as sharp from 'sharp'
 import { MFile } from './mfile.class'
@@ -14,11 +12,8 @@ export class FotosetService {
 		@InjectModel(FishModel) private readonly fishModel: ModelType<FishModel>,
 	) {}
 	async saveFoto(files: MFile[], folder: string): Promise<FileElemResponse[]> {
-		const uploadFolder = `${path}/upload/${folder}`
-		await ensureDir(uploadFolder)
 		const res: FileElemResponse[] = []
 		for (const file of files) {
-			await writeFile(`${uploadFolder}/${file.originalname}`, file.buffer)
 			res.push({
 				url: `${folder}/${file.originalname}`,
 				name: file.originalname,

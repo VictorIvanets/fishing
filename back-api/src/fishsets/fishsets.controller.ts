@@ -10,12 +10,14 @@ import {
 import { FishsetsService } from './fishsets.service'
 import { FishDto } from './fishsets.dto'
 import { CommentService } from 'src/comment/comment.service'
+import { GetfotoService } from 'src/getfoto/getfoto.service'
 
 @Controller('fishsets')
 export class FishsetsController {
 	constructor(
 		private readonly fishService: FishsetsService,
 		private readonly commentService: CommentService,
+		private readonly getfotoService: GetfotoService,
 	) {}
 
 	@HttpCode(200)
@@ -53,6 +55,7 @@ export class FishsetsController {
 	@HttpCode(200)
 	@Delete(':id')
 	async delSet(@Param('id') id: string): Promise<string> {
+		await this.getfotoService.delBySetId(id)
 		await this.commentService.delCommBySetId(id)
 		return await this.fishService.delById(id)
 	}
