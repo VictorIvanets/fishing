@@ -11,25 +11,15 @@ export class UserService {
 		@InjectModel(UserModel)
 		private readonly userModel: ModelType<UserModel>,
 	) {}
-	async userIn(data: string): Promise<UserModel> {
-		const chat = 'chat'
-		const userAll = await this.userModel.find({ chat }).exec()
-
-		const findeUser = userAll.find((i) => {
-			return i.user === data
-		})
-		if (findeUser) {
-			return findeUser
-		} else {
-			const dto: UserDto = {
-				userId: (Math.random() * 100000).toFixed(),
-				chat: 'chat',
-				user: data,
-			}
-			const newUser = new this.userModel(dto)
-			console.log(newUser)
-			return newUser.save()
+	async userIn(user: string, userId: string): Promise<UserModel> {
+		const dto: UserDto = {
+			userId: userId,
+			chat: 'chat',
+			user: user,
 		}
+		const newUser = new this.userModel(dto)
+
+		return newUser.save()
 	}
 
 	async findAll(chat: string): Promise<UserModel[]> {
@@ -43,11 +33,11 @@ export class UserService {
 		// const user = 'multik'
 		// const del = await this.userModel.deleteMany({ user }).exec()
 		const del = await this.userModel.findOneAndDelete({ userId }).exec()
-
-		if (!del) {
-			throw new Error(`${userId} user not found`)
-		} else {
-			return true
-		}
+		// if (!del) {
+		// 	throw true
+		// } else {
+		// 	return true
+		// }
+		return true
 	}
 }

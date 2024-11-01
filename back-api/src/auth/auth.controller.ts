@@ -36,7 +36,7 @@ export class AuthController {
 		@Body() { login, password }: Pick<AuthDto, 'login' | 'password'>,
 	): Promise<object> {
 		const user = await this.authService.validateUser(login, password)
-		return this.authService.login(user.login)
+		return this.authService.login(user.login, user.userId)
 	}
 
 	@HttpCode(200)

@@ -6,41 +6,53 @@ import {
 	useQueryAllComment,
 	useSubscribeForComment,
 } from './glq_hooks/chatComment.hook'
-import { useEffect, useState } from 'react'
+import { memo, useCallback, useEffect, useState } from 'react'
 import { CommentData } from './glq_hooks/chat.types'
 import { UserComponent } from './components/userComponent'
 import { CommentComponent } from './components/commentComponent'
 import { useNavigate } from 'react-router-dom'
 
-function ChatPage() {
+const ChatPage = memo(() => {
 	const { login } = useSelector((s: RootState) => s.user)
-	const { userOutByUserId } = useCheckOut()
 	const { deletedCommentById } = useDelComment()
 	const { loading, error, allComm } = useQueryAllComment()
 	const { subdata } = useSubscribeForCheck()
 	const { subdataComment } = useSubscribeForComment()
 	const [allCommentData, setAllCommentData] = useState<CommentData[]>([])
 	const navigate = useNavigate()
+	const { userOutByUserId } = useCheckOut()
+	const [selectUser, setSelectUser] = useState<string>('')
+
+	const outChat = useCallback(
+		(userId: string) => {
+			navigate(-1)
+			userOutByUserId(userId)
+		},
+		[navigate, userOutByUserId],
+	)
 
 	useEffect(() => {
 		if (subdataComment) setAllCommentData(subdataComment)
-		else setAllCommentData(allComm)
-	}, [subdataComment, allComm, login])
-
-	function outChat(userId: string) {
-		navigate(-1)
-		userOutByUserId(userId)
-	}
+		else {
+			setAllCommentData(allComm)
+		}
+	}, [subdataComment, allComm])
 
 	return (
 		<div className="chatpage">
 			<>
 				<div className="chatpage__section">
 					{login && (
-						<UserComponent login={login} subdata={subdata} outChat={outChat} />
+						<UserComponent
+							setSelectUser={setSelectUser}
+							login={login}
+							subdata={subdata}
+							outChat={outChat}
+						/>
 					)}
 					{login && (
 						<CommentComponent
+							selectUser={selectUser}
 							login={login}
 							allCommentData={allCommentData}
 							loading={loading}
@@ -52,6 +64,6 @@ function ChatPage() {
 			</>
 		</div>
 	)
-}
+})
 
 export default ChatPage

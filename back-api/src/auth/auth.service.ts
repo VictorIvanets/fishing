@@ -23,6 +23,7 @@ export class AuthService {
 			subname: dto.subname,
 			country: dto.country,
 			city: dto.city,
+			userId: `${(Math.random() * 100000).toFixed()}`,
 		})
 		console.log(newUser)
 		return newUser.save()
@@ -34,7 +35,7 @@ export class AuthService {
 	async validateUser(
 		login: string,
 		password: string,
-	): Promise<Pick<AuthModel, 'login'>> {
+	): Promise<Pick<AuthModel, 'login' | 'userId'>> {
 		const user = await this.findUser(login)
 		if (!user) {
 			throw new UnauthorizedException(USER_NOT_FOUND)
@@ -43,14 +44,15 @@ export class AuthService {
 		if (!isCorrectPass) {
 			throw new UnauthorizedException(PASS_NOT_CORRECT)
 		}
-		return { login: user.login }
+		return { login: user.login, userId: user.userId }
 	}
 
-	async login(login: string): Promise<object> {
+	async login(login: string, userId: string): Promise<object> {
 		const payload = { login }
 		return {
 			access_token: await this.jwtService.signAsync(payload),
 			login: login,
+			userId: userId,
 		}
 	}
 

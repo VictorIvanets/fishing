@@ -1,5 +1,5 @@
-mutation CheckIn($newUser: String!) {
-	userIn(newUser: $newUser) {
+mutation CheckIn($newUser: String!, $userId: String!) {
+	userIn(newUser: $newUser, userId: $userId) {
 		userId
 		user
 	}

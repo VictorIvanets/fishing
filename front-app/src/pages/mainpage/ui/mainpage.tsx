@@ -1,20 +1,25 @@
-import { useDispatch } from 'react-redux'
-import { Link, Outlet, useNavigate, useParams } from 'react-router-dom'
-import { AppDispath } from '../../../store/store'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, Outlet, useNavigate } from 'react-router-dom'
+import { AppDispath, RootState } from '../../../store/store'
 import { userActions } from '../../../store/login.slice'
-import { JWT_PER_STATE, LOG_PER_STATE } from '../../../store/login.slice.types'
-import { useEffect, useState } from 'react'
+import {
+	JWT_PER_STATE,
+	LOG_PER_STATE,
+	USERID_PER_STATE,
+} from '../../../store/login.slice.types'
+import { memo, useCallback, useEffect, useState } from 'react'
 import axios from 'axios'
 import { UserData } from './data.types'
 import { PREFIX } from '../../../app/prefix'
-import { useCheckIn } from '../../chat/ui/glq_hooks/chatUser.hook'
+import { useCheckIn, useCheckOut } from '../../chat/ui/glq_hooks/chatUser.hook'
 
-function MainPage() {
-	const { login } = useParams()
+const MainPage = memo(() => {
 	const dispatch = useDispatch<AppDispath>()
 	const navigate = useNavigate()
 	const [data, setData] = useState<UserData>()
 	const { userInByUserName } = useCheckIn()
+	const { login, userId } = useSelector((s: RootState) => s.user)
+	const { userOutByUserId } = useCheckOut()
 
 	useEffect(() => {
 		;(async function load(): Promise<void> {
@@ -23,12 +28,19 @@ function MainPage() {
 		})()
 	}, [login])
 
-	const logOut = () => {
+	const logOut = useCallback(() => {
 		dispatch(userActions.logout())
 		localStorage.removeItem(JWT_PER_STATE)
 		localStorage.removeItem(LOG_PER_STATE)
+		localStorage.removeItem(USERID_PER_STATE)
+		if (userId) userOutByUserId(userId)
 		navigate('/')
-	}
+	}, [dispatch, navigate, userId, userOutByUserId])
+
+	useEffect(() => {
+		userOutByUserId(userId ? userId : '')
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
 
 	return (
 		<div className="mainpage">
@@ -55,15 +67,17 @@ function MainPage() {
 					>
 						галерея
 					</Link>
-					{login && (
+					{login && userId ? (
 						<Link
-							onClick={() => userInByUserName(login)}
+							onClick={() => userInByUserName(login, userId)}
 							className="mainpage__navbar__left__link tacenter"
-							to={`/main/${login}/chat`}
+							to={`/chat`}
 						>
 							чат
 						</Link>
-					)}{' '}
+					) : (
+						''
+					)}
 					<div
 						onClick={() => navigate(-1)}
 						className="mainpage__navbar__left__link tacenter"
@@ -90,6 +104,6 @@ function MainPage() {
 			</div>
 		</div>
 	)
-}
+})
 
 export default MainPage

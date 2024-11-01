@@ -1,10 +1,12 @@
 export const JWT_PER_STATE = 'userData'
 export const LOG_PER_STATE = 'userName'
+export const USERID_PER_STATE = 'userID'
 
 export interface UserState {
 	jwt: string | null
 	loginErrorMass?: string
-	login?: string | null
+	login: string | null
+	userId: string | null
 	registerErrorMass?: string
 	errorMassege?: string | null
 	isLoading: boolean
@@ -25,6 +27,7 @@ export interface UserRegisterState {
 export interface UserPerSate {
 	jwt: string | null
 	login: string | null
+	userId: string | null
 }
 
 export interface Profile {
@@ -37,8 +40,9 @@ export interface Profile {
 
 export interface LoginResponse {
 	access_token: string
-	login?: string
+	login: string
 	message?: string
+	userId: string
 }
 
 export interface RegisterResponse {

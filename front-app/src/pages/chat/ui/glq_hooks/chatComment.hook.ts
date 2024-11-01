@@ -44,7 +44,6 @@ export const useDelComment = (): IDelComment => {
 		_queries.delComment,
 	)
 	const deletedCommentById = (comId: string) => {
-		console.log(comId)
 		deleteComment({
 			variables: {
 				comId,

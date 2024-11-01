@@ -12,10 +12,14 @@ export class UserResolver {
 	constructor(private readonly userService: UserService) {}
 
 	@Mutation(() => UserModel)
-	async userIn(@Args('newUser') newUser: string): Promise<UserModel> {
-		const userIn = await this.userService.userIn(newUser)
+	async userIn(
+		@Args('newUser') newUser: string,
+		@Args('userId') userId: string,
+	): Promise<UserModel> {
+		const userIn = await this.userService.userIn(newUser, userId)
 		const userAll = await this.userService.findAll('chat')
 		pubSub.publish('userChek', { userChek: userAll })
+
 		return userIn
 	}
 

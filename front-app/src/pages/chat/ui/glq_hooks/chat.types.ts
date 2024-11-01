@@ -6,7 +6,7 @@ interface CheckData {
 }
 
 export interface ICheckIn {
-	userInByUserName: (newUser: string) => void
+	userInByUserName: (newUser: string, userId: string) => void
 	loadingChecIn: boolean
 	errorCheckIn: ApolloError | undefined
 	userIn: CheckData

@@ -69,10 +69,10 @@ export const router = createBrowserRouter(
 					path: 'info',
 					element: <InfoPage />,
 				},
-				{
-					path: 'chat',
-					element: <ChatPage />,
-				},
+				// {
+				// 	path: 'chat',
+				// 	element: <ChatPage />,
+				// },
 				{
 					path: 'galery',
 					element: <GaleryPage />,
@@ -90,6 +90,14 @@ export const router = createBrowserRouter(
 					element: <AboutPage />,
 				},
 			],
+		},
+		{
+			path: 'chat',
+			element: (
+				<Suspense fallback={<PreLoaderGradient />}>
+					<ChatPage />
+				</Suspense>
+			),
 		},
 		{
 			path: '*',

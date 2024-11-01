@@ -1,11 +1,20 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link, Outlet } from 'react-router-dom'
 import { RootState } from '../../../store/store'
+import { useCheckOut } from '../../chat/ui/glq_hooks/chatUser.hook'
 
 function AuthLayout() {
 	const [viewLogin, setViewLogin] = useState(false)
-	const { login, jwt } = useSelector((s: RootState) => s.user)
+	const { login, jwt, userId } = useSelector((s: RootState) => s.user)
+	const { userOutByUserId } = useCheckOut()
+
+	useEffect(() => {
+		return () => {
+			userOutByUserId(userId ? userId : '')
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
 
 	return (
 		<div className={`startpage ${viewLogin ? 'hiddenlogo authrow' : ''}`}>

@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import {
 	JWT_PER_STATE,
 	LOG_PER_STATE,
+	USERID_PER_STATE,
 	LoginResponse,
 	UserPerSate,
 	UserState,
@@ -13,6 +14,7 @@ import { PREFIX } from '../app/prefix'
 const initialState: UserState = {
 	jwt: loadState<UserPerSate>(JWT_PER_STATE)?.jwt ?? null,
 	login: loadState<UserPerSate>(LOG_PER_STATE)?.login ?? null,
+	userId: loadState<UserPerSate>(USERID_PER_STATE)?.userId ?? null,
 	isLoading: false,
 }
 
@@ -34,6 +36,7 @@ export const userSlice = createSlice({
 		logout: (state) => {
 			state.jwt = null
 			state.login = null
+			state.userId = null
 		},
 		clearLoginError: (state) => {
 			state.loginErrorMass = undefined
@@ -52,6 +55,7 @@ export const userSlice = createSlice({
 		builder.addCase(getlogin.fulfilled, (state, actions) => {
 			state.jwt = actions.payload.access_token
 			state.login = actions.payload.login
+			state.userId = actions.payload.userId
 			state.isLoading = false
 		})
 

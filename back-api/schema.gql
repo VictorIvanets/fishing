@@ -32,7 +32,7 @@ type Query {
 }
 
 type Mutation {
-  userIn(newUser: String!): UserModel!
+  userIn(newUser: String!, userId: String!): UserModel!
   userOut(userId: String!): Boolean!
   addComment(newCommentData: NewCommentInput!): Chat!
   deleteComment(comId: String!): Boolean!

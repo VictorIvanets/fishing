@@ -20,10 +20,11 @@ export const useCheckOut = (): ICheckOut => {
 }
 export const useCheckIn = (): ICheckIn => {
 	const [userIn, { data, loading, error }] = useMutation(_queries.CheckIn)
-	const userInByUserName = (newUser: string) => {
+	const userInByUserName = (newUser: string, userId: string) => {
 		userIn({
 			variables: {
 				newUser,
+				userId,
 			},
 		})
 	}
