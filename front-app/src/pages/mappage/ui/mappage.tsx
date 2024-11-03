@@ -89,14 +89,11 @@ function MapPage() {
 		)
 	}, [state])
 
-	async function delSet(e: any) {
-		const id = e.target.dataset.setid
-		if (id) {
-			const response = await fetchDelState(`${id}`)
-			setDeleteSet(!deleteSet)
-			console.log(response)
-			setViewResult(false)
-		}
+	async function delSet(delSet: number) {
+		const response = await fetchDelState(`${delSet}`)
+		setDeleteSet(!deleteSet)
+		console.log(response)
+		setViewResult(false)
 	}
 
 	function getCoords(e: any) {

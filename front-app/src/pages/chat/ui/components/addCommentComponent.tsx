@@ -9,6 +9,7 @@ import {
 import { useAddComment } from '../glq_hooks/chatComment.hook'
 import { CommentSubmit } from '../glq_hooks/chat.types'
 import { PreLoaderGradientBox } from '../../../../widgets/PreLoader'
+import iconfishpage_chatsend from '/iconfishpage_chatsend.svg'
 
 interface AddCommentComponentProps {
 	login: string
@@ -69,7 +70,16 @@ export const AddCommentComponent = memo(
 							onChange={(e) => onChange(e.target.value)}
 							ref={inputRef}
 						></textarea>
-						<button className="addcomment__btn">SEND</button>
+						<button className="addcomment__btn">
+							<div className="addcomment__btn__svgbox">
+								<img
+									title="ВИДАЛИТИ"
+									src={iconfishpage_chatsend}
+									className="addcomment__btn__svgbox__img"
+									alt="ВИДАЛИТИ"
+								/>
+							</div>
+						</button>
 					</>
 				)}
 			</form>

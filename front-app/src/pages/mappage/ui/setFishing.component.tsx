@@ -1,11 +1,14 @@
 import { useState } from 'react'
 import { MapResponse } from '../../../store/map.slice.types'
 import { Link } from 'react-router-dom'
+import iconfishpage_del from '/iconfishpage_del.svg'
+import iconfishpage_cancel from '/iconfishpage_cancel.svg'
+import iconfishpage_ok from '/iconfishpage_ok.svg'
 
 export interface setFishProps {
 	i: MapResponse
 	getCoords: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
-	delSet: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
+	delSet: (setID: number) => void
 	setViewAllstate: React.Dispatch<React.SetStateAction<boolean>>
 }
 
@@ -42,33 +45,54 @@ export function SetFishing({
 						показати на карті
 					</button>
 					{!viewDel ? (
-						<button
+						<div
 							onClick={() => setViewDel(true)}
 							className="resultbtndel"
 							data-setid={i.setID}
 						>
-							<p className="resultbtn__info">видалити</p>
-						</button>
+							<div className="delsvgbox">
+								<img
+									title="ВИДАЛИТИ"
+									src={iconfishpage_del}
+									className="delsvgitem"
+									alt="ВИДАЛИТИ"
+								/>
+							</div>
+						</div>
 					) : (
 						<div className="resultbtndel__confirm">
-							<h2>Ви дійсно хочете видалити?</h2>
+							<h2 className="tacenter">Ви дійсно хочете видалити?</h2>
 							<div className="resultbtndel__confirm__btn">
 								<button
-									onClick={(e) => {
-										delSet(e)
+									onClick={() => {
+										delSet(i.setID)
 										setViewDel(false)
 									}}
-									className="resultbtndel"
+									className="resultbtndelconfirm"
 									data-setid={i.setID}
 								>
-									так
+									<div onClick={() => console.log('DIV')} className="delsvgbox">
+										<img
+											title="ВИДАЛИТИ"
+											src={iconfishpage_ok}
+											className="delsvgitem"
+											alt="ВИДАЛИТИ"
+										/>
+									</div>
 								</button>
 								<button
 									onClick={() => setViewDel(false)}
-									className="resultbtndel"
+									className="resultbtndelconfirm"
 									data-setid={i.setID}
 								>
-									відміна
+									<div className="delsvgbox">
+										<img
+											title="ВІДМІНИТИ"
+											src={iconfishpage_cancel}
+											className="delsvgitem"
+											alt="ВІДМІНИТИ"
+										/>
+									</div>
 								</button>
 							</div>
 						</div>

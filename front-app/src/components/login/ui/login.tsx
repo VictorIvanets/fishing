@@ -58,12 +58,12 @@ function Login() {
 						placeholder="password"
 					/>
 					{loginErrorMass ? (
-						<p className="margin1 active roboto-bold">{errorValue}</p>
+						<p className="margin1 colorGreen roboto-bold">{errorValue}</p>
 					) : (
 						''
 					)}
 					{inputValue ? (
-						<p className="margin1 active roboto-bold">заповніть всі поля</p>
+						<p className="margin1 colorGreen roboto-bold">заповніть всі поля</p>
 					) : (
 						''
 					)}

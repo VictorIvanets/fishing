@@ -56,9 +56,8 @@ function SetsPage() {
 
 			axios
 				.post(`${PREFIX}fotoset/upload/${load?.setID}`, formData, config)
-				.then((response) => {
+				.then((_) => {
 					setUploadedFiles(!uploadedFiles)
-					console.log(response.data[0].name)
 					setviewloadFoto(false)
 				})
 				.catch((error) => {

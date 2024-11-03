@@ -3,6 +3,7 @@ import { CommentData } from '../glq_hooks/chat.types'
 import { memo, useCallback, useEffect, useRef } from 'react'
 import { AddCommentComponent } from './addCommentComponent'
 import { PreLoaderGradient } from '../../../../widgets/PreLoader'
+import MessengerNotificationSound from '/Messenger-Notification-Sound.mp3'
 
 interface CommentComponentProps {
 	login: string
@@ -25,6 +26,8 @@ export const CommentComponent = memo(
 		const ref1 = useRef(null)
 		const ref2 = useRef(null)
 
+		const audio = new Audio(MessengerNotificationSound)
+
 		const scrollDown = useCallback(
 			(r1: any, r2: any) => {
 				if (allCommentData && allCommentData.length > 3) {
@@ -39,6 +42,7 @@ export const CommentComponent = memo(
 		)
 
 		useEffect(() => {
+			audio.play()
 			if (ref1 && ref2) {
 				const r1 = ref1
 				const r2 = ref2

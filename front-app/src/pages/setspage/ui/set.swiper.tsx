@@ -24,15 +24,12 @@ export default function SwiperComponent({ img, setId }: SwiperProps) {
 				setTimeout(() => {
 					if (Array.isArray(res)) {
 						setFotoInFolder(res.reverse())
-					} else {
-						console.log(res)
 					}
 				}, 1000),
 			)
 		}
 	}, [img, setFotoInFolder, setId])
 
-	console.log(fotoInFolder)
 	return (
 		<div className="swiperpage">
 			{fotoInFolder ? (

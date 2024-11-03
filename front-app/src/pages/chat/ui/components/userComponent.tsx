@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux'
 import { UserData } from '../glq_hooks/chat.types'
 import { RootState } from '../../../../store/store'
 import { memo } from 'react'
+import iconfishpage_chatout from '/iconfishpage_chatout.svg'
 
 interface userComponentProps {
 	login: string
@@ -21,7 +22,14 @@ export const UserComponent = memo((props: userComponentProps) => {
 					className="chatpage__outbtn"
 					onClick={() => outChat(userId ? userId : '')}
 				>
-					ВИЙТИ
+					<div className="chatpage__outbtn__btn__svgbox">
+						<img
+							title="ВИДАЛИТИ"
+							src={iconfishpage_chatout}
+							className="chatpage__outbtn__btn__svgbox__img"
+							alt="ВИДАЛИТИ"
+						/>
+					</div>
 				</button>
 
 				<h3 className="margin1">У ЧАТІ:</h3>

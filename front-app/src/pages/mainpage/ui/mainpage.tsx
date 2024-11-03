@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, Outlet, useNavigate } from 'react-router-dom'
+import { NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { AppDispath, RootState } from '../../../store/store'
 import { userActions } from '../../../store/login.slice'
 import {
@@ -12,6 +12,12 @@ import axios from 'axios'
 import { UserData } from './data.types'
 import { PREFIX } from '../../../app/prefix'
 import { useCheckIn, useCheckOut } from '../../chat/ui/glq_hooks/chatUser.hook'
+import iconfishpage_back from '/iconfishpage_back.svg'
+import iconfishpage_foto from '/iconfishpage_foto.svg'
+import iconfishpage_map from '/iconfishpage_map.svg'
+import iconfishpage_chat from '/iconfishpage_chat.svg'
+import iconfishpage_info from '/iconfishpage_info.svg'
+import exit from '/exit.svg'
 
 const MainPage = memo(() => {
 	const dispatch = useDispatch<AppDispath>()
@@ -49,40 +55,75 @@ const MainPage = memo(() => {
 			</div>
 			<div className="mainpage__navbar">
 				<div className="mainpage__navbar__left">
-					<Link
+					<NavLink
+						title="КАРТА"
 						className="mainpage__navbar__left__link tacenter"
 						to={`/main/${login}/map`}
 					>
-						до карти
-					</Link>
-					<Link
+						<div className="mainpage__svgbox">
+							<img
+								src={iconfishpage_map}
+								className="mainpage__svgbox__svg"
+								alt="КАРТА"
+							/>
+						</div>
+					</NavLink>
+					<NavLink
+						title="ПРАВИЛА"
 						className="mainpage__navbar__left__link tacenter"
 						to={`/main/${login}/about`}
 					>
-						про сайт
-					</Link>
-					<Link
+						<div className="mainpage__svgbox">
+							<img
+								src={iconfishpage_info}
+								className="mainpage__svgbox__svg"
+								alt="ПРАВИЛА"
+							/>
+						</div>
+					</NavLink>
+					<NavLink
+						title="ГАЛЕРЕЯ"
 						className="mainpage__navbar__left__link tacenter"
 						to={`/main/${login}/galery`}
 					>
-						галерея
-					</Link>
+						<div className="mainpage__svgbox">
+							<img
+								src={iconfishpage_foto}
+								className="mainpage__svgbox__svg"
+								alt="ГАЛЕРЕЯ"
+							/>
+						</div>
+					</NavLink>
 					{login && userId ? (
-						<Link
+						<NavLink
+							title="ЧАТ"
 							onClick={() => userInByUserName(login, userId)}
-							className="mainpage__navbar__left__link tacenter"
+							className="mainpage__navbar__left__link tacenter chaticon"
 							to={`/chat`}
 						>
-							чат
-						</Link>
+							<div className="mainpage__svgbox">
+								<img
+									src={iconfishpage_chat}
+									className="mainpage__svgbox__svg chaticon"
+									alt="ЧАТ"
+								/>
+							</div>
+						</NavLink>
 					) : (
 						''
 					)}
 					<div
+						title="НАЗАД"
 						onClick={() => navigate(-1)}
 						className="mainpage__navbar__left__link tacenter"
 					>
-						<p className="">назад</p>
+						<div className="mainpage__svgbox">
+							<img
+								src={iconfishpage_back}
+								className="mainpage__svgbox__svg"
+								alt="НАЗАД"
+							/>
+						</div>
 					</div>
 				</div>
 
@@ -94,11 +135,14 @@ const MainPage = memo(() => {
 						<h3 className="colorLight roboto-medium">{data?.city}</h3>
 						<h3 className="colorLight roboto-medium">{data?.country}</h3>
 					</div>
-					<button
-						className="mainpage__navbar__left__link tacenter"
-						onClick={logOut}
-					>
-						Вийти
+					<button title="ВИЙТИ" className="exiticon" onClick={logOut}>
+						<div className="mainpage__svgbox">
+							<img
+								src={exit}
+								className="mainpage__svgbox__svg exiticon"
+								alt="ВИЙТИ"
+							/>
+						</div>
 					</button>
 				</div>
 			</div>
