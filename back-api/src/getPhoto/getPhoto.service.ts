@@ -1,30 +1,30 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, UseGuards } from '@nestjs/common'
 import { ensureDir, readFile, writeFile } from 'fs-extra'
 import { path } from 'app-root-path'
 import { MFile } from 'src/fotoset/mfile.class'
 import { ModelType } from '@typegoose/typegoose/lib/types'
 import { InjectModel } from 'nestjs-typegoose'
-import { GetFotoModel } from './getfoto.model'
+import { GetPhotoModel, PhotoResponseDBT } from './getPhoto.model'
 import * as sharp from 'sharp'
 
 @Injectable()
-export class GetfotoService {
+export class GetPhotoService {
 	constructor(
-		@InjectModel(GetFotoModel)
-		private readonly getFotoModel: ModelType<GetFotoModel>,
+		@InjectModel(GetPhotoModel)
+		private readonly getPhotoModel: ModelType<GetPhotoModel>,
 	) {}
 	async getFoto(folder: string): Promise<string[]> {
 		const setid = folder
-		const fotoBySetId = await this.getFotoModel.find({ setid }).exec()
+		const fotoBySetId = await this.getPhotoModel.find({ setid }).exec()
 		const res = []
 
 		const uploadFolder = `${path}/upload/${folder}`
 
 		if (fotoBySetId.length) {
 			await ensureDir(uploadFolder)
-			fotoBySetId.forEach(async (fotoitem) => {
-				const originalname = fotoitem.filename
-				const buffer = fotoitem.imgBuffer
+			fotoBySetId.forEach(async (photoitem) => {
+				const originalname = photoitem.filename
+				const buffer = photoitem.imgBuffer
 				res.push(originalname)
 				// const check = await readFile(`${uploadFolder}/${originalname}`)
 				// if (!check) {
@@ -52,43 +52,45 @@ export class GetfotoService {
 		}
 	}
 
-	async saveFotoBd(files: MFile[], folder: string): Promise<string> {
+	async savePhotoBd(files: MFile[], folder: string): Promise<PhotoResponseDBT> {
 		for (const file of files) {
 			const minbuffer = await this.convertToJpegMin(file.buffer)
 			const filename = file.originalname
-			const fotoset = await this.getFotoModel.findOne({ filename }).exec()
+			const fotoset = await this.getPhotoModel.findOne({ filename }).exec()
 			const check = fotoset?.setid === folder ? true : false
 			const checkcheck = fotoset?.filename && check ? false : true
 			if (checkcheck) {
-				const res = new this.getFotoModel({
+				const res = new this.getPhotoModel({
 					setid: folder,
 					filename: file.originalname,
 					imgBuffer: minbuffer,
 				})
 
 				res.save()
+				return res
 			} else {
 				return
 			}
 		}
-
-		return folder
 	}
 
-	async getAllFotoBySetId(setid: string): Promise<GetFotoModel[]> {
-		const fotoByset = await this.getFotoModel.find({ setid }).exec()
+	async getAllPhotoBySetId(setid: string): Promise<GetPhotoModel[]> {
+		const fotoByset = await this.getPhotoModel.find({ setid }).exec()
+
 		return fotoByset
 	}
 
 	async delBySetId(setid: string): Promise<string> {
-		const fotoByset = await this.getFotoModel.find({ setid }).exec()
+		const fotoByset = await this.getPhotoModel.find({ setid }).exec()
 
 		fotoByset.forEach((i) => {
-			const _id = i._id
-			this.getFotoModel.findByIdAndDelete({ _id }).exec()
-			return i.filename
+			this.getPhotoModel.findByIdAndDelete({ _id: setid }).exec()
 		})
 
 		return `DEL ${setid}`
+	}
+
+	async delBy_Id(id: string): Promise<PhotoResponseDBT> {
+		return await this.getPhotoModel.findOneAndDelete({ _id: id }).exec()
 	}
 }

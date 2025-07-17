@@ -1,6 +1,6 @@
 import { Global, Module } from '@nestjs/common'
 import { FotosetService } from './fotoset.service'
-import { FotosetController } from './fotoset.controller'
+import { PhotosetController } from './fotoset.controller'
 import { ServeStaticModule } from '@nestjs/serve-static'
 import { path } from 'app-root-path'
 import { TypegooseModule } from 'nestjs-typegoose'
@@ -25,6 +25,6 @@ import { ConfigModule } from '@nestjs/config'
 		ConfigModule,
 	],
 	providers: [FotosetService],
-	controllers: [FotosetController],
+	controllers: [PhotosetController],
 })
 export class FotosetModule {}

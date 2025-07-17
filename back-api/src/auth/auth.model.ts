@@ -19,6 +19,4 @@ export class AuthModel extends TimeStamps {
 	country: string
 	@prop()
 	city: string
-	@prop()
-	userId: string
 }

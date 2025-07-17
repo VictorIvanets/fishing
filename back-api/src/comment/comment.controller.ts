@@ -6,11 +6,16 @@ import {
 	HttpCode,
 	Param,
 	Post,
+	UseGuards,
 } from '@nestjs/common'
 import { CommentService } from './comment.service'
 import { CommentDto } from './comment.dto'
 import { CommentModel } from './comment.model'
+import { AuthGuard } from '@nestjs/passport'
+import { ApiTags } from '@nestjs/swagger'
 
+@ApiTags('Comment')
+@UseGuards(AuthGuard('jwt'))
 @Controller('comment')
 export class CommentController {
 	constructor(private readonly commentService: CommentService) {}

@@ -1,0 +1,218 @@
+@use '../components/animation/_animation' as *
+
+$COLORMAIN: #1b1b1b
+$COLORTEXT: #afafaf
+$COLORSECOND: #5a0000
+$COLORACCENT: #ff0037
+$COLORWHITE: #ffffff
+
+:root
+    --index: calc( 1vw + 1vh )
+
+html
+    font-size: 62.5%
+    font-family: "Raleway", sans-serif
+    font-weight: 100
+    font-style: normal
+    background: $COLORMAIN
+
+*
+    margin: 0
+    padding: 0
+    box-sizing: border-box
+p
+    // font-size: calc(var(--index)*0.5)
+    font-size: 1.1rem
+    font-family: "Raleway"
+    letter-spacing: 1px
+    font-optical-sizing: auto
+    font-weight: 400
+    font-style: normal
+    color: $COLORTEXT
+    
+h1
+    font-size: 3rem 
+    color: $COLORACCENT
+    font-family: "Raleway"
+    font-weight: normal
+h2
+    font-size: 3rem 
+    color: $COLORACCENT
+    font-family: "Raleway"
+    font-weight: normal
+    text-align: left
+h3 
+    font-size: 2rem
+    color: $COLORTEXT
+    margin: 0.3rem 0
+h4
+    font-size: 1.2rem
+    color: $COLORTEXT
+    margin: 0.3rem 0
+a  
+    color: $COLORACCENT 
+    text-decoration: none
+    font-size: 1.1rem 
+    font-family: "Raleway"
+    letter-spacing: 1px
+    &:hover
+        color: $COLORSECOND
+        transition: all 0.2s
+        box-shadow: 1px 1px 3px $COLORMAIN
+
+
+.COLORMAIN
+    color: $COLORMAIN
+.COLORTEXT
+    color: $COLORTEXT
+.COLORSECOND
+    color: $COLORSECOND
+.COLORACCENT
+    color: $COLORACCENT
+.COLORMAINBG
+    background: $COLORMAIN
+.COLORTEXTBG
+    background: $COLORTEXT
+.COLORSECONDBG
+    background: $COLORSECOND
+.COLORACCENTBG
+    background: $COLORACCENT
+
+.fontsize2rem
+    font-size: 2rem
+.fontsize1rem
+    font-size: 1.1rem
+.fontsize1-5rem
+    font-size: 1.5rem
+
+
+.taright
+    text-align: right
+.taleft
+    text-align: left
+.tacenter
+    text-align: center
+.tajustify
+    text-align: justify
+
+.marginbottom1
+    margin-bottom: 1rem
+.marginbottom2
+    margin-bottom: 2rem
+.marginbottom3
+    margin-bottom: 3rem
+.marginbottom5
+    margin-bottom: 5rem
+
+.margin1
+    margin: 1rem
+.margin2
+    margin: 2rem
+.marginright1
+    margin-right: 1rem
+.marginright2
+    margin-right: 2rem
+.marginleft1
+    margin-left: 1rem
+.marginleft2
+    margin-left: 2rem
+.active
+    color: $COLORACCENT
+    // background: $COLORMAIN
+    border-right: 3px solid $COLORACCENT
+    *
+        color: $COLORACCENT
+    p, h4
+        color: $COLORTEXT
+
+
+.upper
+    text-transform: uppercase
+.svg
+    display: flex
+    min-height: 3rem
+    max-height: 5rem
+
+.svgbox
+    height: 100%
+    width: 100%
+
+.absolutecenter
+    position: absolute
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%)
+.flexcenter
+    display: flex
+    align-items: center
+    justify-content: center
+
+.flexcolumn
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-content: center
+    align-items: center
+
+input
+    width: 100% 
+    height: 3rem
+    border: none
+    border-bottom: 1px solid $COLORACCENT
+    outline: none
+    margin-bottom: 2rem
+    border-radius: 0.2rem
+    background: none
+    padding: 0.5rem
+    font-size: 1.5rem
+    color: white
+    &:focus
+        border-bottom: 1px solid white
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus,
+    &:-webkit-autofill:active 
+        text-decoration-color: white
+        transition: background-color 5000s ease-in-out 0s
+        -webkit-text-fill-color: #ffffff
+
+
+button
+    width: 100% 
+    height: 3rem
+    border: none
+    outline: none
+    cursor: pointer
+    border-radius: calc(var(--index)*3) 
+    padding: calc(var(--index)*0.3) 
+    font-size: calc(var(--index)*1) 
+    font-weight: 300
+    font-style: normal
+    letter-spacing: 1px
+    background: $COLORACCENT
+    color: $COLORTEXT
+    transition: all 0.2s
+
+    &:hover
+        color: $COLORSECOND
+        background: $COLORTEXT
+        transition: all 0.1s
+        box-shadow: 1px 1px 3px $COLORSECOND
+    &:active
+        color: $COLORACCENT
+        background: $COLORSECOND
+        transition: all 0.1s
+        
+
+
+.addfavortoastr
+    font-size: 1.7rem
+    transition: all 0.2s
+    cursor: pointer
+
+
+        
+
+
+
+

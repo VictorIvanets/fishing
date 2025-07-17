@@ -1,9 +1,9 @@
 import { Global, Module } from '@nestjs/common'
-import { GetfotoService } from './getfoto.service'
-import { GetfotoController } from './getfoto.controller'
+import { GetPhotoService } from './getPhoto.service'
+import { GetfotoController } from './getPhoto.controller'
 import { TypegooseModule } from 'nestjs-typegoose'
 import { ConfigModule } from '@nestjs/config'
-import { GetFotoModel } from './getfoto.model'
+import { GetPhotoModel } from './getPhoto.model'
 import { ServeStaticModule } from '@nestjs/serve-static'
 import { path } from 'app-root-path'
 
@@ -17,7 +17,7 @@ import { path } from 'app-root-path'
 		}),
 		TypegooseModule.forFeature([
 			{
-				typegooseClass: GetFotoModel,
+				typegooseClass: GetPhotoModel,
 				schemaOptions: {
 					collection: 'getfoto',
 				},
@@ -25,7 +25,7 @@ import { path } from 'app-root-path'
 		]),
 		ConfigModule,
 	],
-	providers: [GetfotoService],
-	exports: [GetfotoService],
+	providers: [GetPhotoService],
+	exports: [GetPhotoService],
 })
-export class GetfotoModule {}
+export class GetPhotoModule {}

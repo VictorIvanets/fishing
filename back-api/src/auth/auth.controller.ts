@@ -7,15 +7,21 @@ import {
 	HttpCode,
 	Param,
 	Post,
+	UseGuards,
 	UsePipes,
 	ValidationPipe,
 } from '@nestjs/common'
 import { AuthService } from './auth.service'
-import { InjectModel } from 'nestjs-typegoose'
-import { AuthDto } from './auth.dto'
+import { AuthDto, loginDto } from './auth.dto'
+import { AuthResponseT } from './auth.types'
+import { AuthModel } from './auth.model'
+import { AuthGuard } from '@nestjs/passport'
+import { ApiTags } from '@nestjs/swagger'
+import { CurrentUser } from './auth.decorator'
 
 const REGISTER_ERROR = 'такий user зараєстрован'
 
+@ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
 	constructor(private readonly authService: AuthService) {}
@@ -32,25 +38,31 @@ export class AuthController {
 	@UsePipes(new ValidationPipe())
 	@HttpCode(200)
 	@Post('login')
-	async login(
-		@Body() { login, password }: Pick<AuthDto, 'login' | 'password'>,
-	): Promise<object> {
+	async login(@Body() { login, password }: loginDto): Promise<AuthResponseT> {
 		const user = await this.authService.validateUser(login, password)
-		return this.authService.login(user.login, user.userId)
+		const res = await this.authService.login(user.login, user._id)
+
+		return res
 	}
 
 	@HttpCode(200)
-	@Get(':login')
-	async user(@Param('login') login: string): Promise<object> {
-		console.log(login)
-		const user = await this.authService.findByLogin(login)
-		console.log(user)
-		return user
+	@Get('check')
+	async checkServer(): Promise<string> {
+		return 'Server is running'
 	}
+
+	@UseGuards(AuthGuard('jwt'))
 	@HttpCode(200)
-	@Delete(':login')
-	async deluser(@Param('login') login: string): Promise<string> {
-		const user = await this.authService.delByLogin(login)
+	@Get('userinfo')
+	async user(@CurrentUser() user: any): Promise<object> {
+		return await this.authService.findUserById(user)
+	}
+
+	@UseGuards(AuthGuard('jwt'))
+	@HttpCode(200)
+	@Delete('delete/:id')
+	async deluser(@Param('id') id: string): Promise<AuthModel> {
+		const user = await this.authService.delUserById(id)
 		return user
 	}
 }

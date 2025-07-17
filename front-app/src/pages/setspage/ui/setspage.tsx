@@ -32,12 +32,13 @@ function SetsPage() {
 
 	function handleMultipleChange(event: any) {
 		setFiles([...event.target.files])
+		console.log([...event.target.files])
 		const nameFiale = [...event.target.files]
 
 		nameFiale.forEach((file: any) => {
 			const onefile = file.name
 			const nameFile = onefile.split('.')
-
+			console.log(onefile)
 			setNameFiles(nameFile[0])
 		})
 	}
@@ -47,7 +48,10 @@ function SetsPage() {
 		if (files) {
 			files.forEach((file: any) => {
 				formData.append('files', file, file.name)
+				console.log(file)
+				console.log(file.name)
 			})
+			console.log(formData)
 			const config = {
 				headers: {
 					'content-type': 'multipart/form-data',

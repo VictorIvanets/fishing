@@ -11,7 +11,7 @@ export class FotosetService {
 	constructor(
 		@InjectModel(FishModel) private readonly fishModel: ModelType<FishModel>,
 	) {}
-	async saveFoto(files: MFile[], folder: string): Promise<FileElemResponse[]> {
+	async savePhoto(files: MFile[], folder: string): Promise<FileElemResponse[]> {
 		const res: FileElemResponse[] = []
 		for (const file of files) {
 			res.push({
@@ -31,7 +31,6 @@ export class FotosetService {
 					fishset.img.unshift(`${folder}/${file.originalname}`)
 				}
 			}
-
 			this.fishModel
 				.findByIdAndUpdate(fishset._id, fishset, { new: true })
 				.exec()

@@ -8,13 +8,15 @@ import { getMongoConfig } from './config/mongo-config'
 import { FishsetsModule } from './fishsets/fishsets.module'
 import { FotosetModule } from './fotoset/fotoset.module'
 import { CommentModule } from './comment/comment.module'
-import { GetfotoModule } from './getfoto/getfoto.module'
+import { GetPhotoModule } from './getPhoto/getPhoto.module'
 import { GraphQLModule } from '@nestjs/graphql'
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
 import { upperDirectiveTransformer } from './common/directives/upper-case.directive'
 import { DirectiveLocation, GraphQLDirective } from 'graphql'
 import { ChatModule } from './chat/chat.module'
 import { UserInOutModule } from './userInOut/userInOut.module'
+import { FishingsModule } from './fishings/fishings.module'
+import { PhotoModule } from './photoFishing/photo.module'
 
 @Module({
 	imports: [
@@ -48,7 +50,9 @@ import { UserInOutModule } from './userInOut/userInOut.module'
 		FishsetsModule,
 		FotosetModule,
 		CommentModule,
-		GetfotoModule,
+		GetPhotoModule,
+		FishingsModule,
+		PhotoModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],

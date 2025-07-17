@@ -5,16 +5,19 @@ import { genSaltSync, hashSync, compare } from 'bcryptjs'
 import { JwtService } from '@nestjs/jwt'
 import { AuthModel } from './auth.model'
 import { AuthDto } from './auth.dto'
-const USER_NOT_FOUND = 'Такого користувача не знайдено'
-const PASS_NOT_CORRECT = 'Невірний пароль'
+import { ConfigService } from '@nestjs/config'
+import { AuthResponseT, RegisterResponseT } from './auth.types'
+import { Types } from 'mongoose'
+import { PASS_NOT_CORRECT, USER_NOT_FOUND } from 'src/STATIC/static'
 
 @Injectable()
 export class AuthService {
 	constructor(
 		@InjectModel(AuthModel) private readonly userModel: ModelType<AuthModel>,
 		private readonly jwtService: JwtService,
+		private readonly configService: ConfigService,
 	) {}
-	async createUser(dto: AuthDto): Promise<unknown> {
+	async createUser(dto: AuthDto): Promise<RegisterResponseT> {
 		const salt = genSaltSync(10)
 		const newUser = new this.userModel({
 			login: dto.login,
@@ -23,20 +26,22 @@ export class AuthService {
 			subname: dto.subname,
 			country: dto.country,
 			city: dto.city,
-			userId: `${(Math.random() * 100000).toFixed()}`,
 		})
-		console.log(newUser)
 		return newUser.save()
 	}
 	async findUser(login: string): Promise<AuthModel> {
 		return this.userModel.findOne({ login }).exec()
 	}
 
+	async findUserById(user: { _id: string; login: string }): Promise<AuthModel> {
+		return this.userModel.findOne({ _id: user._id }).exec()
+	}
+
 	async validateUser(
 		login: string,
 		password: string,
-	): Promise<Pick<AuthModel, 'login' | 'userId'>> {
-		const user = await this.findUser(login)
+	): Promise<Pick<AuthModel, 'login'> & Record<'_id', Types.ObjectId>> {
+		const user = await this.userModel.findOne({ login })
 		if (!user) {
 			throw new UnauthorizedException(USER_NOT_FOUND)
 		}
@@ -44,25 +49,19 @@ export class AuthService {
 		if (!isCorrectPass) {
 			throw new UnauthorizedException(PASS_NOT_CORRECT)
 		}
-		return { login: user.login, userId: user.userId }
+		return { login: user.login, _id: user._id }
 	}
 
-	async login(login: string, userId: string): Promise<object> {
-		const payload = { login }
+	async login(login: string, _id: Types.ObjectId): Promise<AuthResponseT> {
+		const secret = this.configService.get('JWT_SECRET')
 		return {
-			access_token: await this.jwtService.signAsync(payload),
+			access_token: await this.jwtService.signAsync({ login, _id }, { secret }),
 			login: login,
-			userId: userId,
+			_id,
 		}
 	}
 
-	async findByLogin(login: string): Promise<AuthModel> {
-		const user = await this.findUser(login)
-		return user
-	}
-	async delByLogin(login: string): Promise<string> {
-		const { _id } = await this.findUser(login)
-		this.userModel.findByIdAndDelete(_id).exec()
-		return `delete: ${login}`
+	async delUserById(id: string): Promise<AuthModel> {
+		return await this.userModel.findByIdAndDelete({ _id: id }).exec()
 	}
 }

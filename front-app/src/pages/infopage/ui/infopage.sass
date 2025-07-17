@@ -1,16 +1,16 @@
 .infopage
-    // display: flex
     width: 100%
     height: 100%
     color: $COLSECOND
+    padding: 2rem
     display: flex
-    flex-direction: column
-    text-align: center
-    justify-content: center
+    flex-direction: wrap
+    justify-content: space-around
+    flex-wrap: wrap
     align-items: center
 
     &__itembox
-        height: 50vh
+        height: 30vh
         overflow: auto
         scrollbar: 0px      
         &__item
@@ -21,11 +21,67 @@
             padding: 0.5rem
             margin: 0.2rem
             border-radius: 0.3rem
-            background: rgba(0, 42, 48, 0.11)
+            background: rgb(0, 23, 32)
             backdrop-filter: blure(10px)
             cursor: pointer
+            transition: all 0.3s
+            &:hover
+                background: rgb(0, 33, 53)
+                transition: all 0.3s
     &__itembox::-webkit-scrollbar
             width: 7px
     &__itembox::-webkit-scrollbar-thumb
             width: 7px
             background: $COLSECOND
+
+    &__linkbox
+        width: 30rem
+        height: 50%
+        
+        display: flex
+        align-items: center
+        justify-content: center
+        flex-direction: column
+        position: relative
+        &__circle
+                width: 80rem
+                height: 80rem
+                position: absolute
+                background: #003249
+                border-radius: 50%
+                z-index: 1
+                animation: animecircle 3s ease-out  infinite
+                opacity: 0
+        h1
+                display: inline-block
+                background: linear-gradient(45deg, #585858 3%, #05848d 48%, #575757 97%)
+                background-clip: text
+                text-fill-color: transparent
+                color: transparent
+                z-index: 2
+    
+
+    &__infobox
+        height: 50%
+        width: 30rem
+        display: flex
+        align-items: center
+        flex-direction: column
+        justify-content: center
+        position: relative
+         
+           
+                
+@keyframes animecircle
+        0%
+            opacity: 1
+            scale: 10%
+            backface-visibility: hidden
+        60%
+            opacity: 0
+            scale: 70%
+            backface-visibility: hidden
+        100%
+            opacity: 0
+            scale: 100%
+            backface-visibility: hidden

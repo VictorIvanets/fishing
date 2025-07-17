@@ -14,7 +14,12 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 		})
 	}
 
-	async validate({ login }: Pick<AuthModel, 'login'>): Promise<string> {
-		return login
+	async validate({
+		login,
+		_id,
+	}: Pick<AuthModel, 'login' | '_id'>): Promise<
+		Pick<AuthModel, 'login' | '_id'>
+	> {
+		return { login, _id }
 	}
 }

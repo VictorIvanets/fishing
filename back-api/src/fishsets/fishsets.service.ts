@@ -33,7 +33,10 @@ export class FishsetsService {
 	}
 
 	async findAllSets(db: string): Promise<Omit<FishModel[], 'login'>> {
-		return this.fishModel.find({ db }).exec()
+		console.log(db)
+		const res = await this.fishModel.find({ db }).exec()
+		console.log(res.length)
+		return res
 	}
 
 	async delById(setID: string): Promise<string> {

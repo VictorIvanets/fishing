@@ -1,0 +1,98 @@
+@use '../../sass/main_style' as *
+.home
+    width: 100%
+    height: 100%
+    position: relative
+    padding: 5rem 3rem
+    animation: gradientAnimation 8s ease infinite
+    background: linear-gradient(270deg, #ffffff00, #001a2c67, #ffffff00)
+    background-size: 400% 400%
+
+    @media (max-width: 700px)
+        padding: 10rem 1rem
+
+    &__logobox
+        width: 30%
+        align-self: end
+        cursor: pointer       
+        @media (max-width: 700px)
+            width: 70%
+            align-self: center
+        &__logo
+            height: 100%
+    &__fone
+        width: 100%
+        height: 100%
+        position: absolute
+        top: 0
+        right: 0
+        z-index: -1
+        img
+            width: 100%
+            height: 100%
+            object-fit: cover
+            object-position: right
+    &__maintext
+        color: $COLORWHITE
+        font-size: clamp(50px, 6vw, 80px)
+        align-self: end
+        font-weight: 800
+        letter-spacing: 0.1rem
+        background: linear-gradient(270deg, #ffffff, $COLORGREEN, #ffffff)
+        background-size: 400% 400%
+        animation: gradientAnimation 6s ease infinite
+        -webkit-background-clip: text
+        -webkit-text-fill-color: transparent
+
+        @media (max-width: 700px)
+            align-self: center
+            text-align: center
+    &__text
+        width: 50%
+        align-items: flex-end
+        align-self: end
+        gap: 1rem
+        p
+            font-size: clamp(12px, 1vw, 12px)
+            text-align: right
+            transition: color 0.3s ease
+            @media (max-width: 700px)
+                text-align: center
+            &:last-child
+                cursor: pointer
+                &:hover
+                    color: $COLORACCENT
+                    transition: color 0.3s ease
+
+                
+
+        @media (max-width: 700px)
+            align-items: center
+            align-self: center
+            width: 100%
+
+.serverload
+    position: absolute
+    top: 50%
+    right: 50%
+    transform: translate(50%, -50%)
+    padding: 5rem
+    cursor: pointer
+    z-index: 5
+    p
+        color: $COLORRED
+        font-weight: 600
+        width: 100%
+        text-align: center
+        position: absolute
+        top: 50%
+        right: 50%
+        transform: translate(50%, -50%)
+
+@keyframes gradientAnimation
+  0%
+    background-position: 0% 50%
+  50%
+    background-position: 100% 50%
+  100%
+    background-position: 0% 50%
