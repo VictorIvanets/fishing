@@ -6,6 +6,8 @@ import Flex from "../Flex/Flex"
 import { useDispatch, useSelector } from "react-redux"
 import type { AppDispatch, RootState } from "src/store/store"
 import { userActions } from "src/store/auth.slice"
+import { IoFish } from "react-icons/io5"
+
 interface NavbarProps {}
 const Navbar = memo(({}: NavbarProps) => {
   const dispatch = useDispatch<AppDispatch>()
@@ -13,41 +15,51 @@ const Navbar = memo(({}: NavbarProps) => {
 
   return (
     <>
-      <Flex center gap={10} className="navbar">
+      <Flex column gap={25} className="navbar">
         <NavLink to={"/home"}>
-          <Flex centerV gap={5}>
-            <h4>
+          <Flex className="navbar__item" gap={10}>
+            <h1>
               <MaterialIcon name="MdHome" />
-            </h4>
+            </h1>
             <p>ГОЛОВНА</p>
           </Flex>
         </NavLink>
+        {data && (
+          <NavLink to={"/mypage"}>
+            <Flex className="navbar__item" gap={10}>
+              <h1>
+                <IoFish />
+              </h1>
+              <p>РИБАЛКИ</p>
+            </Flex>
+          </NavLink>
+        )}
+        {data && (
+          <NavLink to={"/mappage"}>
+            <Flex gap={10} className="navbar__item">
+              <h1>
+                <MaterialIcon name="MdOutlineMap" />
+              </h1>
+              <p>КАРТА</p>
+            </Flex>
+          </NavLink>
+        )}
         {!data ? (
           <NavLink to={"/login"}>
-            <Flex centerV gap={5}>
-              <h4>
+            <Flex className="navbar__item" gap={10}>
+              <h1>
                 <MaterialIcon name="MdLogin" />
-              </h4>
+              </h1>
               <p>ВХІД</p>
             </Flex>
           </NavLink>
         ) : (
           <NavLink onClick={() => dispatch(userActions.logout())} to={"/login"}>
-            <Flex centerV gap={5}>
-              <h4>
+            <Flex className="navbar__item" gap={10}>
+              <h1>
                 <MaterialIcon name="MdLogin" />
-              </h4>
+              </h1>
               <p>ВИХІД</p>
-            </Flex>
-          </NavLink>
-        )}
-        {data && (
-          <NavLink to={"/mypage"}>
-            <Flex centerV gap={5}>
-              <h4>
-                <MaterialIcon name="MdAccountBox" />
-              </h4>
-              <p>МІЙ КАБІНЕТ</p>
             </Flex>
           </NavLink>
         )}

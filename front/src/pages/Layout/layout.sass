@@ -4,11 +4,33 @@
     width: 100%
     overflow: hidden
     background: url("./fonfish.jpg") center center/cover no-repeat
+    position: relative
  
     
     &__navbar
-        width: 100%
-        height: 3rem
+        position: absolute
+        z-index: 11
+        top: 10rem
+        left: 0
+        transition: left 0.3s ease-in-out
     &__main
         width: 100%
-        height: calc( 100vh - 3rem)
+        height: 100vh
+    &__hiddnavbar
+        width: 3rem
+        height: 3rem
+        position: absolute
+        z-index: 100
+        top: 5rem
+        left: 1.5rem
+        scale: 1.3
+        background: $COLORSECOND
+        border-radius: 0.5rem
+        opacity: 1
+.visiblenavbar
+    opacity: 0.3
+    top: 10rem
+    left: -20rem
+    transition: left 0.3s ease-in-out
+
+        

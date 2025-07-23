@@ -3,9 +3,11 @@ import { createBrowserRouter, Navigate } from "react-router-dom"
 import { Preloader } from "src/components/preloaders/PreloaderBall"
 import { RequireAuth } from "src/components/RequireAuth/RequireAuth"
 import { About } from "src/pages/About"
+import { AddPage } from "src/pages/AddPage"
 import { Home } from "src/pages/Home"
 import Layout from "src/pages/Layout/Layout"
 import { Login } from "src/pages/logIn"
+import { MapPage } from "src/pages/MapPage"
 import { MyPage } from "src/pages/MyPage"
 import { RegisterUser } from "src/pages/RegisterUser"
 
@@ -16,7 +18,6 @@ export const router = createBrowserRouter(
       element: <Layout />,
       children: [
         { index: true, element: <Navigate to="/home" replace /> },
-
         {
           path: "home",
           element: (
@@ -33,7 +34,6 @@ export const router = createBrowserRouter(
             </Suspense>
           ),
         },
-
         {
           path: "login",
           element: (
@@ -59,43 +59,27 @@ export const router = createBrowserRouter(
               </RequireAuth>
             </Suspense>
           ),
-          // children: [
-          //   { index: true, element: <Navigate to="start" replace /> },
-          //   {
-          //     path: "start",
-          //     element: (
-          //       <Suspense fallback={<Preloader />}>
-          //         <Start />
-          //       </Suspense>
-          //     ),
-          //   },
-          //   {
-          //     path: "mappage",
-          //     element: (
-          //       <Suspense fallback={<Preloader />}>
-          //         <MapPage />
-          //       </Suspense>
-          //     ),
-          //   },
-          //   {
-          //     path: "allfishings",
-          //     element: (
-          //       <Suspense fallback={<Preloader />}>
-          //         <AllFishingPage />
-          //       </Suspense>
-          //     ),
-          //   },
-          // ],
         },
-
-        // {
-        // 	path: 'movie/:id',
-        // 	element: (
-        // 		<Suspense fallback={<Preloader />}>
-        // 			<MoviesById />
-        // 		</Suspense>
-        // 	),
-        // },
+        {
+          path: "mappage",
+          element: (
+            <Suspense fallback={<Preloader />}>
+              <RequireAuth>
+                <MapPage />
+              </RequireAuth>
+            </Suspense>
+          ),
+        },
+        {
+          path: "addpage",
+          element: (
+            <Suspense fallback={<Preloader />}>
+              <RequireAuth>
+                <AddPage />
+              </RequireAuth>
+            </Suspense>
+          ),
+        },
       ],
     },
 

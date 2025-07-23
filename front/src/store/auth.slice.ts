@@ -5,7 +5,7 @@ import { loginServices } from "src/services/Login.services"
 import type { LoginAuthState, UserState } from "src/types/auth.types"
 
 const initialState: UserState = {
-  authinfo: loadState<LoginAuthState>(STORAGE_KEYS_ACCESS_TOKEN) ?? null,
+  authinfo: loadState<LoginAuthState>(STORAGE_KEYS_ACCESS_TOKEN) ?? undefined,
   isLoading: false,
   errorMassege: undefined,
   userInfo: null,
@@ -29,7 +29,7 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     logout: (state) => {
-      state.authinfo = null
+      state.authinfo = undefined
       state.userInfo = null
     },
     clearLoginError: (state) => {

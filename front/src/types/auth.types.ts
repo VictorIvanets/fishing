@@ -46,11 +46,11 @@ export type LoginForm = {
 export type LoginAuthState = {
   access_token: string | null
   login: string | null
-  _id: string | null
+  _id: string | undefined
 }
 
 export interface UserState {
-  authinfo: LoginAuthState | null
+  authinfo: LoginAuthState | undefined
   errorMassege: string | undefined
   isLoading: boolean
   userInfo: UserInfoT | null

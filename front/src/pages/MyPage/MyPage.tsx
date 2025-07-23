@@ -5,21 +5,20 @@ import Flex from "src/components/Flex/Flex"
 import { Preloader } from "src/components/preloaders/PreloaderBall"
 import { useDispatch, useSelector } from "react-redux"
 import type { AppDispatch, RootState } from "src/store/store"
-import { coordsThunk } from "src/store/map.slice"
 import { userThunk } from "src/store/auth.slice"
 import { SwipeTabs } from "src/components/SwipeTabs/SwipeTabs"
-import { TABS } from "./constatnts"
+import { TABS } from "./constants"
+import MaterialIcon from "src/shared/icons/Materialicons"
+import { Link } from "react-router-dom"
 interface MyPageProps {}
 
 const MyPage = memo(({}: MyPageProps) => {
   const dispatch = useDispatch<AppDispatch>()
-  const coords = useSelector((s: RootState) => s.map.coords)
   const user = useSelector((s: RootState) => s.auth.userInfo)
 
   useEffect(() => {
-    coords ?? dispatch(coordsThunk())
     user ?? dispatch(userThunk())
-  }, [coords, user])
+  }, [user])
 
   return (
     <FadeIn>
@@ -37,6 +36,13 @@ const MyPage = memo(({}: MyPageProps) => {
               </p>
             </Flex>
           )}
+        </Flex>
+        <Flex title="MAP" gap={7} centerV className="mypage__link">
+          <Link to={"/mappage"}>
+            <h1>
+              <MaterialIcon name="MdOutlineMap" />
+            </h1>
+          </Link>
         </Flex>
       </Flex>
     </FadeIn>
