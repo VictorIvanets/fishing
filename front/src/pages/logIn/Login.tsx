@@ -11,7 +11,7 @@ import FadeIn from "src/components/FadeIn/FadeIn"
 import { Preloader } from "src/components/preloaders/PreloaderBall"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { userLogInSchema, type UserLogInDataFields } from "./userProfileSchema"
+import { userLogInSchema, type UserLogInDataFields } from "./userLogInSchema"
 import InputText from "src/components/Input/InputText"
 
 interface LoginProps {}
@@ -45,6 +45,7 @@ const Login = memo(({}: LoginProps) => {
 
   useEffect(() => {
     if (!data.errorMassege && data.authinfo?.access_token) {
+      console.log(data.authinfo?.access_token)
       setTimeout(() => {
         navigate("/mypage")
       }, 1000)

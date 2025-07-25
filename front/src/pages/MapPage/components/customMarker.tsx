@@ -10,7 +10,7 @@ interface CustomMarkerProps {
   position: L.LatLngLiteral
 }
 
-const CustomMarker: React.FC<CustomMarkerProps> = ({ position, userId }) => {
+const CustomMarker: React.FC<CustomMarkerProps> = ({ position }) => {
   const navigate = useNavigate()
   const markerIconConst = L.icon({
     iconUrl: marker,
@@ -26,7 +26,6 @@ const CustomMarker: React.FC<CustomMarkerProps> = ({ position, userId }) => {
           onClick={() =>
             navigate("/addpage", {
               state: {
-                userId,
                 position,
               },
             })

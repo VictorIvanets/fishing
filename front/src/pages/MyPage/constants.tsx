@@ -4,11 +4,11 @@ import { AllFishingPage } from "../AllFishingPage"
 
 export const TABS: TabsT[] = [
   {
-    title: "моя сторінка",
+    title: "мої рибалки",
     components: <Start />,
   },
   {
-    title: "рибалки",
+    title: "всі рибалки",
     components: <AllFishingPage />,
   },
 ]

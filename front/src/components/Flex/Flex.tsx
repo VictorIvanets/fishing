@@ -12,6 +12,9 @@ type FlexProps = {
   centerH?: boolean
   centerV?: boolean
   padding?: boolean
+  relativ?: boolean
+  absolute?: boolean
+  flex?: boolean
   height?: number | string
   width?: number | string
   gap?: number
@@ -36,19 +39,25 @@ const Flex = forwardRef<HTMLDivElement, FlexProps>(
       background,
       padding,
       gap,
+      relativ,
+      absolute,
+      flex,
       ...props
     }: FlexProps,
     ref
   ) => {
     const styleFlex = {
-      row: row ? "flex-row" : undefined,
-      column: column ? "flex-column" : undefined,
-      spredV: spredV ? "flex-spredv" : undefined,
-      spredH: spredH ? "flex-spredh" : undefined,
-      center: center ? "flex-center" : undefined,
-      centerH: centerH ? "flex-centerh" : undefined,
-      centerV: centerV ? "flex-centerv" : undefined,
-      padding: padding ? "flex-pading" : undefined,
+      row: row ? "flex-row " : undefined,
+      column: column ? "flex-column " : undefined,
+      spredV: spredV ? "flex-spredv " : undefined,
+      spredH: spredH ? "flex-spredh " : undefined,
+      center: center ? "flex-center " : undefined,
+      centerH: centerH ? "flex-centerh " : undefined,
+      centerV: centerV ? "flex-centerv " : undefined,
+      padding: padding ? "flex-pading " : undefined,
+      relativ: relativ ? "flex-relative " : undefined,
+      absolute: absolute ? "flex-absolute " : undefined,
+      flex: flex ? "flex-flex " : undefined,
     }
 
     return (
@@ -64,7 +73,7 @@ const Flex = forwardRef<HTMLDivElement, FlexProps>(
             ? (background as unknown as string)
             : undefined,
         }}
-        className={`flex${Object.values(styleFlex)
+        className={`flex ${Object.values(styleFlex)
           .join(" ")
           .replace(/\s+/g, " ")}${className ? className : ""}`}
       >

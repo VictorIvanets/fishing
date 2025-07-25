@@ -1,0 +1,58 @@
+@use '../../sass/main_style' as *
+
+.card
+    width: 100%
+    background: #00000070
+    border: 2px solid $COLORACCENT
+    border-radius: 0.7rem
+    margin-bottom: 2rem
+    cursor: pointer
+    transition: all 0.3s
+    @media (max-width: 700px)
+        margin-bottom: 1rem
+    &:last-child
+        margin-bottom: 0
+    &:hover
+        background: #00000000
+        transition: all 0.3s
+    &__fon
+        width: 100%
+        height: 100%
+        overflow: hidden
+        border-radius: 0.7rem
+        z-index: -1
+        top: 0
+        left: 0
+        &__img
+            width: 100%
+            height: 100%
+            object-fit: cover
+            opacity: 0.5
+    &__content
+        
+        width: 100%
+        height: 100%
+        padding: 1rem
+        p
+            font-size: 1.4rem
+            display: -webkit-box
+            -webkit-line-clamp: 3
+            -webkit-box-orient: vertical
+            overflow: hidden
+            text-overflow: ellipsis
+        h4
+            color: $COLORACCENT
+            font-size: 2rem
+        &__footer
+            padding-top: 0.53rem
+            margin-top: 2rem
+            border-top: 1px solid $COLORACCENT
+    &__author
+        padding: 0.5rem
+        background: $COLORACCENT
+        border-radius: 0 0.5rem 0 0.7rem
+        right: 0
+        top: 0
+        z-index: 10
+        p
+            color: $COLORWHITE

@@ -1,6 +1,6 @@
 import { prop } from '@typegoose/typegoose'
 import { TimeStamps, Base } from '@typegoose/typegoose/lib/defaultClasses'
-import { ImageT } from './fishings.dto'
+import { ImageT, WeatherT } from './fishings.dto'
 import { ObjectId, Types } from 'mongoose'
 
 export interface FishingsModel extends Base {}
@@ -25,8 +25,8 @@ export class FishingsModel extends TimeStamps {
 	db: string
 	@prop({ type: () => [String] })
 	img: ImageT[]
-	@prop({ type: () => [Object] })
-	weather: object[]
+	@prop({ type: () => Object })
+	weather: WeatherT
 }
 
 export type FishingsResponseDBT = Omit<

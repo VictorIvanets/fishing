@@ -33,9 +33,11 @@ export const SwipeTabs = ({ render }: SwipeTabsProps) => {
             style={{
               borderBottom:
                 activeTab === idx
-                  ? "1px solid #009e96"
+                  ? "1px solid #008db8"
                   : "1px solid transparent",
-              color: activeTab === idx ? "#009e96" : "#adadad",
+              color: activeTab === idx ? "#008db8" : "#adadad",
+              fontSize: "1.4rem",
+              fontWeight: activeTab === idx ? 600 : 400,
             }}
           >
             {i.title}

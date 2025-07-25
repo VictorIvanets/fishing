@@ -1,21 +1,26 @@
-import { useSelector } from "react-redux"
 import "./start.sass"
-import type { RootState } from "src/store/store"
 import { memo } from "react"
+import { useQuery } from "@tanstack/react-query"
+import { fishingServices } from "src/services/fishing.services"
+import Flex from "src/components/Flex/Flex"
+import List from "src/components/List"
+import { Preloader } from "src/components/preloaders/PreloaderBall"
+import { QUERY_KEY } from "src/types/constants"
 
 const Start = memo(() => {
-  const coords = useSelector((s: RootState) => s.map.coords)
-  const userId = useSelector((s: RootState) => s.auth.authinfo?._id)
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: [QUERY_KEY.ALL_FISH_USER],
+    queryFn: fishingServices.getAllByUser,
+  })
 
   return (
-    <>
-      <div className="startpage">
-        <h1>Start</h1>
-        <p>{userId}</p>
-        <p>{coords?.latitude}</p>
-        <p>{coords?.longitude}</p>
-      </div>
-    </>
+    <Flex centerH className="startpage">
+      <Flex className="startpage__list">
+        {data && <List data={data} />}
+        {isLoading && <Preloader />}
+        {isError && <h4>{error.message}</h4>}
+      </Flex>
+    </Flex>
   )
 })
 

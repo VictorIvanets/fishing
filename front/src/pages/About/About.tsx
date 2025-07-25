@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom"
 import "./about.sass"
 import Flex from "src/components/Flex/Flex"
 import FadeIn from "src/components/FadeIn/FadeIn"
+import MaterialIcon from "src/shared/icons/Materialicons"
 interface AboutProps {}
 const About = ({}: AboutProps) => {
   const navigate = useNavigate()
@@ -50,9 +51,11 @@ const About = ({}: AboutProps) => {
         <h3 className="tacenter">Усі користувачі можуть бачити усі місця!</h3>
         <br />
 
-        <h4 className="about__back" onClick={() => navigate(-1)}>
-          Назад
-        </h4>
+        <Flex className="about__back" onClick={() => navigate(-1)}>
+          <h1>
+            <MaterialIcon name="MdArrowBackIos" />
+          </h1>
+        </Flex>
       </Flex>
     </FadeIn>
   )

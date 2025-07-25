@@ -6,6 +6,7 @@ type InputPropsT = {
   label: string | undefined
   error?: string | undefined
   appearance?: "small" | "standart" | undefined
+  ibackground?: boolean
 } & InputHTMLAttributes<HTMLInputElement>
 
 const InputText = forwardRef<HTMLInputElement, InputPropsT>(function InputText(
@@ -15,6 +16,7 @@ const InputText = forwardRef<HTMLInputElement, InputPropsT>(function InputText(
     error,
     disabled,
     className,
+    ibackground = false,
     appearance = "small",
     ...rest
   }: InputPropsT,
@@ -27,6 +29,9 @@ const InputText = forwardRef<HTMLInputElement, InputPropsT>(function InputText(
       }`}
     >
       <input
+        style={{
+          background: ibackground ? "#ffffff1d" : "",
+        }}
         className={`${error && "input-error"}`}
         disabled={disabled}
         ref={ref}

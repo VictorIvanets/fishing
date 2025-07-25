@@ -63,6 +63,14 @@ const Navbar = memo(({}: NavbarProps) => {
             </Flex>
           </NavLink>
         )}
+        <NavLink to={"/about"}>
+          <Flex className="navbar__item" gap={10}>
+            <h1>
+              <MaterialIcon name="MdOutlineInfo" />
+            </h1>
+            <p>ПРАВИЛА</p>
+          </Flex>
+        </NavLink>
       </Flex>
     </>
   )

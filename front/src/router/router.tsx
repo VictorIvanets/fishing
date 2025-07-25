@@ -4,6 +4,7 @@ import { Preloader } from "src/components/preloaders/PreloaderBall"
 import { RequireAuth } from "src/components/RequireAuth/RequireAuth"
 import { About } from "src/pages/About"
 import { AddPage } from "src/pages/AddPage"
+import { Details } from "src/pages/DetailsPage"
 import { Home } from "src/pages/Home"
 import Layout from "src/pages/Layout/Layout"
 import { Login } from "src/pages/logIn"
@@ -56,6 +57,16 @@ export const router = createBrowserRouter(
             <Suspense fallback={<Preloader />}>
               <RequireAuth>
                 <MyPage />
+              </RequireAuth>
+            </Suspense>
+          ),
+        },
+        {
+          path: "details/:id",
+          element: (
+            <Suspense fallback={<Preloader />}>
+              <RequireAuth>
+                <Details />
               </RequireAuth>
             </Suspense>
           ),
