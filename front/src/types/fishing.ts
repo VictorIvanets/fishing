@@ -6,7 +6,7 @@ export type FishingPayloadT = {
   score: number
   date: string
   coords: [number, number]
-  img: []
+  img: ImageT[]
   weather: WeatherT
 }
 
@@ -21,7 +21,7 @@ export type OneFishingT = {
   date: string
   coords: [number, number]
   db: string
-  img: []
+  img: ImageT[]
   weather: {
     deg: number
     feels_like: number
@@ -39,3 +39,18 @@ export type OneFishingT = {
   createdA: string
   updatedAt: string
 }
+
+export type FishingResponseT = {
+  data: OneFishingT[]
+  nextCursor: string | null
+}
+
+export type ImageT = {
+  imgId: string
+  url: string
+}
+
+export type ResponseForMapT = Pick<
+  OneFishingT,
+  "_id" | "title" | "coords" | "score" | "description" | "userId"
+>

@@ -1,9 +1,14 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common'
 import { InjectModel } from 'nestjs-typegoose'
-import { FishingsModel, FishingsResponseDBT } from './fishings.model'
+import {
+	FishingsModel,
+	FishingsResponseDBT,
+	ResponseForMapT,
+} from './fishings.model'
 import { ModelType } from '@typegoose/typegoose/lib/types'
 import { FishingsDto } from './fishings.dto'
 import { DB_STRING, INVALID_ID } from 'src/STATIC/static'
+import { Types } from 'mongoose'
 
 @Injectable()
 export class FishingsService {
@@ -42,17 +47,100 @@ export class FishingsService {
 			throw new UnauthorizedException(INVALID_ID, e)
 		}
 	}
-
-	async findUserFishings(user: { _id: string }): Promise<FishingsModel[]> {
+	async deletePhotoInFishing(dto: {
+		photoId: string
+		setId: string
+	}): Promise<FishingsModel> {
 		try {
-			return await this.fishingsModel.find({ userId: user._id }).exec()
+			const oneFising = await this.fishingsModel
+				.findOne({ _id: dto.setId })
+				.exec()
+
+			const newImg = oneFising.img.filter((i) => i.imgId !== dto.photoId)
+			oneFising.img = newImg
+
+			return await this.fishingsModel
+				.findByIdAndUpdate(dto.setId, oneFising, { new: true })
+				.exec()
 		} catch (e) {
 			throw new UnauthorizedException(INVALID_ID, e)
 		}
 	}
 
-	async findAllFishing(): Promise<Omit<FishingsModel[], 'login'>> {
-		return await this.fishingsModel.find({ db: DB_STRING }).exec()
+	async findUserFishings(
+		user: { _id: string },
+		limit: number,
+		cursor?: string,
+	): Promise<{ data: FishingsModel[]; nextCursor: string | null }> {
+		try {
+			const filter: any = { userId: user._id }
+			if (cursor) {
+				filter._id = { $lt: new Types.ObjectId(cursor) }
+			}
+
+			const results = await this.fishingsModel
+				.find(filter)
+				.sort({ _id: -1 })
+				.limit(limit + 1)
+				.exec()
+
+			const hasNextPage = results.length > limit
+			const data = hasNextPage ? results.slice(0, -1) : results
+			const nextCursor = hasNextPage
+				? data[data.length - 1]._id.toString()
+				: null
+
+			return { data, nextCursor }
+		} catch (e) {
+			throw new UnauthorizedException(e)
+		}
+	}
+
+	async findAllFishing(
+		limit: number,
+		cursor?: string,
+	): Promise<{ data: FishingsModel[]; nextCursor: string | null }> {
+		try {
+			const filter: any = { db: DB_STRING }
+			if (cursor) {
+				filter._id = { $lt: new Types.ObjectId(cursor) }
+			}
+
+			const results = await this.fishingsModel
+				.find(filter)
+				.sort({ _id: -1 })
+				.limit(limit + 1)
+				.exec()
+
+			const hasNextPage = results.length > limit
+			const data = hasNextPage ? results.slice(0, -1) : results
+			const nextCursor = hasNextPage
+				? data[data.length - 1]._id.toString()
+				: null
+
+			return { data, nextCursor }
+		} catch (e) {
+			throw new UnauthorizedException(e)
+		}
+	}
+
+	async findAllFishingRorMap(): Promise<ResponseForMapT[]> {
+		try {
+			const results = await this.fishingsModel.find().exec()
+			const response: ResponseForMapT[] = results.map((i) => {
+				return {
+					_id: i._id.toString(),
+					title: i.title,
+					coords: i.coords,
+					score: i.score,
+					description: i.description,
+					userId: i.userId.toString(),
+				}
+			})
+			return response
+		} catch (e) {
+			throw new UnauthorizedException(e)
+		}
 	}
 
 	async delById(id: string): Promise<FishingsResponseDBT> {

@@ -13,13 +13,13 @@ import { PASS_NOT_CORRECT, USER_NOT_FOUND } from 'src/STATIC/static'
 @Injectable()
 export class AuthService {
 	constructor(
-		@InjectModel(AuthModel) private readonly userModel: ModelType<AuthModel>,
+		@InjectModel(AuthModel) private readonly authModel: ModelType<AuthModel>,
 		private readonly jwtService: JwtService,
 		private readonly configService: ConfigService,
 	) {}
 	async createUser(dto: AuthDto): Promise<RegisterResponseT> {
 		const salt = genSaltSync(10)
-		const newUser = new this.userModel({
+		const newUser = new this.authModel({
 			login: dto.login,
 			passwordHash: hashSync(dto.password, salt),
 			name: dto.name,
@@ -30,26 +30,30 @@ export class AuthService {
 		return newUser.save()
 	}
 	async findUser(login: string): Promise<AuthModel> {
-		return this.userModel.findOne({ login }).exec()
+		return this.authModel.findOne({ login }).exec()
 	}
 
 	async findUserById(user: { _id: string; login: string }): Promise<AuthModel> {
-		return this.userModel.findOne({ _id: user._id }).exec()
+		return this.authModel.findOne({ _id: user._id }).exec()
 	}
 
 	async validateUser(
 		login: string,
 		password: string,
 	): Promise<Pick<AuthModel, 'login'> & Record<'_id', Types.ObjectId>> {
-		const user = await this.userModel.findOne({ login })
-		if (!user) {
-			throw new UnauthorizedException(USER_NOT_FOUND)
+		try {
+			const user = await this.authModel.findOne({ login })
+			if (!user) {
+				throw new UnauthorizedException(USER_NOT_FOUND)
+			}
+			const isCorrectPass = await compare(password, user.passwordHash)
+			if (!isCorrectPass) {
+				throw new UnauthorizedException(PASS_NOT_CORRECT)
+			}
+			return { login: user.login, _id: user._id }
+		} catch (e) {
+			console.log(e)
 		}
-		const isCorrectPass = await compare(password, user.passwordHash)
-		if (!isCorrectPass) {
-			throw new UnauthorizedException(PASS_NOT_CORRECT)
-		}
-		return { login: user.login, _id: user._id }
 	}
 
 	async login(login: string, _id: Types.ObjectId): Promise<AuthResponseT> {
@@ -62,6 +66,6 @@ export class AuthService {
 	}
 
 	async delUserById(id: string): Promise<AuthModel> {
-		return await this.userModel.findByIdAndDelete({ _id: id }).exec()
+		return await this.authModel.findByIdAndDelete({ _id: id }).exec()
 	}
 }

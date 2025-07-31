@@ -14,31 +14,30 @@ export class PhotoService {
 	) {}
 	async savePhoto(
 		files: MFile[],
-		folder: string,
+		setid: string,
 		imgId: string,
 	): Promise<FileElemResponseT[]> {
 		const res: FileElemResponseT[] = []
 		for (const file of files) {
-			res.push({
-				url: `${folder}/${file.originalname}`,
-				name: file.originalname,
-			})
-			const fishset = await this.fishingsModel
-				.findOne({ folderName: folder })
-				.exec()
+			const fishset = await this.fishingsModel.findOne({ _id: setid }).exec()
 			const checkDouble = fishset.img.find(
-				(i) => i.url === `${folder}/${file.originalname}`,
+				(i) => i.url === `${setid}/${file.originalname}`,
 			)
 			if (!checkDouble) {
 				fishset.img.unshift({
-					url: `${folder}/${file.originalname}`,
+					url: `${setid}/${file.originalname}`,
 					imgId,
 				})
 			}
 
-			this.fishingsModel
+			const resultLoad = await this.fishingsModel
 				.findByIdAndUpdate(fishset._id, fishset, { new: true })
 				.exec()
+			res.push({
+				url: `${setid}/${file.originalname}`,
+				name: file.originalname,
+				_id: resultLoad._id.toString(),
+			})
 		}
 		return res
 	}

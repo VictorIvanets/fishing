@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux"
 import type { AppDispatch, RootState } from "src/store/store"
 import { userActions } from "src/store/auth.slice"
 import { IoFish } from "react-icons/io5"
+import { FaPowerOff } from "react-icons/fa6"
 
 interface NavbarProps {}
 const Navbar = memo(({}: NavbarProps) => {
@@ -40,7 +41,7 @@ const Navbar = memo(({}: NavbarProps) => {
               <h1>
                 <MaterialIcon name="MdOutlineMap" />
               </h1>
-              <p>КАРТА</p>
+              <p>МАПА</p>
             </Flex>
           </NavLink>
         )}
@@ -54,12 +55,18 @@ const Navbar = memo(({}: NavbarProps) => {
             </Flex>
           </NavLink>
         ) : (
-          <NavLink onClick={() => dispatch(userActions.logout())} to={"/login"}>
+          <NavLink to={"/login"}>
             <Flex className="navbar__item" gap={10}>
               <h1>
                 <MaterialIcon name="MdLogin" />
               </h1>
               <p>ВИХІД</p>
+              <h1
+                className="navbar__exit"
+                onClick={() => dispatch(userActions.logout())}
+              >
+                <FaPowerOff />
+              </h1>
             </Flex>
           </NavLink>
         )}

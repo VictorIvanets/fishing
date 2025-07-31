@@ -16,7 +16,7 @@ export const addFishingSchema = z.object({
       required_error: "Оцінка є обов’язковою",
       invalid_type_error: "Оцінка повинна бути числом",
     })
-    .min(0, "Оцінка не може бути меншою за 0")
+    .min(1, "Оцінка не може бути 0 мін. 1")
     .max(10, "Оцінка не може бути більшою за 10"),
   date: z
     .string({

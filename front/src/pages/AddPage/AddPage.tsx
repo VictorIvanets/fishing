@@ -17,6 +17,8 @@ import Button from "src/components/Button/Button"
 import type { FishingPayloadT, OneFishingT } from "src/types/fishing"
 import MaterialIcon from "src/shared/icons/Materialicons"
 import InputField from "src/components/Input/InputField"
+import useCreateFising from "src/hooks/useCreateFising"
+import useUpdateFising from "src/hooks/useUpdateFising"
 
 type LocationState = {
   data?: OneFishingT
@@ -28,6 +30,8 @@ const AddPage = () => {
   const location = useLocation()
   const state = location.state as LocationState
   const [weather, setWeather] = useState<WeatherT | undefined>()
+  const { create } = useCreateFising()
+  const { updete } = useUpdateFising(state.data?._id || "")
 
   const getWeather = async () => {
     const result = state.position && (await getWeatherApi(state.position))
@@ -69,7 +73,7 @@ const AddPage = () => {
         img: [],
         weather: weather,
       }
-      console.log("CREATE", paramsFishing) /////   GET CREATE
+      create(paramsFishing)
       navigate(`/mypage`)
     }
     reset()
@@ -91,9 +95,9 @@ const AddPage = () => {
         score: data.score,
         date: data.date,
       }
-      const putParams = { ...state.data, ...updateParamsFishing }
-
-      console.log("UPDATE", putParams) /////   PUT UPDATE
+      const _id = state.data?._id || ""
+      const payload = { ...state.data, ...updateParamsFishing }
+      updete({ _id, payload })
       navigate(`/details/${state.data._id}`)
     }
     reset()
@@ -119,9 +123,10 @@ const AddPage = () => {
             <p className="tacenter">
               В описі, бажано, перерахувати що ловилося, та на що
             </p>
-            <p>координати:</p>
-            <p>{state.position?.lat}</p>
-            <p>{state.position?.lng}</p>
+            <p className="tacenter">
+              Опис бажано робити українською, <br /> щоб був коректний пошук
+              ("короп", "товстолоб")
+            </p>
           </Flex>
         )}
         <form
@@ -151,6 +156,8 @@ const AddPage = () => {
                   id="input_score_add"
                   label="Оцінка"
                   type="number"
+                  min="0"
+                  max="10"
                   {...register("score", { valueAsNumber: true })}
                   error={errors.score?.message}
                 />
@@ -168,7 +175,7 @@ const AddPage = () => {
               isValid={isValid}
               type="submit"
               appearence="big"
-              title="СТВОРИТИ"
+              title={!state.data ? "СТВОРИТИ" : "ОНОВИТИ"}
             />
           </Flex>
         </form>

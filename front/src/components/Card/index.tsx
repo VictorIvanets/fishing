@@ -3,6 +3,7 @@ import "./card.sass"
 import Flex from "../Flex/Flex"
 import { DEFAULT_IMG } from "./constants"
 import { useNavigate } from "react-router-dom"
+import { PREFIX_STATIC } from "src/api/PREFIX"
 interface CardProps {
   item: OneFishingT
 }
@@ -18,7 +19,15 @@ const Card = ({ item }: CardProps) => {
       className="card"
     >
       <Flex absolute className="card__fon">
-        <img className="card__fon__img" src={DEFAULT_IMG} alt="fon" />
+        <img
+          className="card__fon__img"
+          src={
+            item.img[0]
+              ? `${PREFIX_STATIC}static/${item.img[0]?.url}`
+              : DEFAULT_IMG
+          }
+          alt="fon"
+        />
       </Flex>
       <Flex className="card__content" column>
         <h4>{item.title}</h4>

@@ -5,14 +5,24 @@ import { memo, useEffect, useState } from "react"
 import FadeIn from "src/components/FadeIn/FadeIn"
 import Flex from "src/components/Flex/Flex"
 import MaterialIcon from "src/shared/icons/Materialicons"
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { Preloader } from "src/components/preloaders/PreloaderBall"
-import { MapContainer, TileLayer } from "react-leaflet"
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet"
 import "leaflet/dist/leaflet.css"
-import type { LatLngExpression, LatLngTuple } from "leaflet"
+import { type LatLngExpression, type LatLngTuple } from "leaflet"
 import { userThunk } from "src/store/auth.slice"
 import { coordsThunk } from "src/store/map.slice"
 import LocationMarker from "./components/LocationMarker"
+import type { OneFishingT, ResponseForMapT } from "src/types/fishing"
+import CustomMarker from "./components/customMarker"
+import useGetAllforMap from "src/hooks/useGetAllforMap"
+import { GiDoubleFish } from "react-icons/gi"
+import MapZoomController from "./components/MapZoomController"
+import Filter from "./components/Filter/Filter"
+
+type MapRoutingState = {
+  oneFishing?: OneFishingT
+}
 
 const MapPage = memo(() => {
   const coords = useSelector((s: RootState) => s.map.coords)
@@ -20,6 +30,15 @@ const MapPage = memo(() => {
   const navigator = useNavigate()
   const [newCoords, setNewCoords] = useState<LatLngTuple>()
   const dispatch = useDispatch<AppDispatch>()
+  const location = useLocation()
+  const { data: allFishins } = useGetAllforMap()
+  const [viewAll, setViewAll] = useState(false)
+  const [filterAll, setFilterAll] = useState<ResponseForMapT[]>([])
+  const routingState = location.state as MapRoutingState
+
+  useEffect(() => {
+    allFishins && setFilterAll(allFishins)
+  }, [allFishins])
 
   useEffect(() => {
     !userId && dispatch(userThunk())
@@ -40,7 +59,14 @@ const MapPage = memo(() => {
     <FadeIn className="mappage">
       {newCoords && userId ? (
         <MapContainer
-          center={newCoords}
+          center={
+            routingState && routingState.oneFishing
+              ? {
+                  lat: routingState.oneFishing.coords[0],
+                  lng: routingState.oneFishing.coords[1],
+                }
+              : newCoords
+          }
           zoom={13}
           scrollWheelZoom={true}
           zoomControl={false}
@@ -49,7 +75,35 @@ const MapPage = memo(() => {
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          <LocationMarker userId={userId} />
+          <Marker position={newCoords}>
+            <Popup>
+              <h1>Ви тут</h1>
+            </Popup>
+          </Marker>
+          {!viewAll && !routingState && <LocationMarker userId={userId} />}
+          {!viewAll && routingState && routingState.oneFishing && (
+            <CustomMarker
+              oneFishing={routingState.oneFishing}
+              position={{
+                lat: routingState.oneFishing.coords[0],
+                lng: routingState.oneFishing.coords[1],
+              }}
+            />
+          )}
+          {viewAll &&
+            filterAll.map((item) => (
+              <CustomMarker
+                key={item._id}
+                oneFishing={item}
+                position={{
+                  lat: item.coords[0],
+                  lng: item.coords[1],
+                }}
+              />
+            ))}
+          {viewAll && newCoords && (
+            <MapZoomController coords={newCoords} zoom={11} />
+          )}
         </MapContainer>
       ) : (
         <Preloader />
@@ -65,6 +119,22 @@ const MapPage = memo(() => {
           <MaterialIcon name="MdArrowBackIos" />
         </h1>
       </Flex>
+      <Flex
+        onClick={() => setViewAll(!viewAll)}
+        gap={3}
+        center
+        className="mappage__viewall"
+      >
+        <p className="tacenter hovertext">
+          всі <br /> місця
+        </p>
+        <h1>
+          <GiDoubleFish />
+        </h1>
+      </Flex>
+      {viewAll && allFishins && (
+        <Filter setFilterAll={setFilterAll} allFishins={allFishins} />
+      )}
     </FadeIn>
   )
 })

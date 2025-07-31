@@ -1,7 +1,11 @@
 import { Controller, Delete, Get, UseGuards } from '@nestjs/common'
 import { GetPhotoService } from './getPhoto.service'
 import { HttpCode, Param, Post } from '@nestjs/common'
-import { GetPhotoModel } from './getPhoto.model'
+import {
+	DelPhotoByIdResponseT,
+	GetPhotoModel,
+	ResponseGetPhoto,
+} from './getPhoto.model'
 import { AuthGuard } from '@nestjs/passport'
 import { ApiTags } from '@nestjs/swagger'
 
@@ -13,7 +17,9 @@ export class GetfotoController {
 
 	@Get('get/:folder')
 	@HttpCode(200)
-	async getFotoById(@Param('folder') folder: string): Promise<string[]> {
+	async getFotoById(
+		@Param('folder') folder: string,
+	): Promise<ResponseGetPhoto[]> {
 		return this.getfotoService.getFoto(folder)
 	}
 

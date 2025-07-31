@@ -23,7 +23,7 @@ export class FishingsModel extends TimeStamps {
 	coords: number[]
 	@prop()
 	db: string
-	@prop({ type: () => [String] })
+	@prop({ type: () => [Object] })
 	img: ImageT[]
 	@prop({ type: () => Object })
 	weather: WeatherT
@@ -36,3 +36,12 @@ export type FishingsResponseDBT = Omit<
 		}>,
 	'typegooseName'
 >
+
+export type ResponseForMapT = {
+	_id: string
+	title: string
+	coords: number[]
+	score: number
+	description: string
+	userId: string
+}

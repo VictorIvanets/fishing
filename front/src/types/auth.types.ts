@@ -57,6 +57,7 @@ export interface UserState {
 }
 
 export type UserInfoT = {
+  _id: string
   login: string
   passwordHash: string
   name: string

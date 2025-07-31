@@ -1,0 +1,87 @@
+@use '../../sass/main_style' as *
+
+.commentcard_wrapper
+        width: 100%
+        margin-bottom: 4rem
+        margin-top: 0.5rem
+        position: relative
+        &:nth-last-child(2)
+                margin-bottom: 1rem
+.commentcard
+        padding: 1rem
+        background: $COLORACCENT
+        border-radius: 3rem
+        width: max-content
+        box-shadow: 0.2rem 0.2rem 1rem $COLORSECOND
+        position: relative
+        p
+                color: $COLORWHITE
+                letter-spacing: 0.1rem
+        &__name
+                right: -1rem
+                top: -1rem
+                position: absolute
+                padding: 0.2rem 0.5rem
+                background: $COLORSECOND
+                border-radius: 2rem
+                border: 1px solid $COLORWHITE
+                width: max-content
+
+                p
+                        font-size: 0.8rem
+        &__date
+                left: 1
+                bottom: -1.2rem
+                position: absolute
+                width: max-content
+
+                p
+                        font-size: 0.8rem
+        &__delete
+                cursor: pointer
+                color: $COLORSECOND
+                transition: color 0.3s
+                &:hover
+                        color: $COLORACCENT
+                        transition: color 0.3s
+
+
+
+
+
+.listwrapper
+    width: 100%
+    height: 100% 
+    position: relative
+    &__loader
+        position: absolute
+        top: 50%
+        left: 50%
+        transform: translate(-50%, -50%)
+
+.list
+    width: 100%
+    height: 100%
+    overflow: auto
+    scrollbar: 0px 
+    padding: 10px
+    border-radius: 0.3rem
+    box-shadow: 3px 3px 7px black
+    background-color: rgba(0, 0, 0, 0.5)
+//     background-color: rgba(37, 37, 37, 0.1)
+//     backdrop-filter: blur(8px)
+//     -webkit-backdrop-filter: blur(10px)
+    &__label
+        color: $COLORWHITE
+    
+    
+.list::-webkit-scrollbar
+        width: 3px
+.list::-webkit-scrollbar-thumb
+        width: 3px
+        background: $COLORTEXT
+        border-radius: 10px
+                
+
+
+        

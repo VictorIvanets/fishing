@@ -13,7 +13,7 @@ import { ConfigModule } from '@nestjs/config'
 			{
 				typegooseClass: CommentModel,
 				schemaOptions: {
-					collection: 'comment',
+					collection: 'comments',
 				},
 			},
 		]),

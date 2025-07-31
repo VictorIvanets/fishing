@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common'
 import { CommentService } from './comment.service'
 import { CommentDto } from './comment.dto'
-import { CommentModel } from './comment.model'
+import { CommentModel, DelByIdResponseT } from './comment.model'
 import { AuthGuard } from '@nestjs/passport'
 import { ApiTags } from '@nestjs/swagger'
 
@@ -35,7 +35,7 @@ export class CommentController {
 
 	@HttpCode(200)
 	@Delete(':id')
-	async delComment(@Param('id') id: string): Promise<string> {
+	async delComment(@Param('id') id: string): Promise<DelByIdResponseT> {
 		return await this.commentService.delCommById(id)
 	}
 

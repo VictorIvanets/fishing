@@ -19,3 +19,14 @@ export type PhotoResponseDBT = Omit<
 		}>,
 	'typegooseName'
 >
+
+export type ResponseGetPhoto = {
+	originalname: string
+	_id: string
+}
+
+export type DelPhotoByIdResponseT = {
+	success: boolean
+	id?: string
+	message?: string
+}

@@ -2,6 +2,7 @@ import { FileInterceptor } from '@nestjs/platform-express'
 import {
 	Controller,
 	HttpCode,
+	InternalServerErrorException,
 	Param,
 	Post,
 	UploadedFile,
@@ -24,20 +25,24 @@ export class PhotoController {
 		private readonly getfotoService: GetPhotoService,
 	) {}
 
-	@Post('upload/:folder')
+	@Post('upload/:setid')
 	@HttpCode(200)
 	@UseInterceptors(FileInterceptor('files'))
 	async uploadPhoto(
 		@UploadedFile() file: Express.Multer.File,
-		@Param('folder') folder: string,
+		@Param('setid') setid: string,
 	): Promise<FileElemResponseT[]> {
 		if (file) {
 			const saveArr: MFile[] = [new MFile(file)]
-			const img = await this.getfotoService.savePhotoBd(saveArr, folder)
-
+			const img = await this.getfotoService.savePhotoBd(saveArr, setid)
+			if (!img) {
+				throw new InternalServerErrorException(
+					'Фото з такою назвою вже існуе у записах',
+				)
+			}
 			return await this.photoService.savePhoto(
 				saveArr,
-				folder,
+				setid,
 				img._id.toString(),
 			)
 		}

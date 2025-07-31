@@ -4,7 +4,7 @@ $COLORSECOND: #313131
 $COLORSECONDTR: #adadad
 $COLORACCENT: #008394
 $COLORWHITE: #eeeeee
-$COLORGREEN: #004d50
+$COLORGREEN: #003546
 $COLORRED: #fd3715
 $COLORORANGE: #832900
 $COLORBLUE: #005e59
@@ -39,9 +39,13 @@ h1
     color: $COLORACCENT
     font-family: "Raleway"
     font-weight: normal
+    // @media (max-width: 700px)
+    //     font-size: 2.7rem
+   
+
 h2
-    font-size: 3rem 
-    color: $COLORACCENT
+    font-size: 2rem 
+    color: $COLORWHITE
     font-family: "Raleway"
     font-weight: normal
     text-align: left
@@ -53,13 +57,13 @@ h3
     font-style: normal
     color: $COLORTEXT
     margin: 0.3rem 0
-    @media (max-width: 700px)
-        font-size: 1.8rem
+  
 h4
     font-size: 1.1rem
     color: $COLORTEXT
     margin: 0.3rem 0
-    text-transform: uppercase
+    @media (max-width: 700px)
+        font-size: 1.4rem
 
 a  
     color: $COLORWHITE 
@@ -175,6 +179,34 @@ input
         transition: background-color 5000s ease-in-out 0s
         -webkit-text-fill-color: #ffffff
 
+.grad
+    color: $COLORACCENT
+    animation: grad 3s ease infinite
+    text-shadow: 0rem 0rem 5rem $COLORWHITE 
+
+@keyframes grad
+    0%
+        color: $COLORACCENT
+    50%
+        color: $COLORWHITE
+    100%
+        color: $COLORACCENT
+
+.icomhover
+    cursor: pointer
+    transition: all 0.2s
+    &:hover
+        transition: all 0.2s
+        color: $COLORGREEN
+    @media (max-width: 700px)
+        font-size: 2.7rem
+    @media (max-width: 400px)
+        font-size: 2rem
+.hovertext
+    transition: all 0.2s
+    &:hover
+        transition: all 0.2s
+        color: black
 
 // button
 //     width: 100% 

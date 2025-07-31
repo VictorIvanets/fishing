@@ -11,14 +11,14 @@ async function bootstrap(): Promise<void> {
 		.setTitle('API документація')
 		.setDescription('Автоматично згенерована Swagger документація')
 		.setVersion('1.0')
-		.addBearerAuth() // Якщо використовуєш JWT
+		.addBearerAuth()
 		.build()
 
 	const document = SwaggerModule.createDocument(app, config)
 	SwaggerModule.setup('api', app, document)
 	app.enableCors()
 	await app.listen(PORT)
-	console.log(`🚀 Server graphql ready at http://localhost:${PORT}/graphql`)
-	console.log(`🚀 Server rest ready at http://localhost:${PORT}/api`)
+	console.log(`Server: http://localhost:${PORT}/api`)
 }
+
 bootstrap()

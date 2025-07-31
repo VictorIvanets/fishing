@@ -8,12 +8,14 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   background?: ThemeColorT
   className?: string
   isValid?: boolean
+  value?: string
 }
 export function Button({
   title,
   className,
   appearence = "small",
   isValid = true,
+  value,
   ...props
 }: ButtonProps) {
   return (
@@ -22,7 +24,7 @@ export function Button({
         appearence === "big" ? "big" : "small"
       } ${isValid ? "" : "btnbox__invalid"}`}
     >
-      <button {...props}>
+      <button value={value || title} {...props}>
         <p>{title}</p>
       </button>
     </div>

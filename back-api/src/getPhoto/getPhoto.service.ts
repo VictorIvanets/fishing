@@ -1,10 +1,15 @@
 import { Injectable, UseGuards } from '@nestjs/common'
-import { ensureDir, readFile, writeFile } from 'fs-extra'
+import { ensureDir, readFile, writeFile, remove } from 'fs-extra'
 import { path } from 'app-root-path'
 import { MFile } from 'src/fotoset/mfile.class'
 import { ModelType } from '@typegoose/typegoose/lib/types'
 import { InjectModel } from 'nestjs-typegoose'
-import { GetPhotoModel, PhotoResponseDBT } from './getPhoto.model'
+import {
+	DelPhotoByIdResponseT,
+	GetPhotoModel,
+	PhotoResponseDBT,
+	ResponseGetPhoto,
+} from './getPhoto.model'
 import * as sharp from 'sharp'
 
 @Injectable()
@@ -13,10 +18,9 @@ export class GetPhotoService {
 		@InjectModel(GetPhotoModel)
 		private readonly getPhotoModel: ModelType<GetPhotoModel>,
 	) {}
-	async getFoto(folder: string): Promise<string[]> {
-		const setid = folder
-		const fotoBySetId = await this.getPhotoModel.find({ setid }).exec()
-		const res = []
+	async getFoto(folder: string): Promise<ResponseGetPhoto[]> {
+		const fotoBySetId = await this.getPhotoModel.find({ setid: folder }).exec()
+		const res: ResponseGetPhoto[] = []
 
 		const uploadFolder = `${path}/upload/${folder}`
 
@@ -25,12 +29,9 @@ export class GetPhotoService {
 			fotoBySetId.forEach(async (photoitem) => {
 				const originalname = photoitem.filename
 				const buffer = photoitem.imgBuffer
-				res.push(originalname)
-				// const check = await readFile(`${uploadFolder}/${originalname}`)
-				// if (!check) {
-				// 	await writeFile(`${uploadFolder}/${originalname}`, buffer)
+				res.push({ originalname, _id: photoitem._id.toString() })
+
 				await writeFile(`${uploadFolder}/${originalname}`, buffer)
-				// }
 			})
 			return res
 		} else return res
@@ -56,20 +57,21 @@ export class GetPhotoService {
 		for (const file of files) {
 			const minbuffer = await this.convertToJpegMin(file.buffer)
 			const filename = file.originalname
-			const fotoset = await this.getPhotoModel.findOne({ filename }).exec()
-			const check = fotoset?.setid === folder ? true : false
-			const checkcheck = fotoset?.filename && check ? false : true
-			if (checkcheck) {
+			const fotoset = await this.getPhotoModel.find({ setid: folder }).exec()
+
+			const exist = fotoset.filter((i) => i.filename === filename)
+
+			if (!exist.length) {
 				const res = new this.getPhotoModel({
 					setid: folder,
 					filename: file.originalname,
 					imgBuffer: minbuffer,
 				})
-
 				res.save()
+
 				return res
 			} else {
-				return
+				return null
 			}
 		}
 	}
@@ -83,11 +85,28 @@ export class GetPhotoService {
 	async delBySetId(setid: string): Promise<string> {
 		const fotoByset = await this.getPhotoModel.find({ setid }).exec()
 
-		fotoByset.forEach((i) => {
-			this.getPhotoModel.findByIdAndDelete({ _id: setid }).exec()
+		const filePath = `${path}/upload/${setid}`
+		await remove(filePath)
+		await ensureDir(`${path}/upload`)
+
+		fotoByset.forEach(async (i) => {
+			await this.getPhotoModel.findByIdAndDelete({ _id: setid }).exec()
 		})
 
 		return `DEL ${setid}`
+	}
+
+	async delPhotoById(_id: string): Promise<DelPhotoByIdResponseT> {
+		const getPhoto = await this.getPhotoModel.findOne({ _id })
+		try {
+			const filePath = `${path}/upload/${getPhoto.setid}/${getPhoto.filename}`
+			await remove(filePath)
+		} catch (e) {
+			console.log(e)
+		}
+		const fotoByset = await this.getPhotoModel.deleteOne({ _id }).exec()
+		if (fotoByset.deletedCount === 1) return { success: true, id: _id }
+		return { success: false, message: 'Фото з таким ID не знайдено' }
 	}
 
 	async delBy_Id(id: string): Promise<PhotoResponseDBT> {

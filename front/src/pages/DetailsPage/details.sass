@@ -13,12 +13,14 @@
         right: 2rem
     &__photobox
         width: 80%
-        height: 60%
-        background: #000
+        min-height: 55%
+        background: #00000081
+        border-radius: 1rem
         @media (max-width: 700px)
             width: 100%
     &__content
         width: 80%
+        max-height: 40%
         padding: 1rem
         p
             font-size: 1.4rem
@@ -29,6 +31,53 @@
             padding-top: 0.53rem
             margin-top: 2rem
             border-top: 1px solid $COLORACCENT
+        &__weather
+            height: 1rem
+            cursor: pointer
+            transition: all 0.2s
+            &:hover
+                color: $COLORACCENT
+                transition: all 0.2s
+        &__viewmap
+            padding: 0.5rem
+            padding-top: 1rem
+            border-radius: 2rem
+            cursor: pointer
+        &__comments
+            padding: 0.5rem
+            padding-top: 1rem
+            border-radius: 2rem
+            cursor: pointer
+            position: relative
+            p
+                width: 2rem
+                height: 2rem
+                position: absolute
+                right: -0.5rem
+                bottom: -0.5rem
+                background: $COLORSECOND
+                padding: 0.1rem
+                border-radius: 50%
+                text-align: center
+        &__description
+            max-height: 30%
+            overflow: auto
+            scrollbar: 0px
+            border-bottom: 1px solid black
+            box-shadow: 0 1rem 2rem black
+            transition: all 0.2s
+            &:active
+                overflow: visible
+                max-height: max-content
+                transition: all 0.3s
+                z-index: 300
+        &__description::-webkit-scrollbar
+            width: 3px
+        &__description::-webkit-scrollbar-thumb
+            width: 3px
+            background: $COLORTEXT
+            border-radius: 10px
+
         &__buttonbar
             height: 3.5rem
             padding-top: 0.53rem

@@ -4,10 +4,10 @@ type FadeInProps = {
   className?: string
 } & React.HTMLAttributes<HTMLDivElement>
 
-const FadeIn = ({ children, ...props }: FadeInProps) => {
+const FadeIn = ({ children, className, ...props }: FadeInProps) => {
   return (
     <>
-      <div {...props} className="fadein">
+      <div {...props} className={"fadein" + " " + className}>
         {children}
       </div>
     </>

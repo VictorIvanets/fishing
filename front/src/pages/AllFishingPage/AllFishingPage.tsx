@@ -1,24 +1,31 @@
 import "./allfishingpage.sass"
 import { memo } from "react"
-import { useQuery } from "@tanstack/react-query"
-import { fishingServices } from "src/services/fishing.services"
 import Flex from "src/components/Flex/Flex"
 import List from "src/components/List"
-import { Preloader } from "src/components/preloaders/PreloaderBall"
-import { QUERY_KEY } from "src/types/constants"
+import useGetAll from "src/hooks/useGetAll"
 const AllFishingPage = memo(() => {
-  const { data, isLoading, isError, error } = useQuery({
-    queryKey: [QUERY_KEY.ALL_FISH],
-    queryFn: fishingServices.getAll,
-  })
+  const {
+    isLoading,
+    isError,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    allItems,
+  } = useGetAll()
 
   return (
     <>
       <Flex centerH className="allfishingpage">
         <Flex className="allfishingpage__list">
-          {data && <List data={data} />}
-          {isLoading && <Preloader />}
-          {isError && <h4>{error.message}</h4>}
+          <List
+            hasNextPage={hasNextPage}
+            fetchNextPage={fetchNextPage}
+            isLoading={isLoading}
+            isFetchingNextPage={isFetchingNextPage}
+            data={allItems}
+          />
+          {isError && <h4>{error?.message}</h4>}
         </Flex>
       </Flex>
     </>
