@@ -52,7 +52,7 @@ export class AuthService {
 			}
 			return { login: user.login, _id: user._id }
 		} catch (e) {
-			console.log(e)
+			throw new UnauthorizedException(e)
 		}
 	}
 

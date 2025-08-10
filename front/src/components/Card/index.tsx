@@ -8,7 +8,7 @@ interface CardProps {
   item: OneFishingT
 }
 const Card = ({ item }: CardProps) => {
-  const dateNormalize = item.date.slice(0, 10).split("-")
+  const dateNormalize = item.date.slice(0, 10).split("-").reverse().join("-")
   const navigate = useNavigate()
 
   return (
@@ -37,9 +37,7 @@ const Card = ({ item }: CardProps) => {
           <p>Автор: {item.userName}</p>
         </Flex>
         <Flex className="card__content__footer" spredV gap={10}>
-          <p>
-            Дата: {dateNormalize[2]} / {dateNormalize[1]} / {dateNormalize[0]}
-          </p>
+          <p>Дата: {dateNormalize}</p>
           <p>Оцінка: {item.score}</p>
         </Flex>
       </Flex>

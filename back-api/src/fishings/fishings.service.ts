@@ -71,11 +71,20 @@ export class FishingsService {
 		user: { _id: string },
 		limit: number,
 		cursor?: string,
+		title?: string,
+		description?: string,
 	): Promise<{ data: FishingsModel[]; nextCursor: string | null }> {
 		try {
 			const filter: any = { userId: user._id }
 			if (cursor) {
 				filter._id = { $lt: new Types.ObjectId(cursor) }
+			}
+
+			if (title) {
+				filter.title = { $regex: new RegExp(title, 'i') }
+			}
+			if (description) {
+				filter.description = { $regex: new RegExp(description, 'i') }
 			}
 
 			const results = await this.fishingsModel
@@ -99,11 +108,21 @@ export class FishingsService {
 	async findAllFishing(
 		limit: number,
 		cursor?: string,
+		title?: string,
+		description?: string,
 	): Promise<{ data: FishingsModel[]; nextCursor: string | null }> {
 		try {
-			const filter: any = { db: DB_STRING }
+			const filter: any = {}
 			if (cursor) {
 				filter._id = { $lt: new Types.ObjectId(cursor) }
+			}
+
+			if (title) {
+				filter.title = { $regex: new RegExp(title, 'i') }
+			}
+
+			if (description) {
+				filter.description = { $regex: new RegExp(description, 'i') }
 			}
 
 			const results = await this.fishingsModel

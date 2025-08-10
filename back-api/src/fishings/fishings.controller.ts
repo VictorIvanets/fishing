@@ -70,8 +70,16 @@ export class FishingsController {
 		@CurrentUser() user: any,
 		@Query('limit') limit = '10',
 		@Query('cursor') cursor?: string,
+		@Query('title') title?: string,
+		@Query('description') description?: string,
 	): Promise<{ data: FishingsModel[]; nextCursor: string | null }> {
-		return await this.fishingsService.findUserFishings(user, +limit, cursor)
+		return await this.fishingsService.findUserFishings(
+			user,
+			+limit,
+			cursor,
+			title,
+			description,
+		)
 	}
 
 	@HttpCode(200)
@@ -79,9 +87,17 @@ export class FishingsController {
 	async getAllFishings(
 		@Query('limit') limit = '10',
 		@Query('cursor') cursor?: string,
+		@Query('title') title?: string,
+		@Query('description') description?: string,
 	): Promise<{ data: FishingsModel[]; nextCursor: string | null }> {
-		return await this.fishingsService.findAllFishing(+limit, cursor)
+		return await this.fishingsService.findAllFishing(
+			+limit,
+			cursor,
+			title,
+			description,
+		)
 	}
+
 	@HttpCode(200)
 	@Get('allformap')
 	async getAllFishingsForMap(): Promise<ResponseForMapT[]> {
