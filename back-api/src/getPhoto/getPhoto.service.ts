@@ -83,17 +83,21 @@ export class GetPhotoService {
 	}
 
 	async delBySetId(setid: string): Promise<string> {
-		const fotoByset = await this.getPhotoModel.find({ setid }).exec()
+		try {
+			const fotoByset = await this.getPhotoModel.find({ setid }).exec()
 
-		const filePath = `${path}/upload/${setid}`
-		await remove(filePath)
-		await ensureDir(`${path}/upload`)
+			const filePath = `${path}/upload/${setid}`
+			await remove(filePath)
+			await ensureDir(`${path}/upload`)
 
-		fotoByset.forEach(async (i) => {
-			await this.getPhotoModel.findByIdAndDelete({ _id: setid }).exec()
-		})
+			fotoByset.forEach(async (i) => {
+				await this.getPhotoModel.findByIdAndDelete({ _id: setid }).exec()
+			})
 
-		return `DEL ${setid}`
+			return `DEL ${setid}`
+		} catch (e) {
+			console.log(e)
+		}
 	}
 
 	async delPhotoById(_id: string): Promise<DelPhotoByIdResponseT> {
