@@ -27,6 +27,8 @@ export class FishingsModel extends TimeStamps {
 	img: ImageT[]
 	@prop({ type: () => Object })
 	weather: WeatherT
+	@prop({ type: () => Object })
+	paid?: PaidFishingT
 }
 
 export type FishingsResponseDBT = Omit<
@@ -44,4 +46,12 @@ export type ResponseForMapT = {
 	score: number
 	description: string
 	userId: string
+	paid?: PaidFishingT
+}
+
+export type PaidFishingT = {
+	title: string
+	price: number
+	owner: string
+	contact: string[]
 }

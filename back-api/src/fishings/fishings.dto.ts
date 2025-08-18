@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { Type } from 'class-transformer'
 import { IsArray, IsNumber, IsObject, IsString } from 'class-validator'
+import { PaidFishingT } from './fishings.model'
 
 export class FishingsDto {
 	@ApiProperty({ example: 'cool fising' })
@@ -51,6 +52,16 @@ export class FishingsDto {
 	})
 	@IsObject()
 	weather: WeatherT
+
+	@ApiProperty({
+		example: {
+			title: 'string',
+			price: 500,
+			owner: 'Vasyl',
+		},
+	})
+	@IsObject()
+	paid?: PaidFishingT
 }
 
 export type ImageT = {

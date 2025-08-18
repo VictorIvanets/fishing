@@ -99,6 +99,22 @@ export class FishingsController {
 	}
 
 	@HttpCode(200)
+	@Get('paid')
+	async getAllPaidFishings(
+		@Query('limit') limit = '10',
+		@Query('cursor') cursor?: string,
+		@Query('title') title?: string,
+		@Query('description') description?: string,
+	): Promise<{ data: FishingsModel[]; nextCursor: string | null }> {
+		return await this.fishingsService.findAllPaidFishing(
+			+limit,
+			cursor,
+			title,
+			description,
+		)
+	}
+
+	@HttpCode(200)
 	@Get('allformap')
 	async getAllFishingsForMap(): Promise<ResponseForMapT[]> {
 		return await this.fishingsService.findAllFishingRorMap()

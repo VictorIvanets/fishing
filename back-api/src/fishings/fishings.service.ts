@@ -34,6 +34,7 @@ export class FishingsService {
 			img: [],
 			weather: dto.weather,
 			imgdb: [],
+			paid: user.login === 'admin' ? dto.paid : undefined,
 		})
 		return await newFishing.save()
 	}
@@ -87,6 +88,8 @@ export class FishingsService {
 				filter.description = { $regex: new RegExp(description, 'i') }
 			}
 
+			filter.paid = undefined
+
 			const results = await this.fishingsModel
 				.find(filter)
 				.sort({ _id: -1 })
@@ -125,6 +128,48 @@ export class FishingsService {
 				filter.description = { $regex: new RegExp(description, 'i') }
 			}
 
+			filter.paid = undefined
+
+			const results = await this.fishingsModel
+				.find(filter)
+				.sort({ _id: -1 })
+				.limit(limit + 1)
+				.exec()
+
+			const hasNextPage = results.length > limit
+			const data = hasNextPage ? results.slice(0, -1) : results
+			const nextCursor = hasNextPage
+				? data[data.length - 1]._id.toString()
+				: null
+
+			return { data, nextCursor }
+		} catch (e) {
+			throw new UnauthorizedException(e)
+		}
+	}
+
+	async findAllPaidFishing(
+		limit: number,
+		cursor?: string,
+		title?: string,
+		description?: string,
+	): Promise<{ data: FishingsModel[]; nextCursor: string | null }> {
+		try {
+			const filter: any = {}
+			if (cursor) {
+				filter._id = { $lt: new Types.ObjectId(cursor) }
+			}
+
+			if (title) {
+				filter.title = { $regex: new RegExp(title, 'i') }
+			}
+
+			if (description) {
+				filter.description = { $regex: new RegExp(description, 'i') }
+			}
+
+			filter.paid = { $exists: true, $ne: null }
+
 			const results = await this.fishingsModel
 				.find(filter)
 				.sort({ _id: -1 })
@@ -145,6 +190,7 @@ export class FishingsService {
 
 	async findAllFishingRorMap(): Promise<ResponseForMapT[]> {
 		try {
+			const filter: any = {}
 			const results = await this.fishingsModel.find().exec()
 			const response: ResponseForMapT[] = results.map((i) => {
 				return {
@@ -154,6 +200,7 @@ export class FishingsService {
 					score: i.score,
 					description: i.description,
 					userId: i.userId.toString(),
+					paid: i.paid,
 				}
 			})
 			return response
