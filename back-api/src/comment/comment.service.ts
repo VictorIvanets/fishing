@@ -28,10 +28,10 @@ export class CommentService {
 	}
 
 	async delCommBySetId(setId: string): Promise<string> {
-		const result = await this.commentModel.find({ setId }).exec()
-		result.forEach(async (i) => {
-			await this.commentModel.deleteOne({ setId: i.setId }).exec()
-		})
+		const result = await this.commentModel.deleteMany({ setId }).exec()
+		if (result.deletedCount === 0) {
+			return `Коментарів з таким setId не знайдено`
+		}
 		return setId
 	}
 }

@@ -1,7 +1,7 @@
 import { prop } from '@typegoose/typegoose'
 import { TimeStamps, Base } from '@typegoose/typegoose/lib/defaultClasses'
 import { ImageT, WeatherT } from './fishings.dto'
-import { ObjectId, Types } from 'mongoose'
+import { Types } from 'mongoose'
 
 export interface FishingsModel extends Base {}
 export class FishingsModel extends TimeStamps {

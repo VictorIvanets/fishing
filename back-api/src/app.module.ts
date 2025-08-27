@@ -17,6 +17,8 @@ import { ChatModule } from './chat/chat.module'
 import { UserInOutModule } from './userInOut/userInOut.module'
 import { FishingsModule } from './fishings/fishings.module'
 import { PhotoModule } from './photoFishing/photo.module'
+import { PostsModule } from './posts/posts.module'
+import { PostsCommentsModule } from './postComments/postComments.module'
 
 @Module({
 	imports: [
@@ -53,6 +55,8 @@ import { PhotoModule } from './photoFishing/photo.module'
 		GetPhotoModule,
 		FishingsModule,
 		PhotoModule,
+		PostsModule,
+		PostsCommentsModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],
