@@ -20,5 +20,6 @@ import { PostsController } from './posts.controller'
 		ConfigModule,
 	],
 	providers: [PostsService],
+	exports: [PostsService],
 })
 export class PostsModule {}

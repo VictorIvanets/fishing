@@ -6,6 +6,7 @@ import {
 	HttpCode,
 	Param,
 	Post,
+	Query,
 	UseGuards,
 } from '@nestjs/common'
 import { PostsCommentsService } from './postComments.service'
@@ -14,12 +15,16 @@ import { AuthGuard } from '@nestjs/passport'
 import { ApiTags } from '@nestjs/swagger'
 import { PostCommentsDto } from './postCommentsdto'
 import { CurrentUser } from 'src/auth/auth.decorator'
+import { PostsService } from 'src/posts/posts.service'
 
 @ApiTags('PostComment')
 @UseGuards(AuthGuard('jwt'))
 @Controller('postcomment')
 export class PostsCommentsController {
-	constructor(private readonly postsCommentService: PostsCommentsService) {}
+	constructor(
+		private readonly postsCommentService: PostsCommentsService,
+		private readonly postsService: PostsService,
+	) {}
 
 	@HttpCode(200)
 	@Post('create')
@@ -27,6 +32,7 @@ export class PostsCommentsController {
 		@Body() dto: PostCommentsDto,
 		@CurrentUser() user: { _id: string; login: string },
 	): Promise<PostCommentsModel> {
+		await this.postsService.updateCommentPost(dto.postId, 1)
 		return await this.postsCommentService.createComment(dto, user)
 	}
 
@@ -40,9 +46,13 @@ export class PostsCommentsController {
 	}
 
 	@HttpCode(200)
-	@Delete(':id')
-	async delComment(@Param('id') id: string): Promise<DelByIdResponseT> {
-		return await this.postsCommentService.delCommById(id)
+	@Delete('delete')
+	async delComment(
+		@Query('commentId') commentId: string,
+		@Query('postId') postId: string,
+	): Promise<DelByIdResponseT> {
+		await this.postsService.updateCommentPost(postId, -1)
+		return await this.postsCommentService.delCommById(commentId)
 	}
 
 	@HttpCode(200)

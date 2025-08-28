@@ -12,6 +12,8 @@ export class PostsModel extends TimeStamps {
 	description: string
 	@prop()
 	colorSchema: string
+	@prop()
+	commentCount: number
 }
 
 export type PostsResponseDBT = Omit<

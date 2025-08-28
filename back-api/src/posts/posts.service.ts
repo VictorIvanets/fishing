@@ -22,8 +22,19 @@ export class PostsService {
 			userId: user._id,
 			description: dto.description,
 			colorSchema: dto.colorSchema,
+			commentCount: 0,
 		})
 		return await newPost.save()
+	}
+
+	async updateCommentPost(id: string, delta: number): Promise<PostsModel> {
+		try {
+			return await this.postsModel
+				.findByIdAndUpdate(id, { $inc: { commentCount: delta } }, { new: true })
+				.exec()
+		} catch (e) {
+			throw new UnauthorizedException(INVALID_ID, e)
+		}
 	}
 
 	async myPosts(
